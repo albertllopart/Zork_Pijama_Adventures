@@ -70,6 +70,7 @@
     <ClCompile Include="ClassExit.cpp" />
     <ClCompile Include="ClassPlayer.cpp" />
     <ClCompile Include="ClassRoom.cpp" />
+    <ClCompile Include="ClassString.cpp" />
     <ClCompile Include="ClassWorld.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -78,6 +79,7 @@
     <ClInclude Include="ClassExit.h" />
     <ClInclude Include="ClassPlayer.h" />
     <ClInclude Include="ClassRoom.h" />
+    <ClInclude Include="ClassString.h" />
     <ClInclude Include="ClassWorld.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
