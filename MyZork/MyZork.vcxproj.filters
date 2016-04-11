@@ -36,6 +36,9 @@
     <ClCompile Include="ClassString.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="ClassEntity.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassWorld.h">
@@ -54,6 +57,9 @@
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
     <ClInclude Include="ClassString.h">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEntity.h">
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
   </ItemGroup>

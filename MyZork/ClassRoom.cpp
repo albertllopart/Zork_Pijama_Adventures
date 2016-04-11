@@ -2,8 +2,7 @@
 
 Room::Room()
 {
-	name = new char[25];
-	description = new char[250];
+
 }
 
 int Room::CheckOptions(int dir)const
@@ -14,22 +13,6 @@ int Room::CheckOptions(int dir)const
 int Room::CheckDoors(int dir)const
 {
 	return doors[dir];
-}
-
-char* Room::CheckName()const
-{
-	return name;
-}
-
-char* Room::CheckDescription()const
-{
-	return description;
-}
-
-void Room::ModifyRoom(char name[25], char description[250])
-{
-	this->name = name;
-	this->description = description;
 }
 
 void Room::ModifyOptions(int n, int s, int e, int w)

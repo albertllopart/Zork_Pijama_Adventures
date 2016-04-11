@@ -1,5 +1,7 @@
 #include "ClassString.h"
 
+
+String::String(){};
 String::String(const char* str)
 {
 	capacity = strlen(str) + 1;
@@ -44,7 +46,7 @@ void String::operator = (const String& str)
 	}
 	else if (IsShorter(str))
 	{
-		int len = str.capacity;
+		int len = str.capacity + 1;
 		strcpy_s(this->str, len, str.str);
 		this->str[len] = 0;
 	}
@@ -56,13 +58,41 @@ void String::operator = (const String& str)
 		strcpy_s(this->str, capacity, str.str);
 	}
 }
+void String::operator =(const char* str)
+{
+	if (SameLenght(str))
+	{
+		strcpy_s(this->str, capacity, str);
+	}
+	else if (IsShorter(str))
+	{
+		int len = strlen(str) + 1;
+		strcpy_s(this->str, len, str);
+		this->str[len] = 0;
+	}
+	else
+	{
+		capacity = strlen(str) + 1;
+		delete[]this->str;
+		this->str = new char[capacity];
+		strcpy_s(this->str, capacity, str);
+	}
+}
 bool String::SameLenght(const String& str)
 {
 	return capacity == str.capacity;
 }
+bool String::SameLenght(const char* str)
+{
+	return capacity == strlen(str);
+}
 bool String::IsShorter(const String& str)
 {
 	return capacity > str.capacity;
+}
+bool String::IsShorter(const char* str)
+{
+	return capacity > strlen(str);
 }
 int String::GetCapacity()
 {

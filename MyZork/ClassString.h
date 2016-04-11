@@ -9,6 +9,7 @@ private:
 
 public:
 
+	String();
 	String(const char* str);
 	String(const String& str);
 	~String();
