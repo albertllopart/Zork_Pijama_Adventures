@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "ClassString.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
 
 	Command(){};
 
-	void ReadInstruction(char instr[25], int &dir)const;
+	void ReadInstruction(String& str, int &dir)const;
 
 	~Command(){};
 };

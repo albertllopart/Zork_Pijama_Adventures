@@ -1,11 +1,11 @@
 #include "ClassCommand.h"
 
-void Command::ReadInstruction(char instr[25], int &dir)const
+void Command::ReadInstruction(String& str, int &dir)const
 {
 
 	//HELP
 
-	if (strcmp(instr, "help") == 0)
+	if (str == "help")
 	{
 		cout << "Move using the 'n', 's', 'e', 'w' keys, 'north/south/east/west' or 'go + north/south/east/west' commands." << endl;
 		cout << "Check door descriptions using 'look + north/south/east/west', player description using 'look + player/me/myself' or room descriptions using 'look room' command" << endl;
@@ -16,104 +16,105 @@ void Command::ReadInstruction(char instr[25], int &dir)const
 
 	//LOOK
 
-	else if (strcmp(instr, "look north") == 0) 
+	else if (str == "look north") 
 	{
 		dir = north;
-		strcpy(instr, "look");
+		str = "look!";
 	}
-	else if (strcmp(instr, "look south") == 0) 
+	else if (str == "look south") 
 	{
 		dir = south;
-		strcpy(instr, "look");
+		str = "look!";
 	}
-	else if (strcmp(instr, "look east") == 0) 
+	else if (str == "look east") 
 	{
 		dir = east;
-		strcpy(instr, "look");
+		str = "look!";
 	}
-	else if (strcmp(instr, "look west") == 0) 
+	else if (str == "look west") 
 	{
 		dir = west;
-		strcpy(instr, "look");
+		str = "look!";
 	}
-	else if (strcmp(instr, "look player") == 0 || strcmp(instr, "look myself") == 0 || strcmp(instr, "look me") == 0)
+	else if (str == "look player"|| str == "look myself" || str == "look me")
 	{
 		dir = stay;
-		cout << "You're wearing a warm pijama and slippers." << endl << endl;
+		str = "lookplayer";
 	}
-	else if (strcmp(instr, "look room") == 0)
+	else if (str == "look room")
 	{
 		dir = stay;
-		strcpy(instr, "lookroom");
+		str = "lookroom";
 	}
 
 	//GO
 
-	else if (strcmp(instr, "go north") == 0 || strcmp(instr, "north") == 0 || strcmp(instr, "n") == 0) 
+	else if (str == "go north"|| str == "north"|| str == "n") 
 	{
 		dir = north;
-		strcpy(instr, "go");
+		str = "go!";
 	}
-	else if (strcmp(instr, "go south") == 0 || strcmp(instr, "south") == 0 || strcmp(instr, "s") == 0) 
+	else if (str == "go south" || str == "south" || str == "s")
 	{
 		dir = south;
-		strcpy(instr, "go");
+		str = "go!";
 	}
-	else if (strcmp(instr, "go east") == 0 || strcmp(instr, "east") == 0 || strcmp(instr, "e") == 0) 
+	else if (str == "go east" || str == "east" || str == "e")
 	{
 		dir = east;
-		strcpy(instr, "go");
+		str = "go!";
 	}
-	else if (strcmp(instr, "go west") == 0 || strcmp(instr, "west") == 0 || strcmp(instr, "w") == 0) 
+	else if (str == "go west" || str == "west" || str == "w")
 	{
 		dir = west;
-		strcpy(instr, "go");
+		str = "go!";
 	}
+	
 
 	//OPEN
 
-	else if (strcmp(instr, "open north") == 0) 
+	else if (str == "open north") 
 	{
 		dir = north;
-		strcpy(instr, "open");
+		str = "open!";
 	}
-	else if (strcmp(instr, "open south") == 0) 
+	else if (str == "open south")
 	{
 		dir = south;
-		strcpy(instr, "open");
+		str = "open!";
 	}
-	else if (strcmp(instr, "open east") == 0) 
+	else if (str == "open east")
 	{
 		dir = east;
-		strcpy(instr, "open");
+		str = "open!";
 	}
-	else if (strcmp(instr, "open west") == 0) 
+	else if (str == "open west")
 	{
 		dir = west;
-		strcpy(instr, "open");
+		str = "open!";
 	}
 
 	//CLOSE
 
-	else if (strcmp(instr, "close north") == 0) 
+	else if (str == "close north") 
 	{
 		dir = north;
-		strcpy(instr, "close");
+		str = "close!";
 	}
-	else if (strcmp(instr, "close south") == 0) 
+	else if (str == "close south")
 	{
 		dir = south;
-		strcpy(instr, "close");
+		str = "close!";
 	}
-	else if (strcmp(instr, "close east") == 0) 
+	else if (str == "close east")
 	{
 		dir = east;
-		strcpy(instr, "close");
+		str = "close!";
 	}
-	else if (strcmp(instr, "close west") == 0) 
+	else if (str == "close west")
 	{
 		dir = west;
-		strcpy(instr, "close");
+		str = "close!";
 	}
 
 	//ELSE

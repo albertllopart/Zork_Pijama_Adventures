@@ -13,6 +13,7 @@ private:
 	Room* rooms = nullptr;
 	Exit* exits = nullptr;
 	Player* adventurer = nullptr;
+
 	bool playing;
 	
 public:
@@ -23,7 +24,7 @@ public:
 	void CheckRoom(int i)const;
 	int CheckPosition()const;
 	void Move(int position);
-	void Execute(char instruction[25], int dir, int &position)const;
+	void Execute(const String& str, int dir, int &position)const;
 	bool Continue()const;
 
 	void CreateWorld(const char* str);

@@ -5,6 +5,7 @@ World::World()
 	rooms = new Room[12];
 	exits = new Exit[11];
 	adventurer = new Player[1];
+
 	playing = true;
 }
 
@@ -100,10 +101,10 @@ void World::Move(int position)
 {
 	adventurer[0].ModifyPosition(position);
 }
-void World::Execute(char instruction[25], int dir, int &position)const
+void World::Execute(const String& str, int dir, int &position)const
 {
 
-	if (strcmp(instruction,"look") == 0)
+	if (str == "look!")
 	{
 		if (rooms[position].CheckDoors(dir) != -1)
 		{
@@ -112,7 +113,7 @@ void World::Execute(char instruction[25], int dir, int &position)const
 		else if (rooms[position].CheckDoors(dir) == -1)
 			cout << "There's no door in that direction." << endl << endl;	
 	}
-	else if (strcmp(instruction, "go") == 0)
+	else if (str == "go!")
 	{
 		if (rooms[position].CheckOptions(dir) != -1 && exits[rooms[position].CheckDoors(dir)].IsOpen())
 		{
@@ -128,7 +129,7 @@ void World::Execute(char instruction[25], int dir, int &position)const
 			cout << "The door is closed." << endl << endl;
 		}
 	}
-	else if (strcmp(instruction, "open") == 0)
+	else if (str == "open!")
 	{
 		if (rooms[position].CheckDoors(dir) != -1 && exits[rooms[position].CheckDoors(dir)].IsOpen() == false)
 		{
@@ -140,7 +141,7 @@ void World::Execute(char instruction[25], int dir, int &position)const
 			cout << "The door is already open." << endl << endl;
 		}
 	}
-	else if (strcmp(instruction, "close") == 0)
+	else if (str == "close!")
 	{
 		if (rooms[position].CheckDoors(dir) != -1 && exits[rooms[position].CheckDoors(dir)].IsOpen())
 		{
@@ -148,9 +149,13 @@ void World::Execute(char instruction[25], int dir, int &position)const
 			cout << "The door is now closed" << endl << endl;
 		}
 	}
-	else if (strcmp(instruction, "lookroom") == 0)
+	else if (str == "lookroom")
 	{
 		cout << rooms[position].GetDescription() << endl << endl;
+	}
+	else if (str == "lookplayer")
+	{
+		cout << adventurer[0].GetDescription() << endl << endl;
 	}
 }
 
