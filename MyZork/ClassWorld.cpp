@@ -4,12 +4,14 @@ World::World()
 {
 	rooms = new Room[12];
 	exits = new Exit[11];
-	adventurer = new Player;
+	adventurer = new Player[1];
 	playing = true;
 }
 
-void World::CreateWorld()
+void World::CreateWorld(const char* str)
 {
+	adventurer[0].ModifyName(str);
+
 	rooms[0].ModifyParameters("Hall", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated.");
 	rooms[0].ModifyOptions(2, -1, -1, 1);
 	rooms[0].ModifyDoors(1, -1, -1, 0);
@@ -59,32 +61,44 @@ void World::CreateWorld()
 	rooms[11].ModifyDoors(-1, -1, -1, 10);
 
 
-	exits[0].ModifyExit("A wooden door that leads to a western room.");
+	exits[0].ModifyDescription("A wooden door that leads to a western room.");
 
-	exits[1].ModifyExit("A huge door that leads to a northern room.");
+	exits[1].ModifyDescription("A huge door that leads to a northern room.");
 
-	exits[2].ModifyExit("You feel like there's gonna be something useful inside.");
+	exits[2].ModifyDescription("You feel like there's gonna be something useful inside.");
 
-	exits[3].ModifyExit("There's a sing on the wall. It says 'Bat room'.");
+	exits[3].ModifyDescription("There's a sing on the wall. It says 'Bat room'.");
 
-	exits[4].ModifyExit("This door leads deeper into this strange place. It has a strange locking mechanism.");
+	exits[4].ModifyDescription("This door leads deeper into this strange place. It has a strange locking mechanism.");
 
-	exits[5].ModifyExit("This door is made out of copper.");
+	exits[5].ModifyDescription("This door is made out of copper.");
+	exits[5].ModifyState();
 
-	exits[6].ModifyExit("You smell bird shit on the other side.");
+	exits[6].ModifyDescription("You smell bird shit on the other side.");
 
-	exits[7].ModifyExit("A wooden door that leads to an eastern room.");
+	exits[7].ModifyDescription("A wooden door that leads to an eastern room.");
 
-	exits[8].ModifyExit("This door is made out of silver.");
+	exits[8].ModifyDescription("This door is made out of silver.");
+	exits[8].ModifyState();
 
-	exits[9].ModifyExit("There's a crack on the wall.");
+	exits[9].ModifyDescription("There's a crack on the wall.");
 
-	exits[10].ModifyExit("It's a door made out of gold.");
+	exits[10].ModifyDescription("It's a door made out of gold.");
 }
 
 void World::CheckRoom(int i)const
 {
 	cout << rooms[i].GetName() << endl << rooms[i].GetDescription() << endl << endl;
+}
+
+int World::CheckPosition()const
+{
+	return adventurer[0].CheckPosition();
+}
+
+void World::Move(int position)
+{
+	adventurer[0].ModifyPosition(position);
 }
 void World::Execute(char instruction[25], int dir, int &position)const
 {
@@ -93,7 +107,7 @@ void World::Execute(char instruction[25], int dir, int &position)const
 	{
 		if (rooms[position].CheckDoors(dir) != -1)
 		{
-			cout << exits[rooms[position].CheckDoors(dir)].CheckDescription() << endl << endl;
+			cout << exits[rooms[position].CheckDoors(dir)].GetDescription() << endl << endl;
 		}
 		else if (rooms[position].CheckDoors(dir) == -1)
 			cout << "There's no door in that direction." << endl << endl;	
@@ -154,5 +168,5 @@ World::~World()
 {
 	delete[]rooms;
 	delete[]exits;
-	delete adventurer;
+	delete[]adventurer;
 }

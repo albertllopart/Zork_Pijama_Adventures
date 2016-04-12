@@ -1,7 +1,7 @@
-#include<iostream>
-#include "ClassEntity.h"
+#ifndef CLASS_ROOM
+#define CLASS_ROOM
 
-using namespace std;
+#include "ClassEntity.h"
 
 class Room:public Entity
 {
@@ -22,4 +22,6 @@ public:
 
 	~Room();
 };
+
+#endif
 

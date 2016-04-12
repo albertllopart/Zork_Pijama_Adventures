@@ -2,23 +2,12 @@
 
 Exit::Exit()
 {
-	description = new char[250];
-	open = false;
+	open = true;
 };
 
 bool Exit::IsOpen()const
 {
 	return open;
-}
-
-char* Exit::CheckDescription()const
-{
-	return description;
-}
-
-void Exit::ModifyExit(char description[250])
-{
-	this->description = description;
 }
 
 void Exit::ModifyState()

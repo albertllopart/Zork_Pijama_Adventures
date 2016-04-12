@@ -1,24 +1,23 @@
-#include <iostream>
-#include <string>
+#ifndef CLASS_EXIT
+#define CLASS_EXIT
 
-using namespace std;
+#include "ClassEntity.h"
 
-class Exit
+
+class Exit:public Entity
 {
 private:
 
-	char* description = nullptr;
 	bool open;
 
 public:
 
 	Exit();
+	~Exit();
 
-	char* CheckDescription()const;
 	bool IsOpen()const;
-
-	void ModifyExit(char description[250]);
 	void ModifyState();
 
-	~Exit();
 };
+
+#endif

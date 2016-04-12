@@ -1,3 +1,6 @@
+#ifndef CLASS_STRING
+#define CLASS_STRING
+
 #include <string.h>
 
 class String
@@ -16,6 +19,7 @@ public:
 
 	const char* GetStr()const;
 	unsigned int GetLenght()const;
+	int GetCapacity()const;
 	bool Empty()const;
 
 	bool operator ==(const String& str)const;
@@ -23,9 +27,10 @@ public:
 	void operator =(const String& str);
 	void operator =(const char* str);
 
-	bool SameLenght(const String& str);
-	bool SameLenght(const char* str);
-	bool IsShorter(const String& str);
-	bool IsShorter(const char* str);
-	int GetCapacity();
+	bool SameLenght(const String& str)const;
+	bool SameLenght(const char* str)const;
+	bool IsShorter(const String& str)const;
+	bool IsShorter(const char* str)const;
 };
+
+#endif

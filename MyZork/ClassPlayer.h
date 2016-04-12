@@ -1,25 +1,23 @@
-#include <iostream>
-#include <string>
+#ifndef CLASS_PLAYER
+#define CLASS_PLAYER
 
-using namespace std;
+#include "ClassEntity.h"
 
-class Player
+class Player:public Entity
 {
 private:
 
-	char* name= nullptr;
 	int position;
 	enum location {Hall};
 
 public:
 
 	Player();
+	~Player();
 
-	char* CheckName()const;
 	int CheckPosition()const;
-
-	void ModifyName(char name[25]);
 	void ModifyPosition(int next);
 
-	~Player();
 };
+
+#endif
