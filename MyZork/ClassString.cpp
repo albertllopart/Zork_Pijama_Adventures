@@ -113,3 +113,4 @@ int String::GetCapacity()const
 {
 	return capacity;
 }
+

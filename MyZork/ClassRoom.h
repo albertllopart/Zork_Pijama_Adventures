@@ -13,6 +13,8 @@ private:
 public:
 
 	Room();
+	Room(const char* name, const char* description);
+	Room(const String& name, const String& description);
 
 	int CheckOptions(int dir)const;
 	int CheckDoors(int dir)const;

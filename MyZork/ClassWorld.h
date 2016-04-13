@@ -5,20 +5,24 @@
 #include "ClassExit.h"
 #include "ClassPlayer.h"
 #include "ClassCommand.h"
+#include "ClassVector.h"
 
 class World
 {
 private:
 
-	Room* rooms = nullptr;
-	Exit* exits = nullptr;
+	Vector <Room*> rooms;
+	Vector <Exit*> exits;
+	String* names = nullptr;
+	String* descriptions = nullptr;
+
 	Player* adventurer = nullptr;
 
 	bool playing;
 	
 public:
 
-	World();
+	World(const char* str);
 	~World();
 
 	void CheckRoom(int i)const;
@@ -27,7 +31,7 @@ public:
 	void Execute(const String& str, int dir, int &position)const;
 	bool Continue()const;
 
-	void CreateWorld(const char* str);
+	void CreateWorld();
 	void EndGame();
 };
 

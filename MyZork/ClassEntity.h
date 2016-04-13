@@ -13,6 +13,9 @@ private:
 public:
 
 	Entity();
+	Entity(const String& name, const String& description);
+	Entity(const char* name, const char* description);
+	Entity(const String& name);
 	~Entity();
 
 	void ModifyName(const String& str);

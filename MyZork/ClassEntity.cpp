@@ -1,9 +1,22 @@
 #include "ClassEntity.h"
 
-Entity::Entity()
+Entity::Entity(){};
+
+Entity::Entity(const char* name, const char* description)
 {
-	name = new String();
-	description = new String();
+	this->name = new String(name);
+	this->description = new String(description);
+}
+
+Entity::Entity(const String& name, const String& description)
+{
+	this->name = new String(name);
+	this->description = new String(description);
+}
+
+Entity::Entity(const String& description)
+{
+	this->description = new String(description);
 }
 
 Entity::~Entity()

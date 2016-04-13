@@ -12,7 +12,7 @@ private:
 
 public:
 
-	Exit();
+	Exit(const String& description);
 	~Exit();
 
 	bool IsOpen()const;

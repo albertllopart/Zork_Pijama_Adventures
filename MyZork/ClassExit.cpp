@@ -1,6 +1,6 @@
 #include "ClassExit.h"
 
-Exit::Exit()
+Exit::Exit(const String& description) : Entity(description)
 {
 	open = true;
 };

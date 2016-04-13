@@ -1,6 +1,13 @@
 #include "ClassRoom.h"
 
-Room::Room()
+Room::Room(){};
+
+Room::Room(const char* name, const char* description) : Entity(name, description)
+{
+
+}
+
+Room::Room(const String& name, const String& description) : Entity(name, description)
 {
 
 }

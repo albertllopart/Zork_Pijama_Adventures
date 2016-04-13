@@ -6,16 +6,17 @@
 
 int main()
 {
-	World dungeon;
-	Command command;
 
 	cout << "Use the 'help' command to see your action options during the game" << endl << endl;
 	cout << "Enter your name" << endl;
 	
 	char PlayerName[25];
 	gets_s(PlayerName);
+
+	World dungeon(PlayerName);
+	Command command;
 	
-	dungeon.CreateWorld(PlayerName);
+	dungeon.CreateWorld();
 
 	int dir = -1;
 	char instruction[25];
