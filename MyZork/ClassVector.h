@@ -8,7 +8,7 @@ class Vector
 private:
 
 	TYPE* vec;
-	unsigned int capacity = 10;
+	unsigned int capacity = 20;
 	unsigned int elements = 0;
 
 public:
@@ -26,7 +26,7 @@ public:
 	int Size()const;
 	int Capacity()const;
 
-	TYPE* operator[](int number)const;
+	TYPE* operator [](int number)const;
 };
 
 #endif

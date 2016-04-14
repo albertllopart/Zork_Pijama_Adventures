@@ -111,7 +111,7 @@ int Vector<TYPE>::Capacity()const
 }
 
 template <class TYPE>
-TYPE* Vector<TYPE>::operator[](int number)const
+TYPE* Vector<TYPE>::operator [](int number)const
 {
 	assert(number < elements);
 	return vec[number];

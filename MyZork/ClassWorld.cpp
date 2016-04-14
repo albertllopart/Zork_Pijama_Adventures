@@ -64,50 +64,50 @@ World::World(const char* str)
 void World::CreateWorld()
 {
 	
-	rooms[0]->ModifyOptions(2, -1, -1, 1);
-	rooms[0]->ModifyDoors(1, -1, -1, 0);
+	(*rooms[0])->ModifyOptions(2, -1, -1, 1);
+	(*rooms[0])->ModifyDoors(1, -1, -1, 0);
 
-	rooms[1]->ModifyOptions(-1, -1, 0, -1); 
-	rooms[1]->ModifyDoors(-1, -1, 0, -1);
+	(*rooms[1])->ModifyOptions(-1, -1, 0, -1); 
+	(*rooms[1])->ModifyDoors(-1, -1, 0, -1);
 
-	rooms[2]->ModifyOptions(5, 0, 4, 3);
-	rooms[2]->ModifyDoors(4, 1, 3, 2);
+	(*rooms[2])->ModifyOptions(5, 0, 4, 3);
+	(*rooms[2])->ModifyDoors(4, 1, 3, 2);
 
-	rooms[3]->ModifyOptions(-1, -1, 2, -1);
-	rooms[3]->ModifyDoors(-1, -1, 2, -1);
+	(*rooms[3])->ModifyOptions(-1, -1, 2, -1);
+	(*rooms[3])->ModifyDoors(-1, -1, 2, -1);
 
-	rooms[4]->ModifyOptions(-1, -1, -1, 2);
-	rooms[4]->ModifyDoors(-1, -1, -1, 3);
+	(*rooms[4])->ModifyOptions(-1, -1, -1, 2);
+	(*rooms[4])->ModifyDoors(-1, -1, -1, 3);
 
-	rooms[5]->ModifyOptions(6, 2, -1, -1);
-	rooms[5]->ModifyDoors(5, 4, -1, -1);
+	(*rooms[5])->ModifyOptions(6, 2, -1, -1);
+	(*rooms[5])->ModifyDoors(5, 4, -1, -1);
 
-	rooms[6]->ModifyOptions(9, 5, 8, 7);
-	rooms[6]->ModifyDoors(8, 5, 7, 6);
+	(*rooms[6])->ModifyOptions(9, 5, 8, 7);
+	(*rooms[6])->ModifyDoors(8, 5, 7, 6);
 
-	rooms[7]->ModifyOptions(-1, -1, 6, -1);
-	rooms[7]->ModifyDoors(-1, -1, 6, -1);
+	(*rooms[7])->ModifyOptions(-1, -1, 6, -1);
+	(*rooms[7])->ModifyDoors(-1, -1, 6, -1);
 
-	rooms[8]->ModifyOptions(10, -1, -1, 6);
-	rooms[8]->ModifyDoors(9, -1, -1, 7);
+	(*rooms[8])->ModifyOptions(10, -1, -1, 6);
+	(*rooms[8])->ModifyDoors(9, -1, -1, 7);
 
-	rooms[9]->ModifyOptions(-1, 6, -1, -1);
-	rooms[9]->ModifyDoors(-1, 8, -1, -1);
+	(*rooms[9])->ModifyOptions(-1, 6, -1, -1);
+	(*rooms[9])->ModifyDoors(-1, 8, -1, -1);
 
-	rooms[10]->ModifyOptions(-1, 8, 11, -1);
-	rooms[10]->ModifyDoors(-1, 9, 10, -1);
+	(*rooms[10])->ModifyOptions(-1, 8, 11, -1);
+	(*rooms[10])->ModifyDoors(-1, 9, 10, -1);
 
-	rooms[11]->ModifyOptions(-1, -1, -1, 10);
-	rooms[11]->ModifyDoors(-1, -1, -1, 10);
+	(*rooms[11])->ModifyOptions(-1, -1, -1, 10);
+	(*rooms[11])->ModifyDoors(-1, -1, -1, 10);
 
-	exits[5]->ModifyState();
-	exits[8]->ModifyState();
+	(*exits[5])->ModifyState();
+	(*exits[8])->ModifyState();
 
 }
 
 void World::CheckRoom(int i)const
 {
-	cout << rooms[i]->GetName() << endl << rooms[i]->GetDescription() << endl << endl;
+	cout << (*rooms[i])->GetName() << endl << (*rooms[i])->GetDescription() << endl << endl;
 }
 
 int World::CheckPosition()const
@@ -124,21 +124,21 @@ void World::Execute(const String& str, int dir, int &position)const
 
 	if (str == "look!")
 	{
-		if (rooms[position]->CheckDoors(dir) != -1)
+		if ((*rooms[position])->CheckDoors(dir) != -1)
 		{
-			cout << exits[rooms[position]->CheckDoors(dir)]->GetDescription() << endl << endl;
+			cout << (*exits[(*rooms[position])->CheckDoors(dir)])->GetDescription() << endl << endl;
 		}
-		else if (rooms[position]->CheckDoors(dir) == -1)
+		else if ((*rooms[position])->CheckDoors(dir) == -1)
 			cout << "There's no door in that direction." << endl << endl;	
 	}
 	else if (str == "go!")
 	{
-		if (rooms[position]->CheckOptions(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
+		if ((*rooms[position])->CheckOptions(dir) != -1 && (*exits[(*rooms[position])->CheckDoors(dir)])->IsOpen())
 		{
-			position = rooms[position]->CheckOptions(dir);
-			cout << rooms[position]->GetName() << endl << rooms[position]->GetDescription() << endl << endl;
+			position = (*rooms[position])->CheckOptions(dir);
+			cout << (*rooms[position])->GetName() << endl << (*rooms[position])->GetDescription() << endl << endl;
 		}
-		else if (rooms[position]->CheckOptions(dir) == -1)
+		else if ((*rooms[position])->CheckOptions(dir) == -1)
 		{
 			cout << "There's no room in that direction." << endl << endl;
 		}
@@ -149,9 +149,9 @@ void World::Execute(const String& str, int dir, int &position)const
 	}
 	else if (str == "open!")
 	{
-		if (rooms[position]->CheckDoors(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen() == false)
+		if ((*rooms[position])->CheckDoors(dir) != -1 && (*exits[(*rooms[position])->CheckDoors(dir)])->IsOpen() == false)
 		{
-			exits[rooms[position]->CheckDoors(dir)]->ModifyState();
+			(*exits[(*rooms[position])->CheckDoors(dir)])->ModifyState();
 			cout << "The door is now open." << endl << endl;
 		}
 		else
@@ -161,15 +161,15 @@ void World::Execute(const String& str, int dir, int &position)const
 	}
 	else if (str == "close!")
 	{
-		if (rooms[position]->CheckDoors(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
+		if ((*rooms[position])->CheckDoors(dir) != -1 && (*exits[(*rooms[position])->CheckDoors(dir)])->IsOpen())
 		{
-			exits[rooms[position]->CheckDoors(dir)]->ModifyState();
+			(*exits[(*rooms[position])->CheckDoors(dir)])->ModifyState();
 			cout << "The door is now closed" << endl << endl;
 		}
 	}
 	else if (str == "lookroom")
 	{
-		cout << rooms[position]->GetDescription() << endl << endl;
+		cout << (*rooms[position])->GetDescription() << endl << endl;
 	}
 	else if (str == "lookplayer")
 	{
