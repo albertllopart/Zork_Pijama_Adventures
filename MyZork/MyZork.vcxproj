@@ -72,7 +72,6 @@
     <ClCompile Include="ClassPlayer.cpp" />
     <ClCompile Include="ClassRoom.cpp" />
     <ClCompile Include="ClassString.cpp" />
-    <ClCompile Include="ClassVector.cpp" />
     <ClCompile Include="ClassWorld.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>

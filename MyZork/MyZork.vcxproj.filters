@@ -39,9 +39,6 @@
     <ClCompile Include="ClassEntity.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="ClassVector.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassWorld.h">

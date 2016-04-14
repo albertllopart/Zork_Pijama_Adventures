@@ -1,6 +1,6 @@
 #include "ClassPlayer.h"
 
-Player::Player(const String& name, const String& description) : Entity(name, description)
+Player::Player(const char* name, const char* description) : Entity(name, description)
 {
 	position = Hall;
 }

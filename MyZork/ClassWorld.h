@@ -13,8 +13,6 @@ private:
 
 	Vector <Room*> rooms;
 	Vector <Exit*> exits;
-	String* names = nullptr;
-	String* descriptions = nullptr;
 
 	Player* adventurer = nullptr;
 

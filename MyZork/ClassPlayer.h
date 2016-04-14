@@ -12,7 +12,7 @@ private:
 
 public:
 
-	Player(const String& name, const String& description);
+	Player(const char* name, const char* description);
 	~Player();
 
 	int CheckPosition()const;
