@@ -96,7 +96,7 @@ bool String::SameLenght(const String& str)const
 
 bool String::SameLenght(const char* str)const
 {
-	return capacity == strlen(str);
+	return capacity == strlen(str) + 1;
 }
 
 bool String::IsShorter(const String& str)const
@@ -106,7 +106,7 @@ bool String::IsShorter(const String& str)const
 
 bool String::IsShorter(const char* str)const
 {
-	return capacity > strlen(str);
+	return capacity > strlen(str) + 1;
 }
 
 int String::GetCapacity()const

@@ -19,7 +19,7 @@ int main()
 	dungeon.CreateWorld();
 
 	int dir = -1;
-	char instruction[25];
+	char instruction[50];
 	String order(instruction);
 	int position;
 

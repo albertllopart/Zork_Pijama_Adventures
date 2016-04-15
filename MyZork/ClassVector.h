@@ -19,6 +19,13 @@ public:
 	{
 		vec = new TYPE[capacity];
 	}
+
+	Vector(uint size)
+	{
+		capacity = size;
+		vec = new TYPE[size];
+	}
+
 	Vector(const Vector& other)
 	{
 		elements = other.elements;
@@ -35,7 +42,7 @@ public:
 		delete[]vec;
 	}
 	
-	TYPE& operator[](int i)const
+	TYPE& operator[](uint i)const
 	{
 		assert(i < elements);
 		return vec[i];
@@ -89,15 +96,25 @@ public:
 
 	}
 
-	uint size() const
+	bool PopBack(TYPE& value)
+	{
+		if (elements > 0)
+		{
+			elements--;
+		}
+		value = vec[elements];
+		return elements >= 0;
+	}
+
+	uint Size() const
 	{
 		return elements;
 	}
-	uint mycapacity() const
+	uint Capacity() const
 	{
 		return capacity;
 	}
-	bool empty() const
+	bool Empty() const
 	{
 		return elements == 0;
 	}
