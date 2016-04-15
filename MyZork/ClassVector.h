@@ -48,11 +48,6 @@ public:
 		return vec[i];
 	}
 
-	void operator =(TYPE i)
-	{
-		vec = i;
-	}
-
 	void PushBack(const TYPE object)
 	{
 		if (elements >= capacity)

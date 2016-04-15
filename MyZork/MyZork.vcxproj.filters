@@ -39,6 +39,12 @@
     <ClCompile Include="ClassEntity.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="ClassItem.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassBox.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassWorld.h">
@@ -63,6 +69,12 @@
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
     <ClInclude Include="ClassVector.h">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassItem.h">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassBox.h">
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,12 +4,7 @@ Room::Room(){};
 
 Room::Room(const char* name, const char* description) : Entity(name, description)
 {
-
-}
-
-Room::Room(const String& name, const String& description) : Entity(name, description)
-{
-
+	
 }
 
 int Room::CheckOptions(int dir)const
@@ -36,6 +31,18 @@ void Room::ModifyDoors(int n, int s, int e, int w)
 	doors.PushFront(e);
 	doors.PushFront(s);
 	doors.PushFront(n);
+}
+
+void Room::ModifyItems(int item1, int item2)
+{
+	for (int i = 0; i < 7; i++)
+	{
+		if (i == item1 || i == item2)
+		{
+			itemsR.PushBack(true);
+		}
+		else itemsR.PushBack(false);
+	}
 }
 
 Room::~Room()

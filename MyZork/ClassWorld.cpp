@@ -27,7 +27,16 @@ World::World(const char* str)
 	exits.PushBack(new Exit("There's a crack on the wall."));
 	exits.PushBack(new Exit("It's a door made out of gold."));
 
+	items.PushBack(new Item("Sword", "It's a sharp sword!"));
+	items.PushBack(new Item("Wooden Shield", "It's a shield strong enough to resist some hits, but do not try to parry fire attacks with it!"));
+	items.PushBack(new Item("Sack of grain", "It's a small sack full of grain."));
+	items.PushBack(new Item("Copper Key", "It's a key made out of copper."));
+	items.PushBack(new Item("Silver Key", "It's a key made out of silver."));
+	items.PushBack(new Item("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
+	items.PushBack(new Item("Orb", "It's a blue translucid orb with a shinny core."));
+
 	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.");
+	box = new Box("Box", "It's a wooden box. You can store items in it.");
 
 	playing = true;
 }
@@ -37,39 +46,51 @@ void World::CreateWorld()
 	
 	rooms[0]->ModifyOptions(2, -1, -1, 1);
 	rooms[0]->ModifyDoors(1, -1, -1, 0);
+	rooms[0]->ModifyItems(-1, -1);
 
 	rooms[1]->ModifyOptions(-1, -1, 0, -1); 
 	rooms[1]->ModifyDoors(-1, -1, 0, -1);
+	rooms[1]->ModifyItems(-1, -1);
 
 	rooms[2]->ModifyOptions(5, 0, 4, 3);
 	rooms[2]->ModifyDoors(4, 1, 3, 2);
+	rooms[2]->ModifyItems(-1, -1);
 
 	rooms[3]->ModifyOptions(-1, -1, 2, -1);
 	rooms[3]->ModifyDoors(-1, -1, 2, -1);
+	rooms[3]->ModifyItems(0, 1);
 
 	rooms[4]->ModifyOptions(-1, -1, -1, 2);
 	rooms[4]->ModifyDoors(-1, -1, -1, 3);
+	rooms[4]->ModifyItems(3, -1);
 
 	rooms[5]->ModifyOptions(6, 2, -1, -1);
 	rooms[5]->ModifyDoors(5, 4, -1, -1);
+	rooms[5]->ModifyItems(2, -1);
 
 	rooms[6]->ModifyOptions(9, 5, 8, 7);
 	rooms[6]->ModifyDoors(8, 5, 7, 6);
+	rooms[6]->ModifyItems(-1, -1);
 
 	rooms[7]->ModifyOptions(-1, -1, 6, -1);
 	rooms[7]->ModifyDoors(-1, -1, 6, -1);
+	rooms[7]->ModifyItems(4, -1);
 
 	rooms[8]->ModifyOptions(10, -1, -1, 6);
 	rooms[8]->ModifyDoors(9, -1, -1, 7);
+	rooms[8]->ModifyItems(-1, -1);
 
 	rooms[9]->ModifyOptions(-1, 6, -1, -1);
 	rooms[9]->ModifyDoors(-1, 8, -1, -1);
+	rooms[9]->ModifyItems(5, -1);
 
 	rooms[10]->ModifyOptions(-1, 8, 11, -1);
 	rooms[10]->ModifyDoors(-1, 9, 10, -1);
+	rooms[10]->ModifyItems(-1, -1);
 
 	rooms[11]->ModifyOptions(-1, -1, -1, 10);
 	rooms[11]->ModifyDoors(-1, -1, -1, 10);
+	rooms[11]->ModifyItems(6, -1);
 
 	exits[5]->ModifyState();
 	exits[8]->ModifyState();

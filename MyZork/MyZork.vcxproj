@@ -66,9 +66,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClassBox.cpp" />
     <ClCompile Include="ClassCommand.cpp" />
     <ClCompile Include="ClassEntity.cpp" />
     <ClCompile Include="ClassExit.cpp" />
+    <ClCompile Include="ClassItem.cpp" />
     <ClCompile Include="ClassPlayer.cpp" />
     <ClCompile Include="ClassRoom.cpp" />
     <ClCompile Include="ClassString.cpp" />
@@ -76,9 +78,11 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClassBox.h" />
     <ClInclude Include="ClassCommand.h" />
     <ClInclude Include="ClassEntity.h" />
     <ClInclude Include="ClassExit.h" />
+    <ClInclude Include="ClassItem.h" />
     <ClInclude Include="ClassPlayer.h" />
     <ClInclude Include="ClassRoom.h" />
     <ClInclude Include="ClassString.h" />

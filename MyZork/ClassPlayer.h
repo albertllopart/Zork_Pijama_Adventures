@@ -2,10 +2,14 @@
 #define CLASS_PLAYER
 
 #include "ClassEntity.h"
+#include "ClassVector.h"
 
 class Player:public Entity
 {
 private:
+
+	Vector<bool> itemsP;
+	uint itemCap;
 
 	int position;
 	enum location {Hall};
