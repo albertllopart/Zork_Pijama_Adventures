@@ -22,8 +22,8 @@ public:
 	void ModifyName(const char* str);
 	void ModifyDescription(const String& str);
 	void ModifyParameters(const char* str1, const char* str2);
-	char* GetName()const;
-	char* GetDescription()const;
+	const char* GetName()const;
+	const char* GetDescription()const;
 
 };
 

@@ -4,7 +4,7 @@ Room::Room(){};
 
 Room::Room(const char* name, const char* description) : Entity(name, description)
 {
-	
+	firstVisit = true;
 }
 
 int Room::CheckOptions(int dir)const
@@ -54,6 +54,16 @@ void Room::PickDrop(int item)
 {
 	if (itemsR[item]) itemsR[item] = false;
 	else itemsR[item] = true;
+}
+
+void Room::NoDescription()
+{
+	if (firstVisit) firstVisit = false;
+}
+
+bool Room::FirstVisit()const
+{
+	return firstVisit;
 }
 
 Room::~Room()

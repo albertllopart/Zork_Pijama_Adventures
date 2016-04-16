@@ -47,6 +47,7 @@ void World::CreateWorld()
 	rooms[0]->ModifyOptions(2, -1, -1, 1);
 	rooms[0]->ModifyDoors(1, -1, -1, 0);
 	rooms[0]->ModifyItems(-1, -1);
+	rooms[0]->NoDescription();
 
 	rooms[1]->ModifyOptions(-1, -1, 0, -1); 
 	rooms[1]->ModifyDoors(-1, -1, 0, -1);
@@ -128,7 +129,13 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		if (rooms[position]->CheckOptions(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
 		{
 			position = rooms[position]->CheckOptions(dir);
-			cout << rooms[position]->GetName() << endl << rooms[position]->GetDescription() << endl << endl;
+			cout << rooms[position]->GetName() << endl;
+			if (rooms[position]->FirstVisit())
+			{
+				cout << rooms[position]->GetDescription() << endl << endl;
+				rooms[position]->NoDescription();
+			}
+			else cout << endl;
 		}
 		else if (rooms[position]->CheckOptions(dir) == -1)
 		{

@@ -46,12 +46,12 @@ void Entity::ModifyParameters(const char* str1, const char* str2)
 	*description = str2;
 }
 
-char* Entity::GetName()const
+const char* Entity::GetName()const
 {
 	return (char*)name->GetStr();
 }
 
-char* Entity::GetDescription()const
+const char* Entity::GetDescription()const
 {
 	return (char*)description->GetStr();
 }

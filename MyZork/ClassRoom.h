@@ -12,6 +12,8 @@ private:
 	Vector<int> doors;
 	Vector<bool> itemsR;
 
+	bool firstVisit;
+
 public:
 
 	Room();
@@ -25,6 +27,8 @@ public:
 	void ModifyItems(int item1, int item2);
 	bool GetItem(int item)const;
 	void PickDrop(int item);
+	void NoDescription();
+	bool FirstVisit()const;
 
 	~Room();
 };
