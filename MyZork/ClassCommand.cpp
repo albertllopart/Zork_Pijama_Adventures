@@ -1,6 +1,34 @@
 #include "ClassCommand.h"
 
-void Command::ReadInstruction(String& str, int &dir)const
+Command::Command()
+{
+	dir = stay;
+	item = nothing;
+}
+
+Command::~Command()
+{
+
+}
+
+void Command::ModifyDirection(int dir)
+{
+	this->dir = dir;
+}
+void Command::ModifyItem(int item)
+{
+	this->item = item;
+}
+int Command::GetDirection()const
+{
+	return dir;
+}
+int Command::GetItem()const
+{
+	return item;
+}
+
+void Command::ReadInstruction(String& str)
 {
 
 	//HELP
@@ -18,32 +46,32 @@ void Command::ReadInstruction(String& str, int &dir)const
 
 	else if (str == "look north") 
 	{
-		dir = north;
+		ModifyDirection(north);
 		str = "look!";
 	}
 	else if (str == "look south") 
 	{
-		dir = south;
+		ModifyDirection(south);
 		str = "look!";
 	}
 	else if (str == "look east") 
 	{
-		dir = east;
+		ModifyDirection(east);
 		str = "look!";
 	}
 	else if (str == "look west") 
 	{
-		dir = west;
+		ModifyDirection(west);
 		str = "look!";
 	}
 	else if (str == "look player"|| str == "look myself" || str == "look me")
 	{
-		dir = stay;
+		ModifyDirection(stay);
 		str = "lookplayer";
 	}
 	else if (str == "look room")
 	{
-		dir = stay;
+		ModifyDirection(stay);
 		str = "lookroom";
 	}
 
@@ -51,22 +79,22 @@ void Command::ReadInstruction(String& str, int &dir)const
 
 	else if (str == "go north"|| str == "north"|| str == "n") 
 	{
-		dir = north;
+		ModifyDirection(north);
 		str = "go!";
 	}
 	else if (str == "go south" || str == "south" || str == "s")
 	{
-		dir = south;
+		ModifyDirection(south);
 		str = "go!";
 	}
 	else if (str == "go east" || str == "east" || str == "e")
 	{
-		dir = east;
+		ModifyDirection(east);
 		str = "go!";
 	}
 	else if (str == "go west" || str == "west" || str == "w")
 	{
-		dir = west;
+		ModifyDirection(west);
 		str = "go!";
 	}
 	
@@ -75,22 +103,22 @@ void Command::ReadInstruction(String& str, int &dir)const
 
 	else if (str == "open north") 
 	{
-		dir = north;
+		ModifyDirection(north);
 		str = "open!";
 	}
 	else if (str == "open south")
 	{
-		dir = south;
+		ModifyDirection(south);
 		str = "open!";
 	}
 	else if (str == "open east")
 	{
-		dir = east;
+		ModifyDirection(east);
 		str = "open!";
 	}
 	else if (str == "open west")
 	{
-		dir = west;
+		ModifyDirection(west);
 		str = "open!";
 	}
 
@@ -98,23 +126,99 @@ void Command::ReadInstruction(String& str, int &dir)const
 
 	else if (str == "close north") 
 	{
-		dir = north;
+		ModifyDirection(north);
 		str = "close!";
 	}
 	else if (str == "close south")
 	{
-		dir = south;
+		ModifyDirection(south);
 		str = "close!";
 	}
 	else if (str == "close east")
 	{
-		dir = east;
+		ModifyDirection(east);
 		str = "close!";
 	}
 	else if (str == "close west")
 	{
-		dir = west;
+		ModifyDirection(west);
 		str = "close!";
+	}
+
+	//PICK
+
+	else if (str == "pick sword")
+	{
+		ModifyItem(sword);
+		str = "pick!";
+	}
+	else if (str == "pick shield")
+	{
+		ModifyItem(shield);
+		str = "pick!";
+	}
+	else if (str == "pick sack of grain")
+	{
+		ModifyItem(sack);
+		str = "pick!";
+	}
+	else if (str == "pick copper key")
+	{
+		ModifyItem(copper);
+		str = "pick!";
+	}
+	else if (str == "pick silver key")
+	{
+		ModifyItem(silver);
+		str = "pick!";
+	}
+	else if (str == "pick grenade")
+	{
+		ModifyItem(grenade);
+		str = "pick!";
+	}
+	else if (str == "pick orb")
+	{
+		ModifyItem(orb);
+		str = "pick!";
+	}
+
+	//DROP
+
+	else if (str == "drop sword")
+	{
+		ModifyItem(sword);
+		str = "drop!";
+	}
+	else if (str == "drop shield")
+	{
+		ModifyItem(shield);
+		str = "drop!";
+	}
+	else if (str == "pick sack of grain")
+	{
+		ModifyItem(sack);
+		str = "drop!";
+	}
+	else if (str == "drop copper key")
+	{
+		ModifyItem(copper);
+		str = "drop!";
+	}
+	else if (str == "drop silver key")
+	{
+		ModifyItem(silver);
+		str = "drop!";
+	}
+	else if (str == "drop grenade")
+	{
+		ModifyItem(grenade);
+		str = "drop!";
+	}
+	else if (str == "drop orb")
+	{
+		ModifyItem(orb);
+		str = "drop!";
 	}
 
 	//ELSE
@@ -122,6 +226,7 @@ void Command::ReadInstruction(String& str, int &dir)const
 	else
 	{
 		cout << "Unknown command" << endl << endl;
-		dir = stay;
+		ModifyDirection(stay);
+		ModifyItem(nothing);
 	}
 }

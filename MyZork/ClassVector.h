@@ -42,7 +42,7 @@ public:
 		delete[]vec;
 	}
 	
-	TYPE& operator[](uint i)const
+	TYPE& operator[](int i)const
 	{
 		assert(i < elements);
 		return vec[i];

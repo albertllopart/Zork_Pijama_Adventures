@@ -21,6 +21,22 @@ void Player::ModifyPosition(int next)
 	position = next;
 }
 
+void Player::PickDrop(int item)
+{
+	if (itemsP[item]) itemsP[item] = false, itemCap--;
+	else itemsP[item] = true, itemCap++;
+}
+
+bool Player::GetItem(int item)const
+{
+	return itemsP[item];
+}
+
+uint Player::GetCap()const
+{
+	return itemCap;
+}
+
 Player::~Player()
 {
 	

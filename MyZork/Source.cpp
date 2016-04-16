@@ -18,7 +18,6 @@ int main()
 	
 	dungeon.CreateWorld();
 
-	int dir = -1;
 	char instruction[50];
 	String order(instruction);
 	int position;
@@ -35,9 +34,11 @@ int main()
 		else
 		{
 			position = dungeon.CheckPosition();
-			command.ReadInstruction(order, dir);
-			dungeon.Execute(order, dir, position);
+			command.ReadInstruction(order);
+			dungeon.Execute(order, command.GetDirection(), command.GetItem(), position);
 			dungeon.Move(position);
+			command.ModifyDirection(-1);
+			command.ModifyItem(-1);
 		}
 	}
 }

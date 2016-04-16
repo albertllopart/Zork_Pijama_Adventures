@@ -111,7 +111,7 @@ void World::Move(int position)
 {
 	adventurer->ModifyPosition(position);
 }
-void World::Execute(const String& str, int dir, int &position)const
+void World::Execute(const String& str, int dir, int item, int &position)const
 {
 
 	if (str == "look!")
@@ -170,6 +170,35 @@ void World::Execute(const String& str, int dir, int &position)const
 	else if (str == "lookplayer")
 	{
 		cout << adventurer->GetDescription() << endl << endl;
+	}
+	else if (str == "pick!")
+	{
+		if (adventurer->GetCap() < 4)
+		{
+			if (rooms[position]->GetItem(item))
+			{
+				adventurer->PickDrop(item);
+				rooms[position]->PickDrop(item);
+				cout << "You picked a " << items[item]->GetName() << endl << endl;
+			}
+			else cout << "There's no such item in this room!" << endl << endl;
+		}
+		else if (rooms[position]->GetItem(item) == false)
+		{
+			cout << "There's no such item in this room!" << endl << endl;
+		}
+		else cout << "Your inventory is full! Try dropping something to free some space." << endl << endl;
+
+	}
+	else if (str == "drop!")
+	{
+		if (adventurer->GetItem(item))
+		{
+			adventurer->PickDrop(item);
+			rooms[position]->PickDrop(item);
+			cout << "You dropped the " << items[item]->GetName() << endl << endl;
+		}
+		else cout << "There's no such item in your inventory!" << endl << endl;
 	}
 }
 

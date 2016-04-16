@@ -30,7 +30,7 @@ public:
 	void CheckRoom(int i)const;
 	int CheckPosition()const;
 	void Move(int position);
-	void Execute(const String& str, int dir, int &position)const;
+	void Execute(const String& str, int dir, int item, int &position)const;
 	bool Continue()const;
 
 	void CreateWorld();

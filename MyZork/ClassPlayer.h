@@ -21,6 +21,9 @@ public:
 
 	int CheckPosition()const;
 	void ModifyPosition(int next);
+	void PickDrop(int item);
+	bool GetItem(int item)const;
+	uint GetCap()const;
 
 };
 

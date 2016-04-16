@@ -45,6 +45,17 @@ void Room::ModifyItems(int item1, int item2)
 	}
 }
 
+bool Room::GetItem(int item)const
+{
+	return itemsR[item];
+}
+
+void Room::PickDrop(int item)
+{
+	if (itemsR[item]) itemsR[item] = false;
+	else itemsR[item] = true;
+}
+
 Room::~Room()
 {
 	
