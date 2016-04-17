@@ -4,7 +4,7 @@ World::World(const char* str)
 {
 	rooms.PushBack(new Room("Hall", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
 	rooms.PushBack(new Room("West of hall", "Something smells rotten in this room. It's a lot darker than the hall. There's a misterious masked man in the center staring at you."));
-	rooms.PushBack(new Room("North of Hall", "It's a small room with one door at each wall."));
+	rooms.PushBack(new Room("North of Hall", "It's a small room with one door at each wall. There's a huge box in the center."));
 	rooms.PushBack(new Room("SnS Room", "It's a small room with a strange switch on a wall. There's also a man laying on a blood paddle."));
 	rooms.PushBack(new Room("Bathroom", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
 	rooms.PushBack(new Room("Copper Room", "Every wall in this room is painted in copper, including both doors."));
@@ -103,14 +103,11 @@ void World::CheckRoom(int room)const
 	if (rooms[room]->FirstVisit()) cout << rooms[room]->GetDescription() << endl, rooms[room]->NoDescription();
 
 	int check = 0;
-	int count = 0;
 
 	for (int i = 0; i < 7; i++)
 	{
-		if (rooms[room]->GetItem(count)) check++;
-		count++;
+		if (rooms[room]->GetItem(i)) check++;
 	}
-	count = 0;
 	if (check == 0)
 	{
 		cout << "This room contains no items." << endl << endl;
@@ -122,22 +119,21 @@ void World::CheckRoom(int room)const
 		{
 			for (int i = 0; i < 7; i++)
 			{
-				if (rooms[room]->GetItem(count)) cout << "one " << items[count]->GetName() << "." << endl << endl;
-				count++;
+				if (rooms[room]->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
 			}
 		}
 		else if (check > 1)
 		{
 			for (int i = 0; i < 7; i++)
 			{
-				if (rooms[room]->GetItem(count) && check > 1)
+				if (rooms[room]->GetItem(i) && check > 1)
 				{
-					cout << "one " << items[count]->GetName() << ", ";
-					check--, count++;
+					cout << "one " << items[i]->GetName() << ", ";
+					check--;
 				}
-				else if (rooms[room]->GetItem(count) && check == 1)
+				else if (rooms[room]->GetItem(i) && check == 1)
 				{
-					cout << "and one " << items[count]->GetName() << "." << endl << endl;
+					cout << "and one " << items[i]->GetName() << "." << endl << endl;
 					check--;
 				}
 			}
@@ -156,6 +152,9 @@ void World::Move(int position)
 }
 void World::Execute(const String& str, int dir, int item, int &position)const
 {
+
+	//LOOK ITEMS / EXITS
+
 	if (str == "look!")
 	{
 		if (item != -1)
@@ -183,6 +182,9 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 				cout << "There's no door in that direction." << endl << endl;
 		}
 	}
+
+	//GO
+
 	else if (str == "go!")
 	{
 		if (rooms[position]->CheckOptions(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
@@ -199,6 +201,9 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			cout << "The door is closed." << endl << endl;
 		}
 	}
+
+	//OPEN
+
 	else if (str == "open!")
 	{
 		if (rooms[position]->CheckDoors(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen() == false)
@@ -215,6 +220,9 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			cout << "The door is already open." << endl << endl;
 		}
 	}
+
+	//CLOSE
+
 	else if (str == "close!")
 	{
 		if (rooms[position]->CheckDoors(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
@@ -223,18 +231,18 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			cout << "The door is now closed" << endl << endl;
 		}
 	}
+
+	//LOOK ROOMS
+
 	else if (str == "lookroom")
 	{
 		cout << rooms[position]->GetDescription() << endl;
 		int check = 0;
-		int count = item;
 
 		for (int i = 0; i < 7; i++)
 		{
-			if (rooms[position]->GetItem(count)) check++;
-			count++;
+			if (rooms[position]->GetItem(i)) check++;
 		}
-		count = item;
 		if (check == 0)
 		{
 			cout << "This room contains no items." << endl << endl;
@@ -246,43 +254,45 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (rooms[position]->GetItem(count)) cout << "one " << items[count]->GetName() << "." << endl << endl;
-					count++;
+					if (rooms[position]->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
 				}
 			}
 			else if (check > 1)
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (rooms[position]->GetItem(count) && check > 1)
+					if (rooms[position]->GetItem(i) && check > 1)
 					{
-						cout << "one " << items[count]->GetName() << ", ";
-						check--, count++;
+						cout << "one " << items[i]->GetName() << ", ";
+						check--;
 					}
-					else if (rooms[position]->GetItem(count) && check == 1)
+					else if (rooms[position]->GetItem(i) && check == 1)
 					{
-						cout << "and one " << items[count]->GetName() << "." << endl << endl;
+						cout << "and one " << items[i]->GetName() << "." << endl << endl;
 						check--;
 					}
 				}
 			}
 		}
 	}
+
+	//LOOK PLAYER
+
 	else if (str == "lookplayer")
 	{
 		cout << adventurer->GetDescription() << endl << endl;
 	}
+
+	//LOOK INVENTORY
+
 	else if (str == "lookinventory")
 	{
 		int check = 0;
-		int count = item;
 
 		for (int i = 0; i < 7; i++)
 		{
-			if (adventurer->GetItem(count)) check++;
-			count++;
+			if (adventurer->GetItem(i)) check++;
 		}
-		count = item;
 		if (check == 0)
 		{
 			cout << "Your inventory is empty." << endl << endl;
@@ -294,28 +304,81 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (adventurer->GetItem(count)) cout << "one " << items[count]->GetName() << "." << endl << endl;
-					count++;
+					if (adventurer->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
 				}
 			}
 			else if (check > 1)
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (adventurer->GetItem(count) && check > 1)
+					if (adventurer->GetItem(i) && check > 1)
 					{
-						cout << "one " << items[count]->GetName() << ", ";
-						check--, count++;
+						cout << "one " << items[i]->GetName() << ", ";
+						check--;
 					}
-					else if (adventurer->GetItem(count) && check == 1)
+					else if (adventurer->GetItem(i) && check == 1)
 					{
-						cout << "and one " << items[count]->GetName() << "." << endl << endl;
+						cout << "and one " << items[i]->GetName() << "." << endl << endl;
 						check--;
 					}
 				}
 			}
 		}
 	}
+
+	//LOOK BOX
+
+	else if (str == "lookbox!")
+	{
+		if (position == 2)
+		{
+			cout << box->GetDescription();
+			int check = 0;
+
+			for (int i = 0; i < 7; i++)
+			{
+				if (box->GetItem(i)) check++;
+			}
+			if (check == 0)
+			{
+				cout << " It is empty." << endl << endl;
+			}
+			else if (check != 0)
+			{
+				cout << " It contains ";
+				if (check == 1)
+				{
+					for (int i = 0; i < 7; i++)
+					{
+						if (box->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
+					}
+				}
+				else if (check > 1)
+				{
+					for (int i = 0; i < 7; i++)
+					{
+						if (box->GetItem(i) && check > 1)
+						{
+							cout << "one " << items[i]->GetName() << ", ";
+							check--;
+						}
+						else if (box->GetItem(i) && check == 1)
+						{
+							cout << "and one " << items[i]->GetName() << "." << endl << endl;
+							check--;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			cout << "There's no such thing in this room!" << endl << endl;
+		}
+	}
+
+	//PICK
+
 	else if (str == "pick!")
 	{
 		if (adventurer->GetCap() < 4)
@@ -332,9 +395,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		{
 			cout << "There's no such item in this room!" << endl << endl;
 		}
-		else cout << "Your inventory is full! Try dropping something to free some space." << endl << endl;
+		else cout << "Your inventory is full! Try dropping of storing something to free some space." << endl << endl;
 
 	}
+
+	//DROP
+
 	else if (str == "drop!")
 	{
 		if (adventurer->GetItem(item))
@@ -344,6 +410,59 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			cout << "You dropped the " << items[item]->GetName() << endl << endl;
 		}
 		else cout << "There's no such item in your inventory!" << endl << endl;
+	}
+
+	//PUT ITEM INTO BOX
+
+	else if (str == "putinto")
+	{
+		if (position == 2)
+		{
+			if (adventurer->GetItem(item))
+			{
+				box->PickDrop(item);
+				adventurer->PickDrop(item);
+				cout << "You put the " << items[item]->GetName() << " into the box." << endl << endl;
+			}
+			else
+			{
+				cout << "There's not such item in your inventory!" << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "There's no box in here!" << endl << endl;
+		}
+	}
+
+	//GET ITEM FROM BOX
+
+	else if (str == "getfrom")
+	{
+		if (position == 2)
+		{
+			if (box->GetItem(item))
+			{
+				if (adventurer->GetCap() < 4)
+				{
+					adventurer->PickDrop(item);
+					box->PickDrop(item);
+					cout << "You got the " << items[item]->GetName() << " from the box." << endl << endl;
+				}
+				else
+				{
+					cout << "Your inventory is full! Try dropping of storing something to free some space." << endl << endl;
+				}
+			}
+			else
+			{
+				cout << "There's no such item in the box!" << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "There's no box in here!" << endl << endl;
+		}
 	}
 }
 

@@ -105,10 +105,18 @@ void Command::ReadInstruction(String& str)
 
 	//LOOK INVENTORY
 
-	else if (str == "look inventory" || str == "check inventory")
+	else if (str == "look inventory" || str == "check inventory" || str == "inventory" || str == "i")
 	{
 		ModifyItem(sword);
 		str = "lookinventory";
+	}
+
+	//LOOK BOX
+
+	else if (str == "look box" || str == "check box")
+	{
+		ModifyItem(sword);
+		str = "lookbox!";
 	}
 
 	//LOOK PLAYER
@@ -247,7 +255,7 @@ void Command::ReadInstruction(String& str)
 		ModifyItem(shield);
 		str = "drop!";
 	}
-	else if (str == "pick sack of grain")
+	else if (str == "drop sack of grain")
 	{
 		ModifyItem(sack);
 		str = "drop!";
@@ -271,6 +279,82 @@ void Command::ReadInstruction(String& str)
 	{
 		ModifyItem(orb);
 		str = "drop!";
+	}
+
+	//PUT ITEM INTO BOX
+
+	else if (str == "put sword into box")
+	{
+		ModifyItem(sword);
+		str = "putinto";
+	}
+	else if (str == "put shield into box")
+	{
+		ModifyItem(shield);
+		str = "putinto";
+	}
+	else if (str == "put sack of grain into box")
+	{
+		ModifyItem(sack);
+		str = "putinto";
+	}
+	else if (str == "put copper key into box")
+	{
+		ModifyItem(copper);
+		str = "putinto";
+	}
+	else if (str == "put silver key into box")
+	{
+		ModifyItem(silver);
+		str = "putinto";
+	}
+	else if (str == "put grenade into box")
+	{
+		ModifyItem(grenade);
+		str = "putinto";
+	}
+	else if (str == "put orb into box")
+	{
+		ModifyItem(orb);
+		str = "putinto";
+	}
+
+	//GET ITEM FROM BOX
+
+	else if (str == "get sword from box")
+	{
+		ModifyItem(sword);
+		str = "getfrom";
+	}
+	else if (str == "get shield from box")
+	{
+		ModifyItem(shield);
+		str = "getfrom";
+	}
+	else if (str == "get sack of grain from box")
+	{
+		ModifyItem(sack);
+		str = "getfrom";
+	}
+	else if (str == "get copper key from box")
+	{
+		ModifyItem(copper);
+		str = "getfrom";
+	}
+	else if (str == "get silver key from box")
+	{
+		ModifyItem(silver);
+		str = "getfrom";
+	}
+	else if (str == "get grenade from box")
+	{
+		ModifyItem(grenade);
+		str = "getfrom";
+	}
+	else if (str == "get orb from box")
+	{
+		ModifyItem(orb);
+		str = "getfrom";
 	}
 
 	//ELSE

@@ -10,4 +10,15 @@ Box::Box(const char* name, const char* description) : Entity(name, description)
 	}
 }
 
+void Box::PickDrop(int item)
+{
+	if (itemsB[item]) itemsB[item] = false;
+	else itemsB[item] = true;
+}
+
+bool Box::GetItem(int item)const
+{
+	return itemsB[item];
+}
+
 Box::~Box(){};

@@ -16,6 +16,9 @@ public:
 	Box(const char* name, const char* description);
 	~Box();
 
+	void PickDrop(int item);
+	bool GetItem(int item)const;
+
 };
 
 #endif
