@@ -377,11 +377,54 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		}
 	}
 
+	//LOOK EQUIPMENT
+
+	else if (str == "equipment!")
+	{
+		int check = 0;
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (adventurer->GetEquip(i)) check++;
+		}
+		if (check == 0)
+		{
+			cout << "You don't have anything equipped." << endl << endl;
+		}
+		else if (check != 0)
+		{
+			cout << "You have ";
+			if (check == 1)
+			{
+				for (int i = 0; i < 2; i++)
+				{
+					if (adventurer->GetEquip(i)) cout << "a " << items[i]->GetName() << " equipped." << endl << endl;
+				}
+			}
+			else if (check > 1)
+			{
+				for (int i = 0; i < 2; i++)
+				{
+					if (adventurer->GetEquip(i) && check > 1)
+					{
+						cout << "a " << items[i]->GetName();
+						check--;
+					}
+					else if (adventurer->GetEquip(i) && check == 1)
+					{
+						cout << " and a " << items[i]->GetName() << " equipped." << endl << endl;
+						check--;
+					}
+				}
+			}
+		}
+	}
+
 	//PICK
 
 	else if (str == "pick!")
 	{
-		if (adventurer->GetCap() < 4)
+		if (adventurer->GetCap() < 3)
 		{
 			if (rooms[position]->GetItem(item))
 			{
@@ -395,7 +438,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		{
 			cout << "There's no such item in this room!" << endl << endl;
 		}
-		else cout << "Your inventory is full! Try dropping of storing something to free some space." << endl << endl;
+		else cout << "Your inventory is full! Consider dropping, storing or equipping something to free some space." << endl << endl;
 
 	}
 
@@ -443,7 +486,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		{
 			if (box->GetItem(item))
 			{
-				if (adventurer->GetCap() < 4)
+				if (adventurer->GetCap() < 3)
 				{
 					adventurer->PickDrop(item);
 					box->PickDrop(item);
@@ -451,7 +494,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 				}
 				else
 				{
-					cout << "Your inventory is full! Try dropping of storing something to free some space." << endl << endl;
+					cout << "Your inventory is full! Consider dropping, storing or equipping something to free some space." << endl << endl;
 				}
 			}
 			else
@@ -463,6 +506,54 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		{
 			cout << "There's no box in here!" << endl << endl;
 		}
+	}
+
+	//EQUIP ITEM
+
+	else if (str == "equip!")
+	{
+		if (adventurer->GetItem(item))
+		{
+			if (item == 0 || item == 1)
+			{
+				cout << "You equipped the " << items[item]->GetName() << endl << endl;
+				adventurer->EquipUnequip(item);
+				adventurer->PickDrop(item);
+			}
+			else
+			{
+				cout << "You can't equip that!" << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "There's no such item in your inventory!" << endl << endl;
+		}
+	}
+
+	//UNEQUIP ITEM
+
+	else if (str == "unequip!")
+	{
+		if (adventurer->GetEquip(item))
+		{
+			cout << "You unequipped the " << items[item]->GetName() << endl << endl;
+			adventurer->EquipUnequip(item);
+			adventurer->PickDrop(item);
+		}
+		else
+		{
+			cout << "You don't have that item equipped!" << endl << endl;
+		}
+	}
+
+	//STATS
+
+	else if (str == "stats!")
+	{
+		cout << "HP:       " << adventurer->GetStat(0) << endl;
+		cout << "Attack:   " << adventurer->GetStat(1) << endl;
+		cout << "Defense:  " << adventurer->GetStat(2) << endl << endl;
 	}
 }
 

@@ -9,6 +9,8 @@ class Player:public Entity
 private:
 
 	Vector<bool> itemsP;
+	Vector<bool> equipment;
+	Vector<int> stats;
 	uint itemCap;
 
 	int position;
@@ -22,7 +24,10 @@ public:
 	int CheckPosition()const;
 	void ModifyPosition(int next);
 	void PickDrop(int item);
+	void EquipUnequip(int item);
 	bool GetItem(int item)const;
+	bool GetEquip(int item)const;
+	int GetStat(int stat)const;
 	uint GetCap()const;
 
 };

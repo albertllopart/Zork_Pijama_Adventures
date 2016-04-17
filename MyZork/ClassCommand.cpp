@@ -357,12 +357,100 @@ void Command::ReadInstruction(String& str)
 		str = "getfrom";
 	}
 
+	//EQUIP ITEM
+
+	else if (str == "equip sword")
+	{
+		ModifyItem(sword);
+		str = "equip!";
+	}
+	else if (str == "equip shield")
+	{
+		ModifyItem(shield);
+		str = "equip!";
+	}
+	else if (str == "equip copper key")
+	{
+		ModifyItem(copper);
+		str = "equip!";
+	}
+	else if (str == "equip silver key")
+	{
+		ModifyItem(silver);
+		str = "equip!";
+	}
+	else if (str == "equip sack of grain")
+	{
+		ModifyItem(sack);
+		str = "equip!";
+	}
+	else if (str == "equip grenade")
+	{
+		ModifyItem(grenade);
+		str = "equip!";
+	}
+	else if (str == "equip orb")
+	{
+		ModifyItem(orb);
+		str = "equip!";
+	}
+
+	//UNEQUIP ITEM
+
+	else if (str == "unequip sword")
+	{
+		ModifyItem(sword);
+		str = "unequip!";
+	}
+	else if (str == "unequip shield")
+	{
+		ModifyItem(shield);
+		str = "unequip!";
+	}
+	else if (str == "equip copper key")
+	{
+		ModifyItem(copper);
+		str = "unequip!";
+	}
+	else if (str == "equip silver key")
+	{
+		ModifyItem(silver);
+		str = "unequip!";
+	}
+	else if (str == "equip sack of grain")
+	{
+		ModifyItem(sack);
+		str = "unequip!";
+	}
+	else if (str == "equip grenade")
+	{
+		ModifyItem(grenade);
+		str = "unequip!";
+	}
+	else if (str == "equip orb")
+	{
+		ModifyItem(orb);
+		str = "unequip!";
+	}
+
+	//STATS
+
+	else if (str == "stats")
+	{
+		str = "stats!";
+	}
+
+	//EQUIPMENT
+
+	else if (str == "equipment" || str == "look equipment" || str == "check equipment")
+	{
+		str = "equipment!";
+	}
+
 	//ELSE
 
 	else
 	{
 		cout << "Unknown command" << endl << endl;
-		ModifyDirection(stay);
-		ModifyItem(nothing);
 	}
 }
