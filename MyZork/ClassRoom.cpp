@@ -33,29 +33,6 @@ void Room::ModifyDoors(int n, int s, int e, int w)
 	doors.PushFront(n);
 }
 
-void Room::ModifyItems(int item1, int item2)
-{
-	for (int i = 0; i < 7; i++)
-	{
-		if (i == item1 || i == item2)
-		{
-			itemsR.PushBack(true);
-		}
-		else itemsR.PushBack(false);
-	}
-}
-
-bool Room::GetItem(int item)const
-{
-	return itemsR[item];
-}
-
-void Room::PickDrop(int item)
-{
-	if (itemsR[item]) itemsR[item] = false;
-	else itemsR[item] = true;
-}
-
 void Room::NoDescription()
 {
 	if (firstVisit) firstVisit = false;

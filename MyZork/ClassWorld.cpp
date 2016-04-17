@@ -27,16 +27,16 @@ World::World(const char* str)
 	exits.PushBack(new Exit("There's a crack on the wall."));
 	exits.PushBack(new Exit("It's a door made out of gold."));
 
-	items.PushBack(new Item("Sword", "It's a sharp sword!"));
-	items.PushBack(new Item("Wooden Shield", "It's a shield strong enough to resist some hits, but do not try to parry fire attacks with it!"));
-	items.PushBack(new Item("Sack of grain", "It's a small sack full of grain."));
-	items.PushBack(new Item("Copper Key", "It's a key made out of copper."));
-	items.PushBack(new Item("Silver Key", "It's a key made out of silver."));
-	items.PushBack(new Item("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
-	items.PushBack(new Item("Orb", "It's a blue translucid orb with a shinny core."));
+	items.PushBack(new Entity("Sword", "It's a sharp sword!"));
+	items.PushBack(new Entity("Wooden Shield", "It's a shield strong enough to resist some hits, but do not try to parry fire attacks with it!"));
+	items.PushBack(new Entity("Sack of grain", "It's a small sack full of grain."));
+	items.PushBack(new Entity("Copper Key", "It's a key made out of copper."));
+	items.PushBack(new Entity("Silver Key", "It's a key made out of silver."));
+	items.PushBack(new Entity("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
+	items.PushBack(new Entity("Orb", "It's a blue translucid orb with a shinny core."));
 
 	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.");
-	box = new Box("Box", "It's a wooden box. You can store items in it.");
+	box = new Entity("Box", "It's a wooden box. You can store items in it.");
 
 	playing = true;
 }
@@ -461,11 +461,15 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 	{
 		if (position == 2)
 		{
-			if (adventurer->GetItem(item))
+			if (adventurer->GetItem(item) && box->GetCap() < 3)
 			{
 				box->PickDrop(item);
 				adventurer->PickDrop(item);
 				cout << "You put the " << items[item]->GetName() << " into the box." << endl << endl;
+			}
+			else if (adventurer->GetItem(item) && box->GetCap() > 2)
+			{
+				cout << "The box is full!" << endl << endl;
 			}
 			else
 			{
@@ -569,5 +573,6 @@ void World::EndGame()
 
 World::~World()
 {
+	delete box;
 	delete adventurer;
 }

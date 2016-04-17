@@ -6,38 +6,36 @@ Entity::Entity(const char* name, const char* description)
 {
 	this->name = new String(name);
 	this->description = new String(description);
+
+	for (int i = 0; i < 7; i++)
+	{
+		itemsP.PushBack(false);
+	}
+	itemCap = 0;
 }
 
 Entity::Entity(const String& name, const String& description)
 {
 	this->name = new String(name);
 	this->description = new String(description);
+
+	for (int i = 0; i < 7; i++)
+	{
+		itemsP.PushBack(false);
+	}
+	itemCap = 0;
 }
 
 Entity::Entity(const String& description)
 {
 	this->description = new String(description);
-}
+	itemCap = 0;
+}	
 
 Entity::~Entity()
 {
 	delete name;
 	delete description;
-}
-
-void Entity::ModifyName(const String& str)
-{
-	*name = str;
-}
-
-void Entity::ModifyName(const char* str)
-{
-	*name = str;
-}
-
-void Entity::ModifyDescription(const String& str)
-{
-	*description = str;
 }
 
 void Entity::ModifyParameters(const char* str1, const char* str2)
@@ -54,4 +52,31 @@ const char* Entity::GetName()const
 const char* Entity::GetDescription()const
 {
 	return (char*)description->GetStr();
+}
+
+int Entity::GetCap()const
+{
+	return itemCap;
+}
+
+void Entity::PickDrop(int item)
+{
+	if (itemsP[item]) itemsP[item] = false, itemCap--;
+	else itemsP[item] = true, itemCap++;
+}
+
+bool Entity::GetItem(int item)const
+{
+	return itemsP[item];
+}
+
+void Entity::ModifyItems(int item1, int item2)
+{
+	for (int i = 0; i < 7; i++)
+	{
+		if (i == item1 || i == item2)
+		{
+			itemsP[i] = true;
+		}
+	}
 }

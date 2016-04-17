@@ -6,8 +6,6 @@
 #include "ClassPlayer.h"
 #include "ClassCommand.h"
 #include "ClassVector.h"
-#include "ClassItem.h"
-#include "ClassBox.h"
 
 class World
 {
@@ -15,10 +13,10 @@ private:
 
 	Vector <Room*> rooms;
 	Vector <Exit*> exits;
-	Vector <Item*> items;
+	Vector <Entity*> items;
 
 	Player* adventurer = nullptr;
-	Box* box = nullptr;
+	Entity* box = nullptr;
 
 	bool playing;
 	

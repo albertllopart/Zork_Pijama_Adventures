@@ -6,11 +6,6 @@ Command::Command()
 	item = nothing;
 }
 
-Command::~Command()
-{
-
-}
-
 void Command::ModifyDirection(int dir)
 {
 	this->dir = dir;
@@ -35,11 +30,19 @@ void Command::ReadInstruction(String& str)
 
 	if (str == "help")
 	{
+		cout << "MOVEMENT" << endl << endl;
 		cout << "Move using the 'n', 's', 'e', 'w' keys, 'north/south/east/west' or 'go + north/south/east/west' commands." << endl;
+		cout << "Open and close doors by using the 'open/close + direction' command" << endl << endl;
+		cout << "INFORMATION" << endl << endl;
 		cout << "Check door descriptions using 'look + north/south/east/west', player description using 'look + player/me/myself' or room descriptions using 'look room' command" << endl;
-		cout << "Open and close doors by using the 'open/close + direction' command" << endl;
+		cout << "You can check item descriptions by using the command 'look + <item>'" << endl;
+		cout << "Check your inventory at any time by using the command 'look/check + inventory or inventory/inv/i" << endl;
+		cout << "Check what the box contains by using 'look/check + box' command" << endl;
+		cout << "Check your stats with the 'stats' command and check your equipment with the 'equipment, look equipment or check equipment' command" << endl << endl;
+		cout << "INTERACTION" << endl << endl;
+		cout << "Pick or drop items by using the 'pick/drop + <item>' command. You can also store items in a Box by using the commands 'put/get + <item> + into/from + box'." << endl;
+		cout << "Equip and unequip items by using the commands 'equip/unequip + <item>'" << endl << endl;
 		cout << "Use 'quit' command to quit the game" << endl << endl;
-		dir = stay;
 	}
 
 	//LOOK EXITS
@@ -105,7 +108,7 @@ void Command::ReadInstruction(String& str)
 
 	//LOOK INVENTORY
 
-	else if (str == "look inventory" || str == "check inventory" || str == "inventory" || str == "i")
+	else if (str == "look inventory" || str == "check inventory" || str == "inventory" || str == "inv" || str == "i")
 	{
 		ModifyItem(sword);
 		str = "lookinventory";
@@ -454,3 +457,5 @@ void Command::ReadInstruction(String& str)
 		cout << "Unknown command" << endl << endl;
 	}
 }
+
+Command::~Command(){};
