@@ -27,7 +27,7 @@ public:
 	World(const char* str);
 	~World();
 
-	void CheckRoom(int i)const;
+	void CheckRoom(int room)const;
 	int CheckPosition()const;
 	void Move(int position);
 	void Execute(const String& str, int dir, int item, int &position)const;

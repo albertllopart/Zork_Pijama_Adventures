@@ -42,7 +42,7 @@ void Command::ReadInstruction(String& str)
 		dir = stay;
 	}
 
-	//LOOK
+	//LOOK EXITS
 
 	else if (str == "look north") 
 	{
@@ -64,14 +64,66 @@ void Command::ReadInstruction(String& str)
 		ModifyDirection(west);
 		str = "look!";
 	}
+
+	//LOOK ITEMS
+
+	else if (str == "look sword")
+	{
+		ModifyItem(sword);
+		str = "look!";
+	}
+	else if (str == "look shield")
+	{
+		ModifyItem(shield);
+		str = "look!";
+	}
+	else if (str == "look sack of grain")
+	{
+		ModifyItem(sack);
+		str = "look!";
+	}
+	else if (str == "look copper key")
+	{
+		ModifyItem(copper);
+		str = "look!";
+	}
+	else if (str == "look silver key")
+	{
+		ModifyItem(silver);
+		str = "look!";
+	}
+	else if (str == "look grenade")
+	{
+		ModifyItem(grenade);
+		str = "look!";
+	}
+	else if (str == "look orb")
+	{
+		ModifyItem(orb);
+		str = "look!";
+	}
+
+	//LOOK INVENTORY
+
+	else if (str == "look inventory" || str == "check inventory")
+	{
+		ModifyItem(sword);
+		str = "lookinventory";
+	}
+
+	//LOOK PLAYER
+
 	else if (str == "look player"|| str == "look myself" || str == "look me")
 	{
 		ModifyDirection(stay);
 		str = "lookplayer";
 	}
+
+	//LOOK ROOM
 	else if (str == "look room")
 	{
 		ModifyDirection(stay);
+		ModifyItem(sword);
 		str = "lookroom";
 	}
 
