@@ -46,51 +46,46 @@ void World::CreateWorld()
 	
 	((Room*)entities[0])->ModifyOptions(2, -1, -1, 1);
 	((Room*)entities[0])->ModifyDoors(1, -1, -1, 0);
-	((Room*)entities[0])->ModifyItems(-1, -1);
 
 	((Room*)entities[1])->ModifyOptions(-1, -1, 0, -1);
 	((Room*)entities[1])->ModifyDoors(-1, -1, 0, -1);
-	((Room*)entities[1])->ModifyItems(-1, -1);
 
 	((Room*)entities[2])->ModifyOptions(5, 0, 4, 3);
 	((Room*)entities[2])->ModifyDoors(4, 1, 3, 2);
-	((Room*)entities[2])->ModifyItems(-1, -1);
 
 	((Room*)entities[3])->ModifyOptions(-1, -1, 2, -1);
 	((Room*)entities[3])->ModifyDoors(-1, -1, 2, -1);
-	((Room*)entities[3])->ModifyItems(0, 1);
+	((Room*)entities[3])->items.PushBack(entities[23]);
+	((Room*)entities[3])->items.PushBack(entities[24]);
 
 	((Room*)entities[4])->ModifyOptions(-1, -1, -1, 2);
 	((Room*)entities[4])->ModifyDoors(-1, -1, -1, 3);
-	((Room*)entities[4])->ModifyItems(3, -1);
+	((Room*)entities[4])->items.PushBack(entities[26]);
 
 	((Room*)entities[5])->ModifyOptions(6, 2, -1, -1);
 	((Room*)entities[5])->ModifyDoors(5, 4, -1, -1);
-	((Room*)entities[5])->ModifyItems(2, -1);
+	((Room*)entities[5])->items.PushBack(entities[25]);
 
 	((Room*)entities[6])->ModifyOptions(9, 5, 8, 7);
 	((Room*)entities[6])->ModifyDoors(8, 5, 7, 6);
-	((Room*)entities[6])->ModifyItems(-1, -1);
 
 	((Room*)entities[7])->ModifyOptions(-1, -1, 6, -1);
 	((Room*)entities[7])->ModifyDoors(-1, -1, 6, -1);
-	((Room*)entities[7])->ModifyItems(4, -1);
+	((Room*)entities[7])->items.PushBack(entities[27]);
 
 	((Room*)entities[8])->ModifyOptions(10, -1, -1, 6);
 	((Room*)entities[8])->ModifyDoors(9, -1, -1, 7);
-	((Room*)entities[8])->ModifyItems(-1, -1);
 
 	((Room*)entities[9])->ModifyOptions(-1, 6, -1, -1);
 	((Room*)entities[9])->ModifyDoors(-1, 8, -1, -1);
-	((Room*)entities[9])->ModifyItems(5, -1);
+	((Room*)entities[9])->items.PushBack(entities[28]);
 
 	((Room*)entities[10])->ModifyOptions(-1, 8, 11, -1);
 	((Room*)entities[10])->ModifyDoors(-1, 9, 10, -1);
-	((Room*)entities[10])->ModifyItems(-1, -1);
 
 	((Room*)entities[11])->ModifyOptions(-1, -1, -1, 10);
 	((Room*)entities[11])->ModifyDoors(-1, -1, -1, 10);
-	((Room*)entities[11])->ModifyItems(6, -1);
+	((Room*)entities[11])->items.PushBack(entities[29]);
 
 	((Exit*)entities[17])->ModifyState();
 	((Exit*)entities[20])->ModifyState();
@@ -102,42 +97,34 @@ void World::CheckRoom(int room)const
 	cout << ((Room*)entities[room])->GetName() << endl;
 	if (((Room*)entities[room])->FirstVisit()) cout << ((Room*)entities[room])->GetDescription() << endl, ((Room*)entities[room])->NoDescription();
 
-	int check = 0;
-
-	for (int i = 0; i < 7; i++)
+	if (((Room*)entities[room])->items.first != nullptr)
 	{
-		if (((Room*)entities[room])->GetItem(i)) check++;
-	}
-	if (check == 0)
-	{
-		cout << "This room contains no items." << endl << endl;
-	}
-	else if (check != 0)
-	{
-		cout << "This room contains ";
-		if (check == 1)
+		if (((Room*)entities[room])->items.first->next == nullptr)
 		{
-			for (int i = 0; i < 7; i++)
-			{
-				if (((Room*)entities[room])->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
-			}
+			cout << "This room contains one " << ((Room*)entities[room])->items.first->data->GetName() << endl << endl;
 		}
-		else if (check > 1)
+		else
 		{
-			for (int i = 0; i < 7; i++)
+			dList<Entity*>::dNode* temp = ((Room*)entities[room])->items.first;
+			cout << "This room contains one " << ((Room*)entities[room])->items.first->data->GetName() << ", ";
+			while (temp->next != nullptr)
 			{
-				if (((Room*)entities[room])->GetItem(i) && check > 1)
+				if (temp->next->next != nullptr)
 				{
-					cout << "one " << entities[i + 23]->GetName() << ", ";
-					check--;
+					temp = temp->next;
+					cout << "one " << temp->data->GetName() << ", ";
 				}
-				else if (((Room*)entities[room])->GetItem(i) && check == 1)
+				else
 				{
-					cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
-					check--;
+					temp = temp->next;
+					cout << "and one " << temp->data->GetName() << endl << endl;
 				}
 			}
 		}
+	}
+	else
+	{
+		cout << "This room contains no items" << endl << endl;
 	}
 }
 
@@ -150,17 +137,18 @@ void World::Move(int position)
 {
 	adventurer->ModifyPosition(position);
 }
-void World::Execute(const String& str, int dir, int item, int &position)const
+void World::Execute(const String& str, int dir, char* item, int &position)const
 {
 
 	//LOOK ITEMS / EXITS
 
 	if (str == "look!")
 	{
-		if (item != -1)
+		if (item != "none")
 		{
 			if (adventurer->GetItem(item))
 			{
+				dList<
 				cout << entities[item + 23]->GetDescription() << " It's in your inventory." << endl << endl;
 			}
 			else if (((Room*)entities[position])->GetItem(item))

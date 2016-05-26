@@ -3,6 +3,7 @@
 
 #include "ClassString.h"
 #include "ClassVector.h"
+#include "Class List.h"
 
 class Entity
 {
@@ -22,14 +23,14 @@ public:
 	Entity(const String& name);
 	~Entity();
 
+	dList <Entity*> items;
+
 	void ModifyParameters(const char* str1, const char* str2);
-	void ModifyItems(int item1, int item2);
 	const char* GetName()const;
 	const char* GetDescription()const;
 
 	int GetCap()const;
-	void PickDrop(int item);
-	bool GetItem(int item)const;
+	bool GetItem(char* item)const;
 
 };
 

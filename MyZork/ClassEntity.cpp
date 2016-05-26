@@ -65,18 +65,26 @@ void Entity::PickDrop(int item)
 	else itemsP[item] = true, itemCap++;
 }
 
-bool Entity::GetItem(int item)const
+bool Entity::GetItem(char* item)const
 {
-	return itemsP[item];
-}
-
-void Entity::ModifyItems(int item1, int item2)
-{
-	for (int i = 0; i < 7; i++)
+	if (items.first == nullptr)
 	{
-		if (i == item1 || i == item2)
+		return false;
+	}
+	else
+	{
+		dList<Entity*>::dNode* temp = items.first;
+		while (temp != nullptr)
 		{
-			itemsP[i] = true;
+			if (temp->data->GetName() == item)
+			{
+				return true;
+			}
+			else
+			{
+				temp = temp->next;
+			}
 		}
 	}
+	return false;
 }

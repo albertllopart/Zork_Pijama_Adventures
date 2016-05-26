@@ -1,42 +1,50 @@
-template <class TYPE>
+#ifndef CLASS_LIST
+#define CLASS_LIST
 
-struct Node
+typedef unsigned int uint;
+
+template<class TYPE>
+class dList
 {
-	TYPE data;
-	Node <TYPE>* next = nullptr;
+public:
 
-	Node(const TYPE& data) : data(data)
+	struct dNode
 	{
-	}
-};
+		TYPE data;
+		dNode* next = nullptr;
+		dNode* prev = nullptr;
 
-template <class TYPE>
+		dNode(const TYPE& data) :data(data){}
+		~dNode(){}
+	};
 
-struct List
-{
-	Node <TYPE>* first = nullptr;
+	dNode* first = nullptr;
 
-	bool Empty()const
+public:
+
+	dList(){};
+	~dList(){};
+
+	bool empty() const
 	{
 		return first == nullptr;
 	}
 
-	unsigned int Size()const
+	uint size() const
 	{
-		Node <TYPE>* temp = first;
-		unsigned int quantity = 0;
-
+		uint elements = 0;
+		dNode* temp = first;
 		while (temp != nullptr)
 		{
-			quantity++;
 			temp = temp->next;
+			elements++;
 		}
-		else return quantity;
+		return elements;
 	}
 
-	Node <TYPE>* End()const
+	dNode* end() const
 	{
-		Node <TYPE>* temp = first;
+		dNode* temp = first;
 
 		if (temp != nullptr)
 		{
@@ -48,139 +56,158 @@ struct List
 		return temp;
 	}
 
-	//pushback
-
 	void PushBack(const TYPE& data)
 	{
-		if (first != nullptr)
+		dNode* temp = first;
+		dNode* new_node = new dNode(data);
+
+		if (temp == nullptr)
 		{
-			End()->next = new Node <TYPE>(data);
+			first = new_node;
 		}
+
 		else
 		{
-			first = new Node <TYPE>(data);
+			while (temp->next != nullptr)
+			{
+				temp = temp->next;
+			}
+			temp->next = new_node;
+			new_node->prev = temp;
 		}
 	}
-
-	//pushfront
 
 	void PushFront(const TYPE& data)
 	{
+		dNode* new_node = new dNode(data);
+
 		if (first == nullptr)
 		{
-			first = new Node <TYPE>(data);
+			first = new_node;
 		}
+
 		else
 		{
-			Node <TYPE>* temp = first;
-			first = new Node <TYPE>(data);
-			first->next = temp;
+			new_node->next = first;
+			first->prev = new_node;
+			first = new_node;
 		}
-
 	}
 
-	//popback
-
-	void PopBack()
+	bool PopBack()
 	{
-		if (first != nullptr)
+		if (first != nullptr) 
 		{
-			if (first->next == nullptr)
+			if (first->next != nullptr) 
 			{
-				Node <TYPE>* temp = first;
-				first = nullptr;
+				dNode* temp = first;
+				while (temp->next != nullptr)
+				{
+					temp = temp->next;
+				}
+				temp->prev->next = nullptr;
 				delete temp;
 			}
 			else
 			{
-				Node <TYPE>* temp = first;
-				while (temp->next->next != nullptr)
-				{
-					temp = temp->next;
-				}
-				delete temp->next->next;
-				temp->next = nullptr;
+				dNode* temp = first;
+				first = nullptr;
+				delete temp;
 			}
+			return true;
+		}
+		return false;
+	}
+
+	bool PopFront()
+	{
+		if (first != nullptr) 
+		{
+			if (first->next != nullptr)
+			{
+				dNode* temp = first;
+				first = temp->next;
+				first->prev = nullptr;
+				delete temp;
+			}
+			else
+			{
+				dNode* temp = first;
+				first = nullptr;
+				delete temp;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	void erase(dNode* toerase)
+	{
+		if (size() > 1)
+		{
+			if (toerase->prev == nullptr)
+			{
+				first = toerase->next;
+				first->prev = nullptr;
+			}
+			else if (toerase->next == nullptr)
+			{
+				toerase->prev->next = nullptr;
+			}
+			else
+			{
+				toerase->prev->next = toerase->next;
+				toerase->next->prev = toerase->prev;
+			}
+			delete toerase;
+		}
+		else
+		{
+			first = nullptr;
+			delete toerase;
 		}
 	}
 
-	//popfront
-
-	void PopFront()
+	void insert(dNode* toinsert, const TYPE& data)
 	{
-		Node <TYPE>* temp = first;
+		dNode* new_node = new dNode(data);
 		if (first != nullptr)
 		{
-			first = first->next;
-			delete temp;
-		}
-	}
-
-	//erase
-
-	void Erase(Node<TYPE>* ToErase)
-	{
-		if (ToErase != nullptr)
-		{
-			if (ToErase != first)
+			if (toinsert->prev == nullptr)
 			{
-				Node <TYPE>* temp = first;
-				while (temp->next != ToErase)
-				{
-					temp = temp->next;
-				}
-				temp->next = ToErase->next;
-				delete ToErase;
+				new_node->next = toinsert;
+				toinsert->prev = new_node;
+				first = new_node;
 			}
+
 			else
 			{
-				first = first->next;
-				delete ToErase;
+				new_node->next = toinsert;
+				toinsert->prev->next = new_node;
+				new_node->prev = toinsert->prev;
+				toinsert->prev = new_node;
 			}
+		}
 
+		else
+		{
+			first = new_node;
 		}
 	}
 
-	//operator []
-
-	Node <TYPE>* operator[](uint index)
+	void clear()
 	{
-		Node <TYPE>* temp = first;
-
-		if (temp != nullptr)
+		dNode* n = first;
+		dNode* next;
+		while (n != nullptr)
 		{
-			for (int i = 0; i < index; i++)
-			{
-				temp = temp->next;
-			}
+			next = n->next;
+			delete n;
+			n = next;
 		}
-		return temp;
-	}
-
-	//insert
-
-	void Insert(Node<TYPE>* position, const TYPE& data)
-	{
-		Node <TYPE>* ToInsert = new Node<TYPE>(data);
-
-		if (position != nullptr)
-		{
-			Node <TYPE>* temp = first;
-
-			if (position != first)
-			{
-				while (temp->next != position)
-				{
-					temp = temp->next;
-				}
-				temp->next = ToInsert;
-				ToInsert->next = position;
-			}
-			else
-			{
-				first = ToInsert;
-			}
-		}
+		first = nullptr;
 	}
 
 };
+
+#endif

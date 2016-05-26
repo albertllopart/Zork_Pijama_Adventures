@@ -12,8 +12,6 @@ class World
 {
 private:
 
-	Vector <Entity*> entities;
-
 	Player* adventurer = nullptr;
 	Entity* box = nullptr;
 
@@ -24,10 +22,12 @@ public:
 	World(const char* str);
 	~World();
 
+	Vector <Entity*> entities;
+
 	void CheckRoom(int room)const;
 	int CheckPosition()const;
 	void Move(int position);
-	void Execute(const String& str, int dir, int item, int &position)const;
+	void Execute(const String& str, int dir, char* item, int &position)const;
 	bool Continue()const;
 
 	void CreateWorld();
