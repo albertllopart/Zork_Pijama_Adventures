@@ -2,38 +2,38 @@
 
 World::World(const char* str)
 {
-	rooms.PushBack(new Room("Hall", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
-	rooms.PushBack(new Room("West of hall", "Something smells rotten in this room. It's a lot darker than the hall. There's a misterious masked man in the center staring at you."));
-	rooms.PushBack(new Room("North of Hall", "It's a small room with one door at each wall. There's a huge box in the center."));
-	rooms.PushBack(new Room("SnS Room", "It's a small room with a strange switch on a wall. There's also a man laying on a blood paddle."));
-	rooms.PushBack(new Room("Bathroom", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
-	rooms.PushBack(new Room("Copper Room", "Every wall in this room is painted in copper, including both doors."));
-	rooms.PushBack(new Room("Silver Room", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
-	rooms.PushBack(new Room("Toucan Room", "There's a toucan holding something in his beak. He's laughing at your pijama."));
-	rooms.PushBack(new Room("Crack Room", "It's completely empty. There's a suspicious crack on the northern wall."));
-	rooms.PushBack(new Room("Grenade Room", "This room would be completely empty if there wasn't a chest right in the center of it."));
-	rooms.PushBack(new Room("Dragon Room", "It smells like if something had been burning for days in here. You notice a huge dragon staring at you. His face doesn't look like the face of mercy."));
-	rooms.PushBack(new Room("Orb Room", "There's a long passage that leads to something that looks like an altar. Something shines on it."));
+	entities.PushBack(new Room("Hall", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
+	entities.PushBack(new Room("West of hall", "Something smells rotten in this room. It's a lot darker than the hall. There's a misterious masked man in the center staring at you."));
+	entities.PushBack(new Room("North of Hall", "It's a small room with one door at each wall. There's a huge box in the center."));
+	entities.PushBack(new Room("SnS Room", "It's a small room with a strange switch on a wall. There's also a man laying on a blood paddle."));
+	entities.PushBack(new Room("Bathroom", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
+	entities.PushBack(new Room("Copper Room", "Every wall in this room is painted in copper, including both doors."));
+	entities.PushBack(new Room("Silver Room", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
+	entities.PushBack(new Room("Toucan Room", "There's a toucan holding something in his beak. He's laughing at your pijama."));
+	entities.PushBack(new Room("Crack Room", "It's completely empty. There's a suspicious crack on the northern wall."));
+	entities.PushBack(new Room("Grenade Room", "This room would be completely empty if there wasn't a chest right in the center of it."));
+	entities.PushBack(new Room("Dragon Room", "It smells like if something had been burning for days in here. You notice a huge dragon staring at you. His face doesn't look like the face of mercy."));
+	entities.PushBack(new Room("Orb Room", "There's a long passage that leads to something that looks like an altar. Something shines on it."));
 	
-	exits.PushBack(new Exit("A wooden door that leads to a western room."));
-	exits.PushBack(new Exit("A huge door that leads to a northern room."));
-	exits.PushBack(new Exit("You feel like there's gonna be something useful inside."));
-	exits.PushBack(new Exit("There's a sing on the wall. It says 'Bat room'."));
-	exits.PushBack(new Exit("This door leads deeper into this strange place. It has a strange locking mechanism."));
-	exits.PushBack(new Exit("This door is made out of copper."));
-	exits.PushBack(new Exit("You smell bird shit on the other side."));
-	exits.PushBack(new Exit("A wooden door that leads to an eastern room."));
-	exits.PushBack(new Exit("This door is made out of silver."));
-	exits.PushBack(new Exit("There's a crack on the wall."));
-	exits.PushBack(new Exit("It's a door made out of gold."));
+	entities.PushBack(new Exit("A wooden door that leads to a western room."));
+	entities.PushBack(new Exit("A huge door that leads to a northern room."));
+	entities.PushBack(new Exit("You feel like there's gonna be something useful inside."));
+	entities.PushBack(new Exit("There's a sing on the wall. It says 'Bat room'."));
+	entities.PushBack(new Exit("This door leads deeper into this strange place. It has a strange locking mechanism."));
+	entities.PushBack(new Exit("This door is made out of copper."));
+	entities.PushBack(new Exit("You smell bird shit on the other side."));
+	entities.PushBack(new Exit("A wooden door that leads to an eastern room."));
+	entities.PushBack(new Exit("This door is made out of silver."));
+	entities.PushBack(new Exit("There's a crack on the wall."));
+	entities.PushBack(new Exit("It's a door made out of gold."));
 
-	items.PushBack(new Entity("Sword", "It's a sharp sword!"));
-	items.PushBack(new Entity("Wooden Shield", "It's a shield strong enough to resist some hits, but do not try to parry fire attacks with it!"));
-	items.PushBack(new Entity("Sack of grain", "It's a small sack full of grain."));
-	items.PushBack(new Entity("Copper Key", "It's a key made out of copper."));
-	items.PushBack(new Entity("Silver Key", "It's a key made out of silver."));
-	items.PushBack(new Entity("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
-	items.PushBack(new Entity("Orb", "It's a blue translucid orb with a shinny core."));
+	entities.PushBack(new Entity("Sword", "It's a sharp sword!"));
+	entities.PushBack(new Entity("Wooden Shield", "It's a shield strong enough to resist some hits, but do not try to parry fire attacks with it!"));
+	entities.PushBack(new Entity("Sack of grain", "It's a small sack full of grain."));
+	entities.PushBack(new Entity("Copper Key", "It's a key made out of copper."));
+	entities.PushBack(new Entity("Silver Key", "It's a key made out of silver."));
+	entities.PushBack(new Entity("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
+	entities.PushBack(new Entity("Orb", "It's a blue translucid orb with a shinny core."));
 
 	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.");
 	box = new Entity("Box", "It's a wooden box. You can store items in it.");
@@ -44,69 +44,69 @@ World::World(const char* str)
 void World::CreateWorld()
 {
 	
-	rooms[0]->ModifyOptions(2, -1, -1, 1);
-	rooms[0]->ModifyDoors(1, -1, -1, 0);
-	rooms[0]->ModifyItems(-1, -1);
+	((Room*)entities[0])->ModifyOptions(2, -1, -1, 1);
+	((Room*)entities[0])->ModifyDoors(1, -1, -1, 0);
+	((Room*)entities[0])->ModifyItems(-1, -1);
 
-	rooms[1]->ModifyOptions(-1, -1, 0, -1); 
-	rooms[1]->ModifyDoors(-1, -1, 0, -1);
-	rooms[1]->ModifyItems(-1, -1);
+	((Room*)entities[1])->ModifyOptions(-1, -1, 0, -1);
+	((Room*)entities[1])->ModifyDoors(-1, -1, 0, -1);
+	((Room*)entities[1])->ModifyItems(-1, -1);
 
-	rooms[2]->ModifyOptions(5, 0, 4, 3);
-	rooms[2]->ModifyDoors(4, 1, 3, 2);
-	rooms[2]->ModifyItems(-1, -1);
+	((Room*)entities[2])->ModifyOptions(5, 0, 4, 3);
+	((Room*)entities[2])->ModifyDoors(4, 1, 3, 2);
+	((Room*)entities[2])->ModifyItems(-1, -1);
 
-	rooms[3]->ModifyOptions(-1, -1, 2, -1);
-	rooms[3]->ModifyDoors(-1, -1, 2, -1);
-	rooms[3]->ModifyItems(0, 1);
+	((Room*)entities[3])->ModifyOptions(-1, -1, 2, -1);
+	((Room*)entities[3])->ModifyDoors(-1, -1, 2, -1);
+	((Room*)entities[3])->ModifyItems(0, 1);
 
-	rooms[4]->ModifyOptions(-1, -1, -1, 2);
-	rooms[4]->ModifyDoors(-1, -1, -1, 3);
-	rooms[4]->ModifyItems(3, -1);
+	((Room*)entities[4])->ModifyOptions(-1, -1, -1, 2);
+	((Room*)entities[4])->ModifyDoors(-1, -1, -1, 3);
+	((Room*)entities[4])->ModifyItems(3, -1);
 
-	rooms[5]->ModifyOptions(6, 2, -1, -1);
-	rooms[5]->ModifyDoors(5, 4, -1, -1);
-	rooms[5]->ModifyItems(2, -1);
+	((Room*)entities[5])->ModifyOptions(6, 2, -1, -1);
+	((Room*)entities[5])->ModifyDoors(5, 4, -1, -1);
+	((Room*)entities[5])->ModifyItems(2, -1);
 
-	rooms[6]->ModifyOptions(9, 5, 8, 7);
-	rooms[6]->ModifyDoors(8, 5, 7, 6);
-	rooms[6]->ModifyItems(-1, -1);
+	((Room*)entities[6])->ModifyOptions(9, 5, 8, 7);
+	((Room*)entities[6])->ModifyDoors(8, 5, 7, 6);
+	((Room*)entities[6])->ModifyItems(-1, -1);
 
-	rooms[7]->ModifyOptions(-1, -1, 6, -1);
-	rooms[7]->ModifyDoors(-1, -1, 6, -1);
-	rooms[7]->ModifyItems(4, -1);
+	((Room*)entities[7])->ModifyOptions(-1, -1, 6, -1);
+	((Room*)entities[7])->ModifyDoors(-1, -1, 6, -1);
+	((Room*)entities[7])->ModifyItems(4, -1);
 
-	rooms[8]->ModifyOptions(10, -1, -1, 6);
-	rooms[8]->ModifyDoors(9, -1, -1, 7);
-	rooms[8]->ModifyItems(-1, -1);
+	((Room*)entities[8])->ModifyOptions(10, -1, -1, 6);
+	((Room*)entities[8])->ModifyDoors(9, -1, -1, 7);
+	((Room*)entities[8])->ModifyItems(-1, -1);
 
-	rooms[9]->ModifyOptions(-1, 6, -1, -1);
-	rooms[9]->ModifyDoors(-1, 8, -1, -1);
-	rooms[9]->ModifyItems(5, -1);
+	((Room*)entities[9])->ModifyOptions(-1, 6, -1, -1);
+	((Room*)entities[9])->ModifyDoors(-1, 8, -1, -1);
+	((Room*)entities[9])->ModifyItems(5, -1);
 
-	rooms[10]->ModifyOptions(-1, 8, 11, -1);
-	rooms[10]->ModifyDoors(-1, 9, 10, -1);
-	rooms[10]->ModifyItems(-1, -1);
+	((Room*)entities[10])->ModifyOptions(-1, 8, 11, -1);
+	((Room*)entities[10])->ModifyDoors(-1, 9, 10, -1);
+	((Room*)entities[10])->ModifyItems(-1, -1);
 
-	rooms[11]->ModifyOptions(-1, -1, -1, 10);
-	rooms[11]->ModifyDoors(-1, -1, -1, 10);
-	rooms[11]->ModifyItems(6, -1);
+	((Room*)entities[11])->ModifyOptions(-1, -1, -1, 10);
+	((Room*)entities[11])->ModifyDoors(-1, -1, -1, 10);
+	((Room*)entities[11])->ModifyItems(6, -1);
 
-	exits[5]->ModifyState();
-	exits[8]->ModifyState();
+	((Exit*)entities[17])->ModifyState();
+	((Exit*)entities[20])->ModifyState();
 
 }
 
 void World::CheckRoom(int room)const
 {
-	cout << rooms[room]->GetName() << endl;
-	if (rooms[room]->FirstVisit()) cout << rooms[room]->GetDescription() << endl, rooms[room]->NoDescription();
+	cout << ((Room*)entities[room])->GetName() << endl;
+	if (((Room*)entities[room])->FirstVisit()) cout << ((Room*)entities[room])->GetDescription() << endl, ((Room*)entities[room])->NoDescription();
 
 	int check = 0;
 
 	for (int i = 0; i < 7; i++)
 	{
-		if (rooms[room]->GetItem(i)) check++;
+		if (((Room*)entities[room])->GetItem(i)) check++;
 	}
 	if (check == 0)
 	{
@@ -119,21 +119,21 @@ void World::CheckRoom(int room)const
 		{
 			for (int i = 0; i < 7; i++)
 			{
-				if (rooms[room]->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
+				if (((Room*)entities[room])->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
 			}
 		}
 		else if (check > 1)
 		{
 			for (int i = 0; i < 7; i++)
 			{
-				if (rooms[room]->GetItem(i) && check > 1)
+				if (((Room*)entities[room])->GetItem(i) && check > 1)
 				{
-					cout << "one " << items[i]->GetName() << ", ";
+					cout << "one " << entities[i + 23]->GetName() << ", ";
 					check--;
 				}
-				else if (rooms[room]->GetItem(i) && check == 1)
+				else if (((Room*)entities[room])->GetItem(i) && check == 1)
 				{
-					cout << "and one " << items[i]->GetName() << "." << endl << endl;
+					cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
 					check--;
 				}
 			}
@@ -161,11 +161,11 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		{
 			if (adventurer->GetItem(item))
 			{
-				cout << items[item]->GetDescription() << " It's in your inventory." << endl << endl;
+				cout << entities[item + 23]->GetDescription() << " It's in your inventory." << endl << endl;
 			}
-			else if (rooms[position]->GetItem(item))
+			else if (((Room*)entities[position])->GetItem(item))
 			{
-				cout << items[item]->GetDescription() << " It's on the floor." << endl << endl;
+				cout << entities[item + 23]->GetDescription() << " It's on the floor." << endl << endl;
 			}
 			else
 			{
@@ -174,11 +174,11 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		}
 		else if (dir != -1)
 		{
-			if (rooms[position]->CheckDoors(dir) != -1)
+			if (((Room*)entities[position])->CheckDoors(dir) != -1)
 			{
-				cout << exits[rooms[position]->CheckDoors(dir)]->GetDescription() << endl << endl;
+				cout << ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->GetDescription() << endl << endl;
 			}
-			else if (rooms[position]->CheckDoors(dir) == -1)
+			else if (((Room*)entities[position])->CheckDoors(dir) == -1)
 				cout << "There's no door in that direction." << endl << endl;
 		}
 	}
@@ -187,12 +187,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 
 	else if (str == "go!")
 	{
-		if (rooms[position]->CheckOptions(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
+		if (((Room*)entities[position])->CheckOptions(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
 		{
-			position = rooms[position]->CheckOptions(dir);
+			position = ((Room*)entities[position])->CheckOptions(dir);
 			CheckRoom(position);
 		}
-		else if (rooms[position]->CheckOptions(dir) == -1)
+		else if (((Room*)entities[position])->CheckOptions(dir) == -1)
 		{
 			cout << "There's no room in that direction." << endl << endl;
 		}
@@ -206,12 +206,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 
 	else if (str == "open!")
 	{
-		if (rooms[position]->CheckDoors(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen() == false)
+		if (((Room*)entities[position])->CheckDoors(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen() == false)
 		{
-			exits[rooms[position]->CheckDoors(dir)]->ModifyState();
+			((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->ModifyState();
 			cout << "The door is now open." << endl << endl;
 		}
-		else if (rooms[position]->CheckDoors(dir) == -1)
+		else if (((Room*)entities[position])->CheckDoors(dir) == -1)
 		{
 			cout << "There's no door in that direction." << endl << endl;
 		}
@@ -225,9 +225,9 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 
 	else if (str == "close!")
 	{
-		if (rooms[position]->CheckDoors(dir) != -1 && exits[rooms[position]->CheckDoors(dir)]->IsOpen())
+		if (((Room*)entities[position])->CheckDoors(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
 		{
-			exits[rooms[position]->CheckDoors(dir)]->ModifyState();
+			((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->ModifyState();
 			cout << "The door is now closed" << endl << endl;
 		}
 	}
@@ -236,12 +236,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 
 	else if (str == "lookroom")
 	{
-		cout << rooms[position]->GetDescription() << endl;
+		cout << ((Room*)entities[position])->GetDescription() << endl;
 		int check = 0;
 
 		for (int i = 0; i < 7; i++)
 		{
-			if (rooms[position]->GetItem(i)) check++;
+			if (((Room*)entities[position])->GetItem(i)) check++;
 		}
 		if (check == 0)
 		{
@@ -254,21 +254,21 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (rooms[position]->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
+					if (((Room*)entities[position])->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
 				}
 			}
 			else if (check > 1)
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (rooms[position]->GetItem(i) && check > 1)
+					if (((Room*)entities[position])->GetItem(i) && check > 1)
 					{
-						cout << "one " << items[i]->GetName() << ", ";
+						cout << "one " << entities[i + 23]->GetName() << ", ";
 						check--;
 					}
-					else if (rooms[position]->GetItem(i) && check == 1)
+					else if (((Room*)entities[position])->GetItem(i) && check == 1)
 					{
-						cout << "and one " << items[i]->GetName() << "." << endl << endl;
+						cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
 						check--;
 					}
 				}
@@ -304,7 +304,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (adventurer->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
+					if (adventurer->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
 				}
 			}
 			else if (check > 1)
@@ -313,12 +313,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 				{
 					if (adventurer->GetItem(i) && check > 1)
 					{
-						cout << "one " << items[i]->GetName() << ", ";
+						cout << "one " << entities[i + 23]->GetName() << ", ";
 						check--;
 					}
 					else if (adventurer->GetItem(i) && check == 1)
 					{
-						cout << "and one " << items[i]->GetName() << "." << endl << endl;
+						cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
 						check--;
 					}
 				}
@@ -350,7 +350,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 				{
 					for (int i = 0; i < 7; i++)
 					{
-						if (box->GetItem(i)) cout << "one " << items[i]->GetName() << "." << endl << endl;
+						if (box->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
 					}
 				}
 				else if (check > 1)
@@ -359,12 +359,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 					{
 						if (box->GetItem(i) && check > 1)
 						{
-							cout << "one " << items[i]->GetName() << ", ";
+							cout << "one " << entities[i + 23]->GetName() << ", ";
 							check--;
 						}
 						else if (box->GetItem(i) && check == 1)
 						{
-							cout << "and one " << items[i]->GetName() << "." << endl << endl;
+							cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
 							check--;
 						}
 					}
@@ -398,7 +398,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			{
 				for (int i = 0; i < 2; i++)
 				{
-					if (adventurer->GetEquip(i)) cout << "a " << items[i]->GetName() << " equipped." << endl << endl;
+					if (adventurer->GetEquip(i)) cout << "a " << entities[i + 23]->GetName() << " equipped." << endl << endl;
 				}
 			}
 			else if (check > 1)
@@ -407,12 +407,12 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 				{
 					if (adventurer->GetEquip(i) && check > 1)
 					{
-						cout << "a " << items[i]->GetName();
+						cout << "a " << entities[i + 23]->GetName();
 						check--;
 					}
 					else if (adventurer->GetEquip(i) && check == 1)
 					{
-						cout << " and a " << items[i]->GetName() << " equipped." << endl << endl;
+						cout << " and a " << entities[i + 23]->GetName() << " equipped." << endl << endl;
 						check--;
 					}
 				}
@@ -426,15 +426,15 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 	{
 		if (adventurer->GetCap() < 3)
 		{
-			if (rooms[position]->GetItem(item))
+			if (((Room*)entities[position])->GetItem(item))
 			{
 				adventurer->PickDrop(item);
-				rooms[position]->PickDrop(item);
-				cout << "You picked a " << items[item]->GetName() << endl << endl;
+				((Room*)entities[position])->PickDrop(item);
+				cout << "You picked a " << entities[item + 23]->GetName() << endl << endl;
 			}
 			else cout << "There's no such item in this room!" << endl << endl;
 		}
-		else if (rooms[position]->GetItem(item) == false)
+		else if (((Room*)entities[position])->GetItem(item) == false)
 		{
 			cout << "There's no such item in this room!" << endl << endl;
 		}
@@ -449,8 +449,8 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		if (adventurer->GetItem(item))
 		{
 			adventurer->PickDrop(item);
-			rooms[position]->PickDrop(item);
-			cout << "You dropped the " << items[item]->GetName() << endl << endl;
+			((Room*)entities[position])->PickDrop(item);
+			cout << "You dropped the " << entities[item + 23]->GetName() << endl << endl;
 		}
 		else cout << "There's no such item in your inventory!" << endl << endl;
 	}
@@ -465,7 +465,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 			{
 				box->PickDrop(item);
 				adventurer->PickDrop(item);
-				cout << "You put the " << items[item]->GetName() << " into the box." << endl << endl;
+				cout << "You put the " << entities[item + 23]->GetName() << " into the box." << endl << endl;
 			}
 			else if (adventurer->GetItem(item) && box->GetCap() > 2)
 			{
@@ -494,7 +494,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 				{
 					adventurer->PickDrop(item);
 					box->PickDrop(item);
-					cout << "You got the " << items[item]->GetName() << " from the box." << endl << endl;
+					cout << "You got the " << entities[item + 23]->GetName() << " from the box." << endl << endl;
 				}
 				else
 				{
@@ -520,7 +520,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 		{
 			if (item == 0 || item == 1)
 			{
-				cout << "You equipped the " << items[item]->GetName() << endl << endl;
+				cout << "You equipped the " << entities[item + 23]->GetName() << endl << endl;
 				adventurer->EquipUnequip(item);
 				adventurer->PickDrop(item);
 			}
@@ -541,7 +541,7 @@ void World::Execute(const String& str, int dir, int item, int &position)const
 	{
 		if (adventurer->GetEquip(item))
 		{
-			cout << "You unequipped the " << items[item]->GetName() << endl << endl;
+			cout << "You unequipped the " << entities[item + 23]->GetName() << endl << endl;
 			adventurer->EquipUnequip(item);
 			adventurer->PickDrop(item);
 		}

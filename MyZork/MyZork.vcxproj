@@ -76,6 +76,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Class List.h" />
     <ClInclude Include="ClassCommand.h" />
     <ClInclude Include="ClassEntity.h" />
     <ClInclude Include="ClassExit.h" />

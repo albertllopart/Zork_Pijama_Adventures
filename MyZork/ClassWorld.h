@@ -6,14 +6,13 @@
 #include "ClassPlayer.h"
 #include "ClassCommand.h"
 #include "ClassVector.h"
+#include "Class List.h"
 
 class World
 {
 private:
 
-	Vector <Room*> rooms;
-	Vector <Exit*> exits;
-	Vector <Entity*> items;
+	Vector <Entity*> entities;
 
 	Player* adventurer = nullptr;
 	Entity* box = nullptr;
