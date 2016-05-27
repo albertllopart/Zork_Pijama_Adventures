@@ -441,15 +441,25 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 
 	//PUT ITEM INTO BOX
 
-	/*else if (str == "putinto")
+	else if (str == "putinto")
 	{
 		if (position == 2)
 		{
 			if (adventurer->GetItem(item) && box->GetCap() < 3)
 			{
-				box->PickDrop(item);
-				adventurer->PickDrop(item);
-				cout << "You put the " << entities[item + 23]->GetName() << " into the box." << endl << endl;
+				box->items.PushBack(entities[pickdrop]);
+				adventurer->itemCap--;
+				box->itemCap++;
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				for (; temp != nullptr; temp = temp->next)
+				{
+					if (item == temp->data->GetName())
+					{
+						adventurer->items.erase(temp);
+						break;
+					}
+				}
+				cout << "You put the " << entities[pickdrop]->GetName() << " into the box." << endl << endl;
 			}
 			else if (adventurer->GetItem(item) && box->GetCap() > 2)
 			{
@@ -476,9 +486,26 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 			{
 				if (adventurer->GetCap() < 3)
 				{
-					adventurer->PickDrop(item);
-					box->PickDrop(item);
-					cout << "You got the " << entities[item + 23]->GetName() << " from the box." << endl << endl;
+					dList<Entity*>::dNode* temp = box->items.first;
+					if (temp != nullptr)
+					{
+						while (temp != nullptr)
+						{
+							if (item == temp->data->GetName())
+							{
+								if (temp != nullptr)
+								{
+									adventurer->items.PushBack(temp->data);
+									adventurer->itemCap++;
+									box->itemCap--;
+									box->items.erase(temp);
+									break;
+								}
+							}
+							temp = temp->next;
+						}
+					}
+					cout << "You got the " << entities[pickdrop]->GetName() << " from the box." << endl << endl;
 				}
 				else
 				{
@@ -502,11 +529,21 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 	{
 		if (adventurer->GetItem(item))
 		{
-			if (item == 0 || item == 1)
+			if (pickdrop == 23 || pickdrop == 24)
 			{
-				cout << "You equipped the " << entities[item + 23]->GetName() << endl << endl;
+				cout << "You equipped the " << entities[pickdrop]->GetName() << endl << endl;
+				adventurer->equipment.PushBack(entities[pickdrop]);
+				adventurer->itemCap--;
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				for (; temp != nullptr; temp = temp->next)
+				{
+					if (item == temp->data->GetName())
+					{
+						adventurer->items.erase(temp);
+						break;
+					}
+				}
 				adventurer->EquipUnequip(item);
-				adventurer->PickDrop(item);
 			}
 			else
 			{
@@ -525,15 +562,25 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 	{
 		if (adventurer->GetEquip(item))
 		{
-			cout << "You unequipped the " << entities[item + 23]->GetName() << endl << endl;
+			cout << "You unequipped the " << entities[pickdrop]->GetName() << endl << endl;
+			adventurer->items.PushBack(entities[pickdrop]);
+			adventurer->itemCap++;
+			dList<Entity*>::dNode* temp = adventurer->equipment.first;
+			for (; temp != nullptr; temp = temp->next)
+			{
+				if (item == temp->data->GetName())
+				{
+					adventurer->equipment.erase(temp);
+					break;
+				}
+			}
 			adventurer->EquipUnequip(item);
-			adventurer->PickDrop(item);
 		}
 		else
 		{
 			cout << "You don't have that item equipped!" << endl << endl;
 		}
-	}*/
+	}
 
 	//STATS
 

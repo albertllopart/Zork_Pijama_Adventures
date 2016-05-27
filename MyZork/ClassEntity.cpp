@@ -59,8 +59,6 @@ int Entity::GetCap()const
 	return itemCap;
 }
 
-
-
 bool Entity::GetItem(const String& item)const
 {
 	if (items.first == nullptr)
@@ -70,6 +68,30 @@ bool Entity::GetItem(const String& item)const
 	else
 	{
 		dList<Entity*>::dNode* temp = items.first;
+		while (temp != nullptr)
+		{
+			if (item == temp->data->GetName())
+			{
+				return true;
+			}
+			else
+			{
+				temp = temp->next;
+			}
+		}
+	}
+	return false;
+}
+
+bool Entity::GetEquip(const String& item)const
+{
+	if (equipment.first == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		dList<Entity*>::dNode* temp = equipment.first;
 		while (temp != nullptr)
 		{
 			if (item == temp->data->GetName())

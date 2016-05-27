@@ -23,6 +23,7 @@ public:
 	~Entity();
 
 	dList <Entity*> items;
+	dList <Entity*> equipment;
 	int itemCap;
 
 	void ModifyParameters(const char* str1, const char* str2);
@@ -31,6 +32,7 @@ public:
 
 	int GetCap()const;
 	bool GetItem(const String& item)const;
+	bool GetEquip(const String& item)const;
 
 };
 
