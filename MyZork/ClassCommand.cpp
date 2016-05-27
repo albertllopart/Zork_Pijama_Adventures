@@ -14,6 +14,10 @@ void Command::ModifyItem(int item)
 {
 	this->item = item;
 }
+void Command::ModifyitemName(const char* itemName)
+{
+	this->itemName = itemName;
+}
 int Command::GetDirection()const
 {
 	return dir;
@@ -21,6 +25,10 @@ int Command::GetDirection()const
 int Command::GetItem()const
 {
 	return item;
+}
+const String& Command::GetItemName()const
+{
+	return itemName;
 }
 
 void Command::ReadInstruction(String& str)
@@ -73,36 +81,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "look sword")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "look!";
 	}
 	else if (str == "look shield")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "look!";
 	}
 	else if (str == "look sack of grain")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "look!";
 	}
 	else if (str == "look copper key")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "look!";
 	}
 	else if (str == "look silver key")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "look!";
 	}
 	else if (str == "look grenade")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "look!";
 	}
 	else if (str == "look orb")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "look!";
 	}
 
@@ -111,6 +126,7 @@ void Command::ReadInstruction(String& str)
 	else if (str == "look inventory" || str == "check inventory" || str == "inventory" || str == "inv" || str == "i")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "lookinventory";
 	}
 
@@ -119,6 +135,7 @@ void Command::ReadInstruction(String& str)
 	else if (str == "look box" || str == "check box")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "lookbox!";
 	}
 
@@ -135,6 +152,7 @@ void Command::ReadInstruction(String& str)
 	{
 		ModifyDirection(stay);
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "lookroom";
 	}
 
@@ -213,36 +231,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "pick sword")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "pick!";
 	}
 	else if (str == "pick shield")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "pick!";
 	}
 	else if (str == "pick sack of grain")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "pick!";
 	}
 	else if (str == "pick copper key")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "pick!";
 	}
 	else if (str == "pick silver key")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "pick!";
 	}
 	else if (str == "pick grenade")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "pick!";
 	}
 	else if (str == "pick orb")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "pick!";
 	}
 
@@ -251,36 +276,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "drop sword")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "drop!";
 	}
 	else if (str == "drop shield")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "drop!";
 	}
 	else if (str == "drop sack of grain")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "drop!";
 	}
 	else if (str == "drop copper key")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "drop!";
 	}
 	else if (str == "drop silver key")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "drop!";
 	}
 	else if (str == "drop grenade")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "drop!";
 	}
 	else if (str == "drop orb")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "drop!";
 	}
 
@@ -289,36 +321,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "put sword into box")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "putinto";
 	}
 	else if (str == "put shield into box")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "putinto";
 	}
 	else if (str == "put sack of grain into box")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "putinto";
 	}
 	else if (str == "put copper key into box")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "putinto";
 	}
 	else if (str == "put silver key into box")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "putinto";
 	}
 	else if (str == "put grenade into box")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "putinto";
 	}
 	else if (str == "put orb into box")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "putinto";
 	}
 
@@ -327,36 +366,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "get sword from box")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "getfrom";
 	}
 	else if (str == "get shield from box")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "getfrom";
 	}
 	else if (str == "get sack of grain from box")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "getfrom";
 	}
 	else if (str == "get copper key from box")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "getfrom";
 	}
 	else if (str == "get silver key from box")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "getfrom";
 	}
 	else if (str == "get grenade from box")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "getfrom";
 	}
 	else if (str == "get orb from box")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "getfrom";
 	}
 
@@ -365,36 +411,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "equip sword")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "equip!";
 	}
 	else if (str == "equip shield")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "equip!";
 	}
 	else if (str == "equip copper key")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "equip!";
 	}
 	else if (str == "equip silver key")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "equip!";
 	}
 	else if (str == "equip sack of grain")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "equip!";
 	}
 	else if (str == "equip grenade")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "equip!";
 	}
 	else if (str == "equip orb")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "equip!";
 	}
 
@@ -403,36 +456,43 @@ void Command::ReadInstruction(String& str)
 	else if (str == "unequip sword")
 	{
 		ModifyItem(sword);
+		ModifyitemName("Sword");
 		str = "unequip!";
 	}
 	else if (str == "unequip shield")
 	{
 		ModifyItem(shield);
+		ModifyitemName("Wooden Shield");
 		str = "unequip!";
 	}
 	else if (str == "equip copper key")
 	{
 		ModifyItem(copper);
+		ModifyitemName("Copper Key");
 		str = "unequip!";
 	}
 	else if (str == "equip silver key")
 	{
 		ModifyItem(silver);
+		ModifyitemName("Silver Key");
 		str = "unequip!";
 	}
 	else if (str == "equip sack of grain")
 	{
 		ModifyItem(sack);
+		ModifyitemName("Sack of grain");
 		str = "unequip!";
 	}
 	else if (str == "equip grenade")
 	{
 		ModifyItem(grenade);
+		ModifyitemName("Grenade");
 		str = "unequip!";
 	}
 	else if (str == "equip orb")
 	{
 		ModifyItem(orb);
+		ModifyitemName("Orb");
 		str = "unequip!";
 	}
 

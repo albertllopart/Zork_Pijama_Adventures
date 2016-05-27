@@ -35,7 +35,7 @@ int main()
 		{
 			position = dungeon.CheckPosition();
 			command.ReadInstruction(order);
-			dungeon.Execute(order, command.GetDirection(), command.GetItem(), position);
+			dungeon.Execute(order, command.GetDirection(), command.GetItemName(), command.GetItem(), position);
 			dungeon.Move(position);
 			command.ModifyDirection(-1);
 			command.ModifyItem(-1);

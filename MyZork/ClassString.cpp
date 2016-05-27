@@ -46,6 +46,14 @@ bool String::operator ==(const char* str)const
 {
 	return strcmp(this->str, str) == 0;
 }
+bool String::operator !=(const String& str)const
+{
+	return strcmp(this->str, str.str) != 0;
+}
+bool String::operator !=(const char* str)const
+{
+	return strcmp(this->str, str) != 0;
+}
 
 void String::operator = (const String& str)
 {

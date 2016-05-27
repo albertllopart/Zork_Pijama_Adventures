@@ -27,7 +27,7 @@ public:
 	void CheckRoom(int room)const;
 	int CheckPosition()const;
 	void Move(int position);
-	void Execute(const String& str, int dir, char* item, int &position)const;
+	void Execute(const String& str, int dir, const String& item, int pickdrop, int &position)const;
 	bool Continue()const;
 
 	void CreateWorld();

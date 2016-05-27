@@ -46,12 +46,12 @@ void Entity::ModifyParameters(const char* str1, const char* str2)
 
 const char* Entity::GetName()const
 {
-	return (char*)name->GetStr();
+	return name->GetStr();
 }
 
 const char* Entity::GetDescription()const
 {
-	return (char*)description->GetStr();
+	return description->GetStr();
 }
 
 int Entity::GetCap()const
@@ -59,13 +59,9 @@ int Entity::GetCap()const
 	return itemCap;
 }
 
-void Entity::PickDrop(int item)
-{
-	if (itemsP[item]) itemsP[item] = false, itemCap--;
-	else itemsP[item] = true, itemCap++;
-}
 
-bool Entity::GetItem(char* item)const
+
+bool Entity::GetItem(const String& item)const
 {
 	if (items.first == nullptr)
 	{
@@ -76,7 +72,7 @@ bool Entity::GetItem(char* item)const
 		dList<Entity*>::dNode* temp = items.first;
 		while (temp != nullptr)
 		{
-			if (temp->data->GetName() == item)
+			if (item == temp->data->GetName())
 			{
 				return true;
 			}

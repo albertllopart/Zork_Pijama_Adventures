@@ -45,46 +45,46 @@ void World::CreateWorld()
 {
 	
 	((Room*)entities[0])->ModifyOptions(2, -1, -1, 1);
-	((Room*)entities[0])->ModifyDoors(1, -1, -1, 0);
+	((Room*)entities[0])->ModifyDoors(13, -1, -1, 12);
 
 	((Room*)entities[1])->ModifyOptions(-1, -1, 0, -1);
-	((Room*)entities[1])->ModifyDoors(-1, -1, 0, -1);
+	((Room*)entities[1])->ModifyDoors(-1, -1, 12, -1);
 
 	((Room*)entities[2])->ModifyOptions(5, 0, 4, 3);
-	((Room*)entities[2])->ModifyDoors(4, 1, 3, 2);
+	((Room*)entities[2])->ModifyDoors(16, 13, 15, 14);
 
 	((Room*)entities[3])->ModifyOptions(-1, -1, 2, -1);
-	((Room*)entities[3])->ModifyDoors(-1, -1, 2, -1);
+	((Room*)entities[3])->ModifyDoors(-1, -1, 14, -1);
 	((Room*)entities[3])->items.PushBack(entities[23]);
 	((Room*)entities[3])->items.PushBack(entities[24]);
 
 	((Room*)entities[4])->ModifyOptions(-1, -1, -1, 2);
-	((Room*)entities[4])->ModifyDoors(-1, -1, -1, 3);
+	((Room*)entities[4])->ModifyDoors(-1, -1, -1, 15);
 	((Room*)entities[4])->items.PushBack(entities[26]);
 
 	((Room*)entities[5])->ModifyOptions(6, 2, -1, -1);
-	((Room*)entities[5])->ModifyDoors(5, 4, -1, -1);
+	((Room*)entities[5])->ModifyDoors(17, 16, -1, -1);
 	((Room*)entities[5])->items.PushBack(entities[25]);
 
 	((Room*)entities[6])->ModifyOptions(9, 5, 8, 7);
-	((Room*)entities[6])->ModifyDoors(8, 5, 7, 6);
+	((Room*)entities[6])->ModifyDoors(20, 17, 19, 18);
 
 	((Room*)entities[7])->ModifyOptions(-1, -1, 6, -1);
-	((Room*)entities[7])->ModifyDoors(-1, -1, 6, -1);
+	((Room*)entities[7])->ModifyDoors(-1, -1, 18, -1);
 	((Room*)entities[7])->items.PushBack(entities[27]);
 
 	((Room*)entities[8])->ModifyOptions(10, -1, -1, 6);
-	((Room*)entities[8])->ModifyDoors(9, -1, -1, 7);
+	((Room*)entities[8])->ModifyDoors(21, -1, -1, 19);
 
 	((Room*)entities[9])->ModifyOptions(-1, 6, -1, -1);
-	((Room*)entities[9])->ModifyDoors(-1, 8, -1, -1);
+	((Room*)entities[9])->ModifyDoors(-1, 20, -1, -1);
 	((Room*)entities[9])->items.PushBack(entities[28]);
 
 	((Room*)entities[10])->ModifyOptions(-1, 8, 11, -1);
-	((Room*)entities[10])->ModifyDoors(-1, 9, 10, -1);
+	((Room*)entities[10])->ModifyDoors(-1, 21, 22, -1);
 
 	((Room*)entities[11])->ModifyOptions(-1, -1, -1, 10);
-	((Room*)entities[11])->ModifyDoors(-1, -1, -1, 10);
+	((Room*)entities[11])->ModifyDoors(-1, -1, -1, 22);
 	((Room*)entities[11])->items.PushBack(entities[29]);
 
 	((Exit*)entities[17])->ModifyState();
@@ -137,23 +137,34 @@ void World::Move(int position)
 {
 	adventurer->ModifyPosition(position);
 }
-void World::Execute(const String& str, int dir, char* item, int &position)const
+void World::Execute(const String& str, int dir, const String& item, int pickdrop, int &position)const
 {
 
 	//LOOK ITEMS / EXITS
 
 	if (str == "look!")
 	{
-		if (item != "none")
+		if (dir == -1)
 		{
 			if (adventurer->GetItem(item))
 			{
-				dList<
-				cout << entities[item + 23]->GetDescription() << " It's in your inventory." << endl << endl;
+				for (int i = 23; i < 30; i++)
+				{
+					if (item == entities[i]->GetName())
+					{
+						cout << entities[i]->GetDescription() << " It's in your inventory." << endl << endl;
+					}
+				}
 			}
 			else if (((Room*)entities[position])->GetItem(item))
 			{
-				cout << entities[item + 23]->GetDescription() << " It's on the floor." << endl << endl;
+				for (int i = 23; i < 30; i++)
+				{
+					if (item == entities[i]->GetName())
+					{
+						cout << entities[i]->GetDescription() << " It's on the floor." << endl << endl;
+					}
+				}
 			}
 			else
 			{
@@ -227,40 +238,34 @@ void World::Execute(const String& str, int dir, char* item, int &position)const
 		cout << ((Room*)entities[position])->GetDescription() << endl;
 		int check = 0;
 
-		for (int i = 0; i < 7; i++)
+		if (((Room*)entities[position])->items.first != nullptr)
 		{
-			if (((Room*)entities[position])->GetItem(i)) check++;
-		}
-		if (check == 0)
-		{
-			cout << "This room contains no items." << endl << endl;
-		}
-		else if (check != 0)
-		{
-			cout << "This room contains ";
-			if (check == 1)
+			if (((Room*)entities[position])->items.first->next == nullptr)
 			{
-				for (int i = 0; i < 7; i++)
-				{
-					if (((Room*)entities[position])->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
-				}
+				cout << "This room contains one " << ((Room*)entities[position])->items.first->data->GetName() << endl << endl;
 			}
-			else if (check > 1)
+			else
 			{
-				for (int i = 0; i < 7; i++)
+				dList<Entity*>::dNode* temp = ((Room*)entities[position])->items.first;
+				cout << "This room contains one " << ((Room*)entities[position])->items.first->data->GetName() << ", ";
+				while (temp->next != nullptr)
 				{
-					if (((Room*)entities[position])->GetItem(i) && check > 1)
+					if (temp->next->next != nullptr)
 					{
-						cout << "one " << entities[i + 23]->GetName() << ", ";
-						check--;
+						temp = temp->next;
+						cout << "one " << temp->data->GetName() << ", ";
 					}
-					else if (((Room*)entities[position])->GetItem(i) && check == 1)
+					else
 					{
-						cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
-						check--;
+						temp = temp->next;
+						cout << "and one " << temp->data->GetName() << endl << endl;
 					}
 				}
 			}
+		}
+		else
+		{
+			cout << "This room contains no items" << endl << endl;
 		}
 	}
 
@@ -275,42 +280,34 @@ void World::Execute(const String& str, int dir, char* item, int &position)const
 
 	else if (str == "lookinventory")
 	{
-		int check = 0;
-
-		for (int i = 0; i < 7; i++)
+		if (adventurer->items.first != nullptr)
 		{
-			if (adventurer->GetItem(i)) check++;
-		}
-		if (check == 0)
-		{
-			cout << "Your inventory is empty." << endl << endl;
-		}
-		else if (check != 0)
-		{
-			cout << "Your inventory contains ";
-			if (check == 1)
+			if (adventurer->items.first->next == nullptr)
 			{
-				for (int i = 0; i < 7; i++)
-				{
-					if (adventurer->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
-				}
+				cout << "Your inventory contains one " << adventurer->items.first->data->GetName() << endl << endl;
 			}
-			else if (check > 1)
+			else
 			{
-				for (int i = 0; i < 7; i++)
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				cout << "Your inventory contains one " << adventurer->items.first->data->GetName() << ", ";
+				while (temp->next != nullptr)
 				{
-					if (adventurer->GetItem(i) && check > 1)
+					if (temp->next->next != nullptr)
 					{
-						cout << "one " << entities[i + 23]->GetName() << ", ";
-						check--;
+						temp = temp->next;
+						cout << "one " << temp->data->GetName() << ", ";
 					}
-					else if (adventurer->GetItem(i) && check == 1)
+					else
 					{
-						cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
-						check--;
+						temp = temp->next;
+						cout << "and one " << temp->data->GetName() << endl << endl;
 					}
 				}
 			}
+		}
+		else
+		{
+			cout << "Your inventory contains no items" << endl << endl;
 		}
 	}
 
@@ -321,42 +318,34 @@ void World::Execute(const String& str, int dir, char* item, int &position)const
 		if (position == 2)
 		{
 			cout << box->GetDescription();
-			int check = 0;
-
-			for (int i = 0; i < 7; i++)
+			if (box->items.first != nullptr)
 			{
-				if (box->GetItem(i)) check++;
+				if (box->items.first->next == nullptr)
+				{
+					cout << "It contains one " << box->items.first->data->GetName() << endl << endl;
+				}
+				else
+				{
+					dList<Entity*>::dNode* temp = box->items.first;
+					cout << "It contains one " << box->items.first->data->GetName() << ", ";
+					while (temp->next != nullptr)
+					{
+						if (temp->next->next != nullptr)
+						{
+							temp = temp->next;
+							cout << "one " << temp->data->GetName() << ", ";
+						}
+						else
+						{
+							temp = temp->next;
+							cout << "and one " << temp->data->GetName() << endl << endl;
+						}
+					}
+				}
 			}
-			if (check == 0)
+			else
 			{
 				cout << " It is empty." << endl << endl;
-			}
-			else if (check != 0)
-			{
-				cout << " It contains ";
-				if (check == 1)
-				{
-					for (int i = 0; i < 7; i++)
-					{
-						if (box->GetItem(i)) cout << "one " << entities[i + 23]->GetName() << "." << endl << endl;
-					}
-				}
-				else if (check > 1)
-				{
-					for (int i = 0; i < 7; i++)
-					{
-						if (box->GetItem(i) && check > 1)
-						{
-							cout << "one " << entities[i + 23]->GetName() << ", ";
-							check--;
-						}
-						else if (box->GetItem(i) && check == 1)
-						{
-							cout << "and one " << entities[i + 23]->GetName() << "." << endl << endl;
-							check--;
-						}
-					}
-				}
 			}
 		}
 		else
@@ -369,42 +358,20 @@ void World::Execute(const String& str, int dir, char* item, int &position)const
 
 	else if (str == "equipment!")
 	{
-		int check = 0;
-
-		for (int i = 0; i < 2; i++)
+		if (adventurer->equipment.first != nullptr)
 		{
-			if (adventurer->GetEquip(i)) check++;
+			if (adventurer->equipment.first->next == nullptr)
+			{
+				cout << "You have a " << adventurer->equipment.first->data->GetName() << " equipped." << endl << endl;
+			}
+			else
+			{
+				cout << "Your have a " << adventurer->equipment.first->data->GetName() << " and a " << adventurer->equipment.first->next->data->GetName() << " equipped." << endl << endl;
+			}
 		}
-		if (check == 0)
+		else
 		{
 			cout << "You don't have anything equipped." << endl << endl;
-		}
-		else if (check != 0)
-		{
-			cout << "You have ";
-			if (check == 1)
-			{
-				for (int i = 0; i < 2; i++)
-				{
-					if (adventurer->GetEquip(i)) cout << "a " << entities[i + 23]->GetName() << " equipped." << endl << endl;
-				}
-			}
-			else if (check > 1)
-			{
-				for (int i = 0; i < 2; i++)
-				{
-					if (adventurer->GetEquip(i) && check > 1)
-					{
-						cout << "a " << entities[i + 23]->GetName();
-						check--;
-					}
-					else if (adventurer->GetEquip(i) && check == 1)
-					{
-						cout << " and a " << entities[i + 23]->GetName() << " equipped." << endl << endl;
-						check--;
-					}
-				}
-			}
 		}
 	}
 
@@ -412,40 +379,69 @@ void World::Execute(const String& str, int dir, char* item, int &position)const
 
 	else if (str == "pick!")
 	{
-		if (adventurer->GetCap() < 3)
-		{
-			if (((Room*)entities[position])->GetItem(item))
-			{
-				adventurer->PickDrop(item);
-				((Room*)entities[position])->PickDrop(item);
-				cout << "You picked a " << entities[item + 23]->GetName() << endl << endl;
-			}
-			else cout << "There's no such item in this room!" << endl << endl;
-		}
-		else if (((Room*)entities[position])->GetItem(item) == false)
+		if (((Room*)entities[position])->GetItem(item) == false)
 		{
 			cout << "There's no such item in this room!" << endl << endl;
 		}
-		else cout << "Your inventory is full! Consider dropping, storing or equipping something to free some space." << endl << endl;
-
+		else
+		{
+			if (adventurer->GetCap() > 2)
+			{
+				cout << "Your inventory is full! Consider dropping, storing or equipping something to free some space." << endl << endl;
+			}
+			else
+			{
+				dList<Entity*>::dNode* temp = ((Room*)entities[position])->items.first;
+				if (temp != nullptr)
+				{
+					while (temp != nullptr)
+					{
+						if (item == temp->data->GetName())
+						{
+							if (temp != nullptr)
+							{
+								adventurer->items.PushBack(temp->data);
+								adventurer->itemCap++;
+								((Room*)entities[position])->items.erase(temp);
+								break;
+							}
+						}
+						temp = temp->next;
+					}
+				}
+				cout << "You picked a " << entities[pickdrop]->GetName() << endl << endl;
+			}
+		}
 	}
 
 	//DROP
 
 	else if (str == "drop!")
 	{
-		if (adventurer->GetItem(item))
+		if (adventurer->GetItem(item) == false)
 		{
-			adventurer->PickDrop(item);
-			((Room*)entities[position])->PickDrop(item);
-			cout << "You dropped the " << entities[item + 23]->GetName() << endl << endl;
+			cout << "There's no such item in your inventory!" << endl << endl;
 		}
-		else cout << "There's no such item in your inventory!" << endl << endl;
+		else
+		{
+			((Room*)entities[position])->items.PushBack(entities[pickdrop]);
+			adventurer->itemCap--;
+			dList<Entity*>::dNode* temp = adventurer->items.first;
+			for (; temp != nullptr; temp = temp->next)
+			{
+				if (item == temp->data->GetName())
+				{
+					adventurer->items.erase(temp);
+					break;
+				}
+			}
+			cout << "You dropped the " << entities[pickdrop]->GetName() << endl << endl;
+		}
 	}
 
 	//PUT ITEM INTO BOX
 
-	else if (str == "putinto")
+	/*else if (str == "putinto")
 	{
 		if (position == 2)
 		{
@@ -537,7 +533,7 @@ void World::Execute(const String& str, int dir, char* item, int &position)const
 		{
 			cout << "You don't have that item equipped!" << endl << endl;
 		}
-	}
+	}*/
 
 	//STATS
 

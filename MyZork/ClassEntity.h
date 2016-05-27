@@ -13,7 +13,6 @@ private:
 	String* description = nullptr;
 
 	Vector<bool> itemsP;
-	int itemCap;
 
 public:
 
@@ -24,13 +23,14 @@ public:
 	~Entity();
 
 	dList <Entity*> items;
+	int itemCap;
 
 	void ModifyParameters(const char* str1, const char* str2);
 	const char* GetName()const;
 	const char* GetDescription()const;
 
 	int GetCap()const;
-	bool GetItem(char* item)const;
+	bool GetItem(const String& item)const;
 
 };
 

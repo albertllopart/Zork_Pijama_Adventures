@@ -23,37 +23,9 @@ void Player::ModifyPosition(int next)
 	position = next;
 }
 
-void Player::EquipUnequip(int item)
-{
-	if (equipment[item])
-	{
-		equipment[item] = false;
-		if (item == 0)
-		{
-			stats[1] += -10;
-		}
-		else if (item == 1)
-		{
-			stats[2] += -10;
-		}
-	}
-	else
-	{
-		equipment[item] = true;
-		if (item == 0)
-		{
-			stats[1] += 10;
-		}
-		else if (item == 1)
-		{
-			stats[2] += 10;
-		}
-	}
-}
-
 bool Player::GetEquip(int item)const
 {
-	return equipment[item];
+	return true;
 }
 
 int Player::GetStat(int stat)const
