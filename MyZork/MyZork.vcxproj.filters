@@ -39,6 +39,15 @@
     <ClCompile Include="ClassEntity.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="ClassCreature.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassNPC.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassEnemy.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassWorld.h">
@@ -66,6 +75,15 @@
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
     <ClInclude Include="Class List.h">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassCreature.h">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassNPC.h">
+      <Filter>Archivos de código fuente</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEnemy.h">
       <Filter>Archivos de código fuente</Filter>
     </ClInclude>
   </ItemGroup>

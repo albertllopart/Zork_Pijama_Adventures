@@ -1,22 +1,10 @@
 #include "ClassPlayer.h"
 
-Player::Player(const char* name, const char* description) : Entity(name, description)
+Player::Player(const char* name, const char* description, int position) : Creature(name, description, position)
 {
-	position = Hall;
-
 	stats.PushBack(100); //HP
 	stats.PushBack(0); //ATTACK
 	stats.PushBack(0); //DEFENSE
-}
-
-int Player::CheckPosition()const
-{
-	return position;
-}
-
-void Player::ModifyPosition(int next)
-{
-	position = next;
 }
 
 void Player::EquipUnequip(const String& item)

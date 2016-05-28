@@ -2,21 +2,21 @@
 
 World::World(const char* str)
 {
-	entities.PushBack(new Room("Hall", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
-	entities.PushBack(new Room("West of hall", "Something smells rotten in this room. It's a lot darker than the hall. There's a misterious masked man in the center staring at you."));
-	entities.PushBack(new Room("North of Hall", "It's a small room with one door at each wall. There's a huge box in the center."));
-	entities.PushBack(new Room("SnS Room", "It's a small room with a strange switch on a wall. There's also a man laying on a blood paddle."));
-	entities.PushBack(new Room("Bathroom", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
-	entities.PushBack(new Room("Copper Room", "Every wall in this room is painted in copper, including both doors."));
-	entities.PushBack(new Room("Silver Room", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
-	entities.PushBack(new Room("Toucan Room", "There's a toucan holding something in his beak. He's laughing at your pijama."));
-	entities.PushBack(new Room("Crack Room", "It's completely empty. There's a suspicious crack on the northern wall."));
-	entities.PushBack(new Room("Grenade Room", "This room would be completely empty if there wasn't a chest right in the center of it."));
-	entities.PushBack(new Room("Dragon Room", "It smells like if something had been burning for days in here. You notice a huge dragon staring at you. His face doesn't look like the face of mercy."));
-	entities.PushBack(new Room("Orb Room", "There's a long passage that leads to something that looks like an altar. Something shines on it."));
+	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
+	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
+	entities.PushBack(new Room(">>> NORTH OF HALL", "It's a small room with one door at each wall. There's a huge box in the center."));
+	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with a strange switch on a wall. There's also a man laying on a blood paddle."));
+	entities.PushBack(new Room(">>> BATHROOM", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
+	entities.PushBack(new Room(">>> COOPER ROOM", "Every wall in this room is painted in copper, including both doors."));
+	entities.PushBack(new Room(">>> SILVER ROOM", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
+	entities.PushBack(new Room(">>> BIRD ROOM", "This room has a high ceiling with a window at the top, but it's impossible to reach."));
+	entities.PushBack(new Room(">>> SUSPICIOUSLY EMPTY ROOM", "It's completely empty. There's a suspicious crack on the northern wall."));
+	entities.PushBack(new Room(">>> CHEST ROOM", "This room would be completely empty if there wasn't a chest right in the center of it."));
+	entities.PushBack(new Room(">>> DRAGON ROOM", "It smells like if something had been burning for days in here. You notice a huge dragon staring at you. His face doesn't look like the face of mercy."));
+	entities.PushBack(new Room(">>> ALTAR ROOM", "There's a long passage that leads to something that looks like an altar. Something shines on it."));
 	
-	entities.PushBack(new Exit("A wooden door that leads to a western room."));
-	entities.PushBack(new Exit("A huge door that leads to a northern room."));
+	entities.PushBack(new Exit("A wooden door."));
+	entities.PushBack(new Exit("A huge door."));
 	entities.PushBack(new Exit("You feel like there's gonna be something useful inside."));
 	entities.PushBack(new Exit("There's a sing on the wall. It says 'Bat room'."));
 	entities.PushBack(new Exit("This door leads deeper into this strange place. It has a strange locking mechanism."));
@@ -35,8 +35,14 @@ World::World(const char* str)
 	entities.PushBack(new Entity("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
 	entities.PushBack(new Entity("Orb", "It's a blue translucid orb with a shinny core."));
 
-	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.");
+	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.", 0);
 	box = new Entity("Box", "It's a wooden box. You can store items in it.");
+	chest = new Entity("Chest", "It's a wooden chest. Luckily it isn't locked.");
+	misterious = new NPC("Misterious", "It's a misterious masked man. He's staring at you.", 1);
+	warrior = new NPC("Warrior", "It's a dead body laying on a blood paddle", 3);
+	toucan = new NPC("Toucan", "An annoying toucan.", 7);
+	skeleton = new NPC("Cool Skeleton", "It's a skeleton who's wearing a cape. He's so cool.", 11);
+	dragon = new Enemy("Dragon", "It's a huge dragon chained to the wall. There's a golden door behind it.", 10);
 
 	playing = true;
 }
@@ -101,7 +107,11 @@ void World::CheckRoom(int room)const
 	{
 		if (((Room*)entities[room])->items.first->next == nullptr)
 		{
-			cout << "This room contains one " << ((Room*)entities[room])->items.first->data->GetName() << endl << endl;
+			cout << "This room contains one " << ((Room*)entities[room])->items.first->data->GetName();
+			if (adventurer->CheckPosition() != misterious->CheckPosition())
+			{
+				cout << endl << endl;
+			}
 		}
 		else
 		{
@@ -117,14 +127,26 @@ void World::CheckRoom(int room)const
 				else
 				{
 					temp = temp->next;
-					cout << "and one " << temp->data->GetName() << endl << endl;
+					cout << "and one " << temp->data->GetName();
+					if (adventurer->CheckPosition() != misterious->CheckPosition())
+					{
+						cout << endl << endl;
+					}
 				}
 			}
 		}
 	}
 	else
 	{
-		cout << "This room contains no items" << endl << endl;
+		cout << "This room contains no items.";
+ 		if (adventurer->CheckPosition() != misterious->CheckPosition())
+		{
+			cout << endl << endl;
+		}
+	}
+	if (adventurer->CheckPosition() == misterious->CheckPosition())
+	{
+		cout << " There's a misterious masked man staring at you." << endl << endl;
 	}
 }
 
@@ -137,7 +159,7 @@ void World::Move(int position)
 {
 	adventurer->ModifyPosition(position);
 }
-void World::Execute(const String& str, int dir, const String& item, int pickdrop, int &position)const
+void World::Execute(const String& str, int dir, const String& item, int pickdrop, int& position)const
 {
 
 	//LOOK ITEMS / EXITS
@@ -189,7 +211,6 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		if (((Room*)entities[position])->CheckOptions(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
 		{
 			position = ((Room*)entities[position])->CheckOptions(dir);
-			CheckRoom(position);
 		}
 		else if (((Room*)entities[position])->CheckOptions(dir) == -1)
 		{
@@ -242,7 +263,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		{
 			if (((Room*)entities[position])->items.first->next == nullptr)
 			{
-				cout << "This room contains one " << ((Room*)entities[position])->items.first->data->GetName() << endl << endl;
+				cout << "This room contains one " << ((Room*)entities[position])->items.first->data->GetName();
 			}
 			else
 			{
@@ -258,15 +279,20 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 					else
 					{
 						temp = temp->next;
-						cout << "and one " << temp->data->GetName() << endl << endl;
+						cout << "and one " << temp->data->GetName();
 					}
 				}
 			}
 		}
 		else
 		{
-			cout << "This room contains no items" << endl << endl;
+			cout << "This room contains no items";
 		}
+		if (adventurer->CheckPosition() == misterious->CheckPosition())
+		{
+			cout << " There's a misterious masked man staring at you.";
+		}
+		cout << endl << endl;
 	}
 
 	//LOOK PLAYER
@@ -351,6 +377,49 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		else
 		{
 			cout << "There's no such thing in this room!" << endl << endl;
+		}
+	}
+
+	//LOOK CHEST
+
+	else if (str == "lookchest!")
+	{
+		if (adventurer->CheckPosition() == 9)
+		{
+			cout << chest->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "There's no chest in here." << endl << endl;
+		}
+	}
+
+	//LOOK MISTERIOUS MASKED MAN && DEAD WARRIOR
+
+	else if (str == "lookmisterious!")
+	{
+		if (adventurer->CheckPosition() == misterious->CheckPosition())
+		{
+			cout << misterious->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "He's not around." << endl << endl;
+		}
+	}
+	else if (str == "lookman!")
+	{
+		if (adventurer->CheckPosition() == misterious->CheckPosition())
+		{
+			cout << misterious->GetDescription() << endl << endl;
+		}
+		else if (adventurer->CheckPosition() == warrior->CheckPosition())
+		{
+			cout << warrior->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "There's no one around." << endl << endl;
 		}
 	}
 

@@ -130,13 +130,39 @@ void Command::ReadInstruction(String& str)
 		str = "lookinventory";
 	}
 
-	//LOOK BOX
+	//LOOK BOX, CHEST, CREATURES
 
 	else if (str == "look box" || str == "check box")
 	{
-		ModifyItem(sword);
-		ModifyitemName("Sword");
 		str = "lookbox!";
+	}
+	else if (str == "look chest")
+	{
+		str = "lookchest!";
+	}
+	else if (str == "look misterious man" || str == "look misterious masked man")
+	{
+		str = "lookmisterious!";
+	}
+	else if (str == "look man")
+	{
+		str = "lookman!";
+	}
+	else if (str == "look body" || str == "look cadaver")
+	{
+		str = "lookwarrior!";
+	}
+	else if (str == "look toucan")
+	{
+		str = "looktoucan!";
+	}
+	else if (str == "look skeleton")
+	{
+		str = "lookskeleton!";
+	}
+	else if (str == "look dragon")
+	{
+		str = "lookdragon!";
 	}
 
 	//LOOK PLAYER
