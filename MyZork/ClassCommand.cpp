@@ -536,6 +536,24 @@ void Command::ReadInstruction(String& str)
 		str = "equipment!";
 	}
 
+	//TELEPORT (FOR DEVELOPER ONLY!!!)
+
+	else if (str == "teleport 1")
+	{
+		str = "teleport 1";
+		dir = 33;
+	}
+	else if (str == "teleport 2")
+	{
+		str = "teleport 2";
+		dir = 33;
+	}
+	else if (str == "teleport 3")
+	{
+		str = "teleport 3";
+		dir = 33;
+	}
+
 	//ELSE
 
 	else

@@ -5,7 +5,7 @@ World::World(const char* str)
 	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
 	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
 	entities.PushBack(new Room(">>> NORTH OF HALL", "It's a small room with one door at each wall. There's a huge box in the center."));
-	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with a strange switch on a wall. There's also a man laying on a blood paddle."));
+	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with a strange switch on a wall. There's also a man laying on a blood puddle."));
 	entities.PushBack(new Room(">>> BATHROOM", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
 	entities.PushBack(new Room(">>> COOPER ROOM", "Every wall in this room is painted in copper, including both doors."));
 	entities.PushBack(new Room(">>> SILVER ROOM", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
@@ -39,7 +39,7 @@ World::World(const char* str)
 	box = new Entity("Box", "It's a wooden box. You can store items in it.");
 	chest = new Entity("Chest", "It's a wooden chest. Luckily it isn't locked.");
 	misterious = new NPC("Misterious", "It's a misterious masked man. He's staring at you.", 1);
-	warrior = new NPC("Warrior", "It's a dead body laying on a blood paddle", 3);
+	warrior = new NPC("Warrior", "It's a dead body laying on a blood puddle.", 3);
 	toucan = new NPC("Toucan", "An annoying toucan.", 7);
 	skeleton = new NPC("Cool Skeleton", "It's a skeleton who's wearing a cape. He's so cool.", 11);
 	dragon = new Enemy("Dragon", "It's a huge dragon chained to the wall. There's a golden door behind it.", 10);
@@ -394,7 +394,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		}
 	}
 
-	//LOOK MISTERIOUS MASKED MAN && DEAD WARRIOR
+	//LOOK NPC'S
 
 	else if (str == "lookmisterious!")
 	{
@@ -420,6 +420,39 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		else
 		{
 			cout << "There's no one around." << endl << endl;
+		}
+	}
+	else if (str == "lookwarrior!")
+	{
+		if (adventurer->CheckPosition() == warrior->CheckPosition())
+		{
+			cout << warrior->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "There's no such thing in here." << endl << endl;
+		}
+	}
+	else if (str == "looktoucan!")
+	{
+		if (adventurer->CheckPosition() == toucan->CheckPosition())
+		{
+			cout << toucan->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "There's no bird here." << endl << endl;
+		}
+	}
+	else if (str == "lookskeleton!")
+	{
+		if (adventurer->CheckPosition() == skeleton->CheckPosition())
+		{
+			cout << skeleton->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "There's no skeleton here." << endl << endl;
 		}
 	}
 
@@ -658,6 +691,21 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		cout << "HP:       " << adventurer->GetStat(0) << endl;
 		cout << "Attack:   " << adventurer->GetStat(1) << endl;
 		cout << "Defense:  " << adventurer->GetStat(2) << endl << endl;
+	}
+
+	//TELEPORT (ONLY FOR DEVELOPER!!!)
+
+	else if (str == "teleport 1")
+	{
+		position = 0;
+	}
+	else if (str == "teleport 2")
+	{
+		position = 6;
+	}
+	else if (str == "teleport 3")
+	{
+		position = 11;
 	}
 }
 
