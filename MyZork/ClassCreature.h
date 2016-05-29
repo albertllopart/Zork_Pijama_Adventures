@@ -16,6 +16,8 @@ public:
 	Creature(const char* name, const char* description, int position);
 	~Creature();
 
+	int state;
+
 	int CheckPosition()const;
 	void ModifyPosition(int next);
 	

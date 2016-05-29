@@ -182,6 +182,13 @@ void Command::ReadInstruction(String& str)
 		str = "lookroom";
 	}
 
+	//TALK TO MISTERIOUS MASKED MAN
+
+	else if (str == "talk to man" || str == "talk to the man" || str == "talk man" || str == "talk to misterious man" || str == "talk to misterious masked man")
+	{
+		str = "talkman!";
+	}
+
 	//GO
 
 	else if (str == "go north"|| str == "north"|| str == "n") 

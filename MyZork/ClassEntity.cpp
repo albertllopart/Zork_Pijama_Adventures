@@ -7,10 +7,6 @@ Entity::Entity(const char* name, const char* description)
 	this->name = new String(name);
 	this->description = new String(description);
 
-	for (int i = 0; i < 7; i++)
-	{
-		itemsP.PushBack(false);
-	}
 	itemCap = 0;
 }
 
@@ -19,10 +15,6 @@ Entity::Entity(const String& name, const String& description)
 	this->name = new String(name);
 	this->description = new String(description);
 
-	for (int i = 0; i < 7; i++)
-	{
-		itemsP.PushBack(false);
-	}
 	itemCap = 0;
 }
 

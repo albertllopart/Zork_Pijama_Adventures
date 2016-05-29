@@ -3,6 +3,7 @@
 Creature::Creature(const char* name, const char* description, int position) : Entity(name, description)
 {
 	this->position = position;
+	state = 0;
 }
 
 int Creature::CheckPosition()const

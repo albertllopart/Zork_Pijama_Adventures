@@ -12,8 +12,6 @@ private:
 	String* name = nullptr;
 	String* description = nullptr;
 
-	Vector<bool> itemsP;
-
 public:
 
 	Entity();

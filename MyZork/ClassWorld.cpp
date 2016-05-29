@@ -27,7 +27,7 @@ World::World(const char* str)
 	entities.PushBack(new Exit("There's a crack on the wall."));
 	entities.PushBack(new Exit("It's a door made out of gold."));
 
-	entities.PushBack(new Entity("Sword", "It's a sharp sword!"));
+	entities.PushBack(new Entity("Sword", "It's a sharp sword."));
 	entities.PushBack(new Entity("Wooden Shield", "It's a shield strong enough to resist some hits, but do not try to parry fire attacks with it!"));
 	entities.PushBack(new Entity("Sack of grain", "It's a small sack full of grain."));
 	entities.PushBack(new Entity("Copper Key", "It's a key made out of copper."));
@@ -38,10 +38,17 @@ World::World(const char* str)
 	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.", 0);
 	box = new Entity("Box", "It's a wooden box. You can store items in it.");
 	chest = new Entity("Chest", "It's a wooden chest. Luckily it isn't locked.");
-	misterious = new NPC("Misterious", "It's a misterious masked man. He's staring at you.", 1);
-	warrior = new NPC("Warrior", "It's a dead body laying on a blood puddle.", 3);
-	toucan = new NPC("Toucan", "An annoying toucan.", 7);
-	skeleton = new NPC("Cool Skeleton", "It's a skeleton who's wearing a cape. He's so cool.", 11);
+	misterious = new NPC("Misterious", "It's a misterious masked man. He's staring at you.", 1, 
+		". Don't worry, I will not do any harm to you. I guess you might be wondering how the hell you ended up here. Let's make a deal: I'll tell you everything you want to know if you bring me something I want so badly. It's a treasure that's been held in here for so long. You'll know what it is as soon as you find it. Will you help me?", 
+		"Okay, do what you want, but you ain't getting outta here without my help. Cya.", 
+		"Have you changed your mind? Will you help me?",
+		"Great! Listen carefully: ", 
+		"Prove your value first. Bring me a sword and I'll give you something you'll be needing sooner or later. Don't worry, you'll get to keep the sword. I opened the northern door of the Hall for you. Let's bounce!",
+		"Nice sword you found there. I'm afraid it belonged to the last dude I sent on a quest. But don't worry, take this shield and you'll be fine. You've proven your value. Good luck on your quest!",
+		"Are you really expecting me to say something else? This can only mean you still don't know about the lazyness of my programmer. Get outta here, you're on a quest!");
+	warrior = new NPC("Warrior", "It's a dead body laying on a blood puddle.", 3, " ", " ", " ", " ", " ", " ", " ");
+	toucan = new NPC("Toucan", "An annoying toucan.", 7, " ", " ", " ", " ", " ", " ", " ");
+	skeleton = new NPC("Cool Skeleton", "It's a skeleton who's wearing a cape. He's so cool.", 11, " ", " ", " ", " ", " ", " ", " ");
 	dragon = new Enemy("Dragon", "It's a huge dragon chained to the wall. There's a golden door behind it.", 10);
 
 	playing = true;
@@ -219,6 +226,137 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		else
 		{
 			cout << "The door is closed." << endl << endl;
+		}
+	}
+
+	//CONVERSATION WITH MASKED MAN
+
+	else if (str == "talkman!")
+	{
+		if (adventurer->CheckPosition() == misterious->CheckPosition() && misterious->state != 3)
+		{
+			char buffer[25] = "lel";
+			String answer(buffer);
+			misterious->talking = true;
+
+			if (adventurer->GetItem("Sword") && misterious->state < 4)
+			{
+				misterious->state = 3;
+			}
+
+			while (misterious->talking)
+			{
+				switch (misterious->state)
+				{
+				case 0: //INTRODUCTION
+					cout << "Hi, " << adventurer->GetName() << misterious->GetDialog(1) << endl << endl;
+					while (1)
+					{
+						gets_s(buffer);
+						answer = buffer;
+						if (answer == "yes" || answer == "y" || answer == "sure" || answer == "yeah")
+						{
+							cout << misterious->GetDialog(4);
+							misterious->state = 2;
+							break;
+						}
+						else if (answer == "no" || answer == "n" || answer == "nope" || answer == "nah")
+						{
+							cout << misterious->GetDialog(2) << endl << endl;
+							misterious->state = 1;
+							misterious->talking = false;
+							break;
+						}
+						else if (answer == "shortcut")
+						{
+							cout << "Skipping dialog" << endl << endl;
+							misterious->state = 3;
+							break;
+						}
+						else
+						{
+							cout << "Sorry, what did you say again?" << endl << endl;
+						}
+					}
+					break;
+
+				case 1: //QUESTION LOOP
+					cout << misterious->GetDialog(3) << endl << endl;
+					while (1)
+					{
+						gets_s(buffer);
+						answer = buffer;
+						if (answer == "yes" || answer == "y" || answer == "sure" || answer == "yeah")
+						{
+							cout << misterious->GetDialog(4);
+							misterious->state = 2;
+							break;
+						}
+						else if (answer == "no" || answer == "n" || answer == "nope" || answer == "nah")
+						{
+							cout << misterious->GetDialog(2) << endl << endl;
+							misterious->state = 1;
+							misterious->talking = false;
+							break;
+						}
+						else if (answer == "shortcut")
+						{
+							cout << "Skipping dialog" << endl << endl;
+							misterious->state = 3;
+							break;
+						}
+						else
+						{
+							cout << "Sorry, what did you say again?" << endl << endl;
+						}
+					}
+					break;
+
+				case 2: //THE QUEST BEGINS!
+					cout << misterious->GetDialog(5) << endl << endl;
+					misterious->talking = false;
+					break;
+
+				case 3: //THE QUEST CONTINUES!
+					cout << misterious->GetDialog(6) << endl << endl;
+					misterious->talking = false;
+					misterious->state = 4;
+					break;
+
+				case 4: //LAZY PROGRAMMER
+					cout << misterious->GetDialog(7) << endl << endl;
+					misterious->talking = false;
+					misterious->state = 5;
+					break;
+
+				case 5: //JOKE
+					cout << "Yes, my programmer writes 'lazyness' cause it's an even lazier way of writting 'laziness'. Now go!" << endl << endl;
+					misterious->talking = false;
+					misterious->state = 6;
+					break;
+
+				case 6: //JOKE
+					cout << "Did you hear about the guy whose whole left side was cut off? He's all right now." << endl << endl;
+					misterious->talking = false;
+					misterious->state = 7;
+					break;
+
+				case 7: //JOKE
+					cout << "I originally wasn't going to get a brain transplant, but then I changed my mind." << endl << endl;
+					misterious->talking = false;
+					misterious->state = 8;
+					break;
+
+				case 8: //...LOOP
+					cout << "..." << endl << endl;
+					misterious->talking = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			cout << "He's not around." << endl << endl;
 		}
 	}
 
@@ -456,6 +594,19 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		}
 	}
 
+	//LOOK ENEMIES
+
+	else if (str == "lookdragon!")
+	{
+		if (adventurer->CheckPosition() == dragon->CheckPosition())
+		{
+			cout << dragon->GetDescription() << endl << endl;
+		}
+		else
+		{
+			cout << "There's no dragon in here. Wow, am I really this predictable?" << endl << endl;
+		}
+	}
 	//LOOK EQUIPMENT
 
 	else if (str == "equipment!")
