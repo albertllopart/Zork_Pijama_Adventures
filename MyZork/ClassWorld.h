@@ -36,6 +36,8 @@ public:
 	int CheckPosition()const;
 	void Move(int position);
 	void Execute(const String& str, int dir, const String& item, int pickdrop, int& position)const;
+	bool Talking()const;
+	void NPCMove(int direction);
 	bool Continue()const;
 
 	void CreateWorld();

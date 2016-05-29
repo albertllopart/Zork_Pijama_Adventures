@@ -5,6 +5,7 @@ Room::Room(){};
 Room::Room(const char* name, const char* description) : Entity(name, description)
 {
 	firstVisit = true;
+	NPCallow = false;
 }
 
 int Room::CheckOptions(int dir)const

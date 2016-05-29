@@ -21,6 +21,8 @@ public:
 	int CheckOptions(int dir)const;
 	int CheckDoors(int dir)const;
 
+	bool NPCallow;
+
 	void ModifyOptions(int n, int s, int e, int w);
 	void ModifyDoors(int n, int s, int e, int w);
 

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "ClassWorld.h"
 #include "ClassString.h"
+#include <time.h>
+#include <Windows.h>
+#include <conio.h>
 
 
 
@@ -16,35 +19,51 @@ int main()
 	World dungeon(PlayerName);
 	Command command;
 	
+	srand(time(NULL));
+
 	dungeon.CreateWorld();
 
 	char instruction[50];
 	String order(instruction);
 	int position = 0;
 	int lastposition;
+	int time = 0;
+	int lapse = 0;
 
 	cout << endl << "You wake up in a strange place you can't recognize. You can't remember what you were doing before falling unconscious." << endl << endl;
 	dungeon.CheckRoom(0);
 
 	while (dungeon.Continue())
 	{
-		gets_s(instruction);
-		order = instruction;
+		time = GetTickCount();
 
-		if (order == "quit") dungeon.EndGame();
-		else
+		if (dungeon.Talking() == false && time >= lapse + 5000)
 		{
-			lastposition = position;
-			position = dungeon.CheckPosition();
-			command.ReadInstruction(order);
-			dungeon.Execute(order, command.GetDirection(), command.GetItemName(), command.GetItem(), position);
-			dungeon.Move(position);
-			if (command.GetDirection() != -1 && order != "look!" && order != "open!" && order != "close!" && lastposition != position)
+			lapse = time;
+			int direction = rand() % 4;
+			dungeon.NPCMove(direction);
+		}
+
+		if (_kbhit())
+		{
+			gets_s(instruction);
+			order = instruction;
+
+			if (order == "quit") dungeon.EndGame();
+			else
 			{
-				dungeon.CheckRoom(position);
+				lastposition = position;
+				position = dungeon.CheckPosition();
+				command.ReadInstruction(order);
+				dungeon.Execute(order, command.GetDirection(), command.GetItemName(), command.GetItem(), position);
+				dungeon.Move(position);
+				if (command.GetDirection() != -1 && order != "look!" && order != "open!" && order != "close!" && lastposition != position)
+				{
+					dungeon.CheckRoom(position);
+				}
+				command.ModifyDirection(-1);
+				command.ModifyItem(-1);
 			}
-			command.ModifyDirection(-1);
-			command.ModifyItem(-1);
 		}
 	}
 }

@@ -9,12 +9,13 @@ class Creature :public Entity
 {
 private:
 
-	int position;
 
 public:
 
 	Creature(const char* name, const char* description, int position);
 	~Creature();
+
+	int position;
 
 	int state;
 

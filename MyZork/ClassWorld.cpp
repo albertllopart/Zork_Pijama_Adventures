@@ -5,7 +5,7 @@ World::World(const char* str)
 	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
 	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
 	entities.PushBack(new Room(">>> NORTH OF HALL", "It's a small room with one door at each wall. There's a huge box in the center."));
-	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with a strange switch on a wall. There's also a man laying on a blood puddle."));
+	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with lots of torches. There's also a man laying on a blood puddle."));
 	entities.PushBack(new Room(">>> BATHROOM", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster. There's a suspicious button behind the toilet."));
 	entities.PushBack(new Room(">>> COOPER ROOM", "Every wall in this room is painted in copper, including both doors."));
 	entities.PushBack(new Room(">>> SILVER ROOM", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
@@ -59,12 +59,15 @@ void World::CreateWorld()
 	
 	((Room*)entities[0])->ModifyOptions(2, -1, -1, 1);
 	((Room*)entities[0])->ModifyDoors(13, -1, -1, 12);
+	((Room*)entities[0])->NPCallow = true;
 
 	((Room*)entities[1])->ModifyOptions(-1, -1, 0, -1);
 	((Room*)entities[1])->ModifyDoors(-1, -1, 12, -1);
+	((Room*)entities[1])->NPCallow = true;
 
 	((Room*)entities[2])->ModifyOptions(5, 0, 4, 3);
 	((Room*)entities[2])->ModifyDoors(16, 13, 15, 14);
+	((Room*)entities[2])->NPCallow = true;
 
 	((Room*)entities[3])->ModifyOptions(-1, -1, 2, -1);
 	((Room*)entities[3])->ModifyDoors(-1, -1, 14, -1);
@@ -73,6 +76,7 @@ void World::CreateWorld()
 	((Room*)entities[4])->ModifyOptions(-1, -1, -1, 2);
 	((Room*)entities[4])->ModifyDoors(-1, -1, -1, 15);
 	((Room*)entities[4])->items.PushBack(entities[26]);
+	((Room*)entities[4])->NPCallow = true;
 
 	((Room*)entities[5])->ModifyOptions(6, 2, -1, -1);
 	((Room*)entities[5])->ModifyDoors(17, 16, -1, -1);
@@ -168,9 +172,38 @@ int World::CheckPosition()const
 	return adventurer->CheckPosition();
 }
 
+bool World::Talking()const
+{
+	return misterious->talking;
+}
+
 void World::Move(int position)
 {
 	adventurer->ModifyPosition(position);
+}
+
+void World::NPCMove(int direction)
+{
+	int oldpos = 12;
+	if (adventurer->CheckPosition() == misterious->position)
+	{
+		oldpos = adventurer->CheckPosition();
+	}
+	if (((Room*)entities[misterious->CheckPosition()])->CheckOptions(direction) != -1 && ((Exit*)entities[((Room*)entities[misterious->CheckPosition()])->CheckDoors(direction)])->IsOpen())
+	{
+		if (((Room*)entities[((Room*)entities[misterious->position])->CheckOptions(direction)])->NPCallow)
+		{
+			misterious->position = ((Room*)entities[misterious->position])->CheckOptions(direction);
+			if (misterious->position == adventurer->CheckPosition())
+			{
+				cout << "A misterious masked man walked into the room." << endl << endl;
+			}
+			else if (oldpos != 12)
+			{
+				cout << "A misterious masked man left the room." << endl << endl;
+			}
+		}
+	}
 }
 void World::Execute(const String& str, int dir, const String& item, int pickdrop, int& position)const
 {
@@ -540,7 +573,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		{
 			if (adventurer->CheckPosition() == 8)
 			{
-				cout << "You threw the grenade against the wall. The explosion dug a path into it" << endl << endl;
+				cout << "You threw the grenade against the wall. The explosion caused the wall to fall to pieces leaving a hole behind it." << endl << endl;
 				adventurer->itemCap--;
 				((Exit*)entities[21])->ModifyState();
 				((Exit*)entities[21])->ModifyDescription("A huge hole that leads deeper into this strange place.");
@@ -599,7 +632,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		}
 		else
 		{
-			cout << "This room contains no items";
+			cout << "This room contains no items.";
 		}
 		if (adventurer->CheckPosition() == misterious->CheckPosition())
 		{
