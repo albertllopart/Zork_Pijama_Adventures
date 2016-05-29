@@ -226,6 +226,14 @@ void Command::ReadInstruction(String& str)
 	{
 		str = "pressbutton!";
 	}
+
+	//SACK OF GRAIN
+
+	else if (str == "use sack of grain")
+	{
+		ModifyitemName("Sack of grain");
+		str = "sackofgrain!";
+	}
 	
 	//PICK
 

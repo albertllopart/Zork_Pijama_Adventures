@@ -69,7 +69,6 @@ void World::CreateWorld()
 	((Room*)entities[3])->ModifyOptions(-1, -1, 2, -1);
 	((Room*)entities[3])->ModifyDoors(-1, -1, 14, -1);
 	((Room*)entities[3])->items.PushBack(entities[23]);
-	((Room*)entities[3])->items.PushBack(entities[24]);
 
 	((Room*)entities[4])->ModifyOptions(-1, -1, -1, 2);
 	((Room*)entities[4])->ModifyDoors(-1, -1, -1, 15);
@@ -84,7 +83,6 @@ void World::CreateWorld()
 
 	((Room*)entities[7])->ModifyOptions(-1, -1, 6, -1);
 	((Room*)entities[7])->ModifyDoors(-1, -1, 18, -1);
-	((Room*)entities[7])->items.PushBack(entities[27]);
 
 	((Room*)entities[8])->ModifyOptions(10, -1, -1, 6);
 	((Room*)entities[8])->ModifyDoors(21, -1, -1, 19);
@@ -148,7 +146,7 @@ void World::CheckRoom(int room)const
 	else
 	{
 		cout << "This room contains no items.";
- 		if (adventurer->CheckPosition() != misterious->CheckPosition())
+		if (adventurer->CheckPosition() != misterious->CheckPosition() && adventurer->CheckPosition() != toucan->CheckPosition())
 		{
 			cout << endl << endl;
 		}
@@ -156,6 +154,10 @@ void World::CheckRoom(int room)const
 	if (adventurer->CheckPosition() == misterious->CheckPosition())
 	{
 		cout << " There's a misterious masked man staring at you." << endl << endl;
+	}
+	if (adventurer->CheckPosition() == toucan->CheckPosition())
+	{
+		cout << " There's a toucan holding something in his beak, but you can't reach it either." << endl << endl;
 	}
 }
 
@@ -323,6 +325,8 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 
 				case 3: //THE QUEST CONTINUES!
 					cout << misterious->GetDialog(6) << endl << endl;
+					cout << "You recieved a Wooden Shield!" << endl << endl;
+					adventurer->items.PushBack(entities[24]);
 					misterious->talking = false;
 					misterious->state = 4;
 					break;
@@ -370,6 +374,14 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 	{
 		switch (position)
 		{
+		case 0:
+			cout << "It is locked with a mechanism you don't understand." << endl << endl;
+			break;
+
+		case 2:
+			cout << "It is locked with a mechanism you don't understand." << endl << endl;
+			break;
+
 		case 5:
 			if (((Exit*)entities[17])->IsOpen() == false && adventurer->GetItem("Copper Key"))
 			{
@@ -387,10 +399,18 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 					}
 				}
 			}
+			else if (((Exit*)entities[17])->IsOpen())
+			{
+				cout << "The door is already open." << endl << endl;
+			}
+			else
+			{
+				cout << "You need the Copper Key to open this door." << endl << endl;
+			}
 			break;
 
 		case 6:
-			if (((Exit*)entities[20])->IsOpen() == false && adventurer->GetItem("Copper Key"))
+			if (((Exit*)entities[20])->IsOpen() == false && adventurer->GetItem("Silver Key"))
 			{
 				((Exit*)entities[20])->ModifyState();
 				cout << "You used the Silver Key to open the Silver Door" << endl << endl;
@@ -406,6 +426,18 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 					}
 				}
 			}
+			else if (((Exit*)entities[20])->IsOpen())
+			{
+				cout << "The door is already open." << endl << endl;
+			}
+			else
+			{
+				cout << "You need the Silver Key to open this door." << endl << endl;
+			}
+			break;
+
+		default:
+			cout << "There's are no locked doors nearby." << endl << endl;
 			break;
 		}
 	}
@@ -429,6 +461,39 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		else
 		{
 			cout << "There's no such thing nearby." << endl << endl;
+		}
+	}
+
+	//SACK OF GRAIN
+
+	else if (str == "sackofgrain!")
+	{
+		if (adventurer->GetItem(item))
+		{
+			if (adventurer->CheckPosition() == 7)
+			{
+				cout << "You put the Sack of grain on the floor. The toucan noticed it, dropped what he was holding, grabbed the Sack and got away through the window." << endl << endl;
+				toucan->ModifyPosition(12);
+				((Room*)entities[position])->items.PushBack(entities[27]);
+				adventurer->itemCap--;
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				for (; temp != nullptr; temp = temp->next)
+				{
+					if (item == temp->data->GetName())
+					{
+						adventurer->items.erase(temp);
+						break;
+					}
+				}
+			}
+			else
+			{
+				cout << "Nothing happened." << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "You don't have that in your inventory." << endl << endl;
 		}
 	}
 
@@ -471,6 +536,10 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		if (adventurer->CheckPosition() == misterious->CheckPosition())
 		{
 			cout << " There's a misterious masked man staring at you.";
+		}
+		if (adventurer->CheckPosition() == toucan->CheckPosition())
+		{
+			cout << " There's a toucan holding something in his beak, but you can't reach it either.";
 		}
 		cout << endl << endl;
 	}
