@@ -220,6 +220,14 @@ void Command::ReadInstruction(String& str)
 		str = "open!";
 	}
 
+	//OPEN CHEST
+
+	else if (str == "open chest")
+	{
+		ModifyitemName("Grenade");
+		str = "openchest!";
+	}
+
 	//BUTTON
 
 	else if (str == "press button")
@@ -233,6 +241,14 @@ void Command::ReadInstruction(String& str)
 	{
 		ModifyitemName("Sack of grain");
 		str = "sackofgrain!";
+	}
+
+	//GRENADE
+
+	else if (str == "use grenade")
+	{
+		ModifyitemName("Grenade");
+		str = "grenade!";
 	}
 	
 	//PICK

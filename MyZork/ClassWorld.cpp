@@ -89,7 +89,6 @@ void World::CreateWorld()
 
 	((Room*)entities[9])->ModifyOptions(-1, 6, -1, -1);
 	((Room*)entities[9])->ModifyDoors(-1, 20, -1, -1);
-	((Room*)entities[9])->items.PushBack(entities[28]);
 
 	((Room*)entities[10])->ModifyOptions(-1, 8, 11, -1);
 	((Room*)entities[10])->ModifyDoors(-1, 21, 22, -1);
@@ -102,6 +101,9 @@ void World::CreateWorld()
 	((Exit*)entities[16])->ModifyState();
 	((Exit*)entities[17])->ModifyState();
 	((Exit*)entities[20])->ModifyState();
+	((Exit*)entities[21])->ModifyState();
+
+	chest->items.PushBack(entities[28]);
 
 }
 
@@ -226,6 +228,10 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		else if (((Room*)entities[position])->CheckOptions(dir) == -1)
 		{
 			cout << "There's no room in that direction." << endl << endl;
+		}
+		else if (adventurer->CheckPosition() == 8)
+		{
+			cout << "There's no room in that direction" << endl << endl;
 		}
 		else
 		{
@@ -442,6 +448,35 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		}
 	}
 
+	//OPEN CHEST
+
+	else if (str == "openchest!")
+	{
+		if (adventurer->CheckPosition() == 9 && chest->GetItem(item))
+		{
+			cout << "You got a Grenade from the chest!" << endl << endl;
+			adventurer->items.PushBack(entities[28]);
+			adventurer->itemCap++;
+			dList<Entity*>::dNode* temp = chest->items.first;
+			for (; temp != nullptr; temp = temp->next)
+			{
+				if (item == temp->data->GetName())
+				{
+					chest->items.erase(temp);
+					break;
+				}
+			}
+		}
+		else if (adventurer->CheckPosition() == 9 && chest->GetItem(item) == false)
+		{
+			cout << "How can you pretend to open something that's already open?" << endl << endl;
+		}
+		else
+		{
+			cout << "There's no chest in here." << endl << endl;
+		}
+	}
+
 	//BUTTON
 
 	else if (str == "pressbutton!")
@@ -489,6 +524,39 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 			else
 			{
 				cout << "Nothing happened." << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "You don't have that in your inventory." << endl << endl;
+		}
+	}
+
+	//GRENADE
+
+	else if (str == "grenade!")
+	{
+		if (adventurer->GetItem(item))
+		{
+			if (adventurer->CheckPosition() == 8)
+			{
+				cout << "You threw the grenade against the wall. The explosion dug a path into it" << endl << endl;
+				adventurer->itemCap--;
+				((Exit*)entities[21])->ModifyState();
+				((Exit*)entities[21])->ModifyDescription("A huge hole that leads deeper into this strange place.");
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				for (; temp != nullptr; temp = temp->next)
+				{
+					if (item == temp->data->GetName())
+					{
+						adventurer->items.erase(temp);
+						break;
+					}
+				}
+			}
+			else
+			{
+				cout << "You better don't use it here." << endl << endl;
 			}
 		}
 		else

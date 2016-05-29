@@ -25,6 +25,7 @@ public:
 	int itemCap;
 
 	void ModifyParameters(const char* str1, const char* str2);
+	void ModifyDescription(const char* newdescription);
 	const char* GetName()const;
 	const char* GetDescription()const;
 
