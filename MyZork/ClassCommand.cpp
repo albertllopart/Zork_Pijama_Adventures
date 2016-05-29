@@ -215,50 +215,18 @@ void Command::ReadInstruction(String& str)
 
 	//OPEN
 
-	else if (str == "open north") 
+	else if (str == "open door") 
 	{
-		ModifyDirection(north);
-		str = "open!";
-	}
-	else if (str == "open south")
-	{
-		ModifyDirection(south);
-		str = "open!";
-	}
-	else if (str == "open east")
-	{
-		ModifyDirection(east);
-		str = "open!";
-	}
-	else if (str == "open west")
-	{
-		ModifyDirection(west);
 		str = "open!";
 	}
 
-	//CLOSE
+	//BUTTON
 
-	else if (str == "close north") 
+	else if (str == "press button")
 	{
-		ModifyDirection(north);
-		str = "close!";
+		str = "pressbutton!";
 	}
-	else if (str == "close south")
-	{
-		ModifyDirection(south);
-		str = "close!";
-	}
-	else if (str == "close east")
-	{
-		ModifyDirection(east);
-		str = "close!";
-	}
-	else if (str == "close west")
-	{
-		ModifyDirection(west);
-		str = "close!";
-	}
-
+	
 	//PICK
 
 	else if (str == "pick sword")

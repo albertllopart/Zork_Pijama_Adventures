@@ -6,7 +6,7 @@ World::World(const char* str)
 	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
 	entities.PushBack(new Room(">>> NORTH OF HALL", "It's a small room with one door at each wall. There's a huge box in the center."));
 	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with a strange switch on a wall. There's also a man laying on a blood puddle."));
-	entities.PushBack(new Room(">>> BATHROOM", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster."));
+	entities.PushBack(new Room(">>> BATHROOM", "So this is actually a bathroom. Someone must've erased the 'h' on the entrance sign. Such a filthy prankster. There's a suspicious button behind the toilet."));
 	entities.PushBack(new Room(">>> COOPER ROOM", "Every wall in this room is painted in copper, including both doors."));
 	entities.PushBack(new Room(">>> SILVER ROOM", "Every wall in this room is painted in silver but this time it's only the northern door the one painted the same way."));
 	entities.PushBack(new Room(">>> BIRD ROOM", "This room has a high ceiling with a window at the top, but it's impossible to reach."));
@@ -100,6 +100,8 @@ void World::CreateWorld()
 	((Room*)entities[11])->ModifyDoors(-1, -1, -1, 22);
 	((Room*)entities[11])->items.PushBack(entities[29]);
 
+	((Exit*)entities[13])->ModifyState();
+	((Exit*)entities[16])->ModifyState();
 	((Exit*)entities[17])->ModifyState();
 	((Exit*)entities[20])->ModifyState();
 
@@ -258,6 +260,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 						{
 							cout << misterious->GetDialog(4);
 							misterious->state = 2;
+							((Exit*)entities[13])->ModifyState();
 							break;
 						}
 						else if (answer == "no" || answer == "n" || answer == "nope" || answer == "nah")
@@ -290,6 +293,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 						{
 							cout << misterious->GetDialog(4);
 							misterious->state = 2;
+							((Exit*)entities[13])->ModifyState();
 							break;
 						}
 						else if (answer == "no" || answer == "n" || answer == "nope" || answer == "nah")
@@ -364,29 +368,67 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 
 	else if (str == "open!")
 	{
-		if (((Room*)entities[position])->CheckDoors(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen() == false)
+		switch (position)
 		{
-			((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->ModifyState();
-			cout << "The door is now open." << endl << endl;
-		}
-		else if (((Room*)entities[position])->CheckDoors(dir) == -1)
-		{
-			cout << "There's no door in that direction." << endl << endl;
-		}
-		else
-		{
-			cout << "The door is already open." << endl << endl;
+		case 5:
+			if (((Exit*)entities[17])->IsOpen() == false && adventurer->GetItem("Copper Key"))
+			{
+				((Exit*)entities[17])->ModifyState();
+				cout << "You used the Copper Key to open the Copper Door" << endl << endl;
+				adventurer->itemCap--;
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				String key("Copper Key");
+				for (; temp != nullptr; temp = temp->next)
+				{
+					if (key == temp->data->GetName())
+					{
+						adventurer->items.erase(temp);
+						break;
+					}
+				}
+			}
+			break;
+
+		case 6:
+			if (((Exit*)entities[20])->IsOpen() == false && adventurer->GetItem("Copper Key"))
+			{
+				((Exit*)entities[20])->ModifyState();
+				cout << "You used the Silver Key to open the Silver Door" << endl << endl;
+				adventurer->itemCap--;
+				dList<Entity*>::dNode* temp = adventurer->items.first;
+				String key("Silver Key");
+				for (; temp != nullptr; temp = temp->next)
+				{
+					if (key == temp->data->GetName())
+					{
+						adventurer->items.erase(temp);
+						break;
+					}
+				}
+			}
+			break;
 		}
 	}
 
-	//CLOSE
+	//BUTTON
 
-	else if (str == "close!")
+	else if (str == "pressbutton!")
 	{
-		if (((Room*)entities[position])->CheckDoors(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
+		if (adventurer->CheckPosition() == 4)
 		{
-			((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->ModifyState();
-			cout << "The door is now closed" << endl << endl;
+			((Exit*)entities[16])->ModifyState();
+			if (((Exit*)entities[16])->IsOpen())
+			{
+				cout << "You feel like you opened some door somewhere." << endl << endl;
+			}
+			else
+			{
+				cout << "You feel like you closed some door somewhere." << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "There's no such thing nearby." << endl << endl;
 		}
 	}
 
