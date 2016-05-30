@@ -75,6 +75,32 @@ int main()
 						}
 					}
 				}
+				if (dungeon.chasing)
+				{
+					dungeon.SkeletonChase();
+					if (dungeon.dead)
+					{
+						while (1)
+						{
+							if (_kbhit())
+							{
+								dungeon.EndGame();
+								break;
+							}
+						}
+					}
+				}
+				if (dungeon.ending)
+				{
+					while (1)
+					{
+						if (_kbhit())
+						{
+							dungeon.EndGame();
+							break;
+						}
+					}
+				}
 				command.ModifyDirection(-1);
 				command.ModifyItem(-1);
 			}

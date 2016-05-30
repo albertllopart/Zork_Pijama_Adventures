@@ -32,6 +32,8 @@ public:
 
 	bool dead;
 	bool fighting;
+	bool chasing;
+	bool ending;
 
 	Vector <Entity*> entities;
 
@@ -43,6 +45,7 @@ public:
 	void NPCMove(int direction);
 	bool Continue()const;
 	void DragonFight();
+	void SkeletonChase();
 
 	void CreateWorld();
 	void EndGame();

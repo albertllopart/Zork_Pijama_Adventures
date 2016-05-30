@@ -340,6 +340,10 @@ void Command::ReadInstruction(String& str)
 		ModifyitemName("Orb");
 		str = "drop!";
 	}
+	else if (str == "drop toucan")
+	{
+		str = "droptoucan!";
+	}
 
 	//PUT ITEM INTO BOX
 

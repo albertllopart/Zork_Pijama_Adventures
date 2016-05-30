@@ -4,6 +4,8 @@ World::World(const char* str)
 {
 	dead = false;
 	fighting = false;
+	chasing = false;
+	ending = false;
 
 	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
 	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
@@ -36,7 +38,8 @@ World::World(const char* str)
 	entities.PushBack(new Entity("Copper Key", "It's a key made out of copper."));
 	entities.PushBack(new Entity("Silver Key", "It's a key made out of silver."));
 	entities.PushBack(new Entity("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
-	entities.PushBack(new Entity("Orb", "It's a blue translucid orb with a shinny core."));
+	entities.PushBack(new Entity("Orb", "It's a translucid blue orb with a shinny core."));
+	entities.PushBack(new Entity("Toucan", "An annoying toucan."));
 
 	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.", 0);
 	box = new Entity("Box", "It's a wooden box. You can store items in it.");
@@ -152,7 +155,7 @@ void World::CheckRoom(int room)
 			}
 		}
 	}
-	else
+	else if (adventurer->position != 11)
 	{
 		cout << "This room contains no items.";
 		if (adventurer->CheckPosition() != misterious->CheckPosition() && adventurer->CheckPosition() != toucan->CheckPosition())
@@ -390,6 +393,132 @@ void World::DragonFight() // DRAGON FIGHT
 				cout << "You did nothing." << endl << endl;
 				dragon->state = 2;
 			}
+			break;
+		}
+	}
+}
+
+void World::SkeletonChase()
+{
+	cout << "You start walking towards the altar but then a Cool Skeleton appears from nowhere. He's wearing a cool cape:" << endl;
+	cout << "'Nyeh heh heh heh heh! I'm going to get the orb before you!'" << endl << endl;
+	bool chase = true;
+
+	char buffer[25] = "lel";
+	String answer(buffer);
+
+	while (chase)
+	{
+		switch (skeleton->state)
+		{
+		case 0:
+			cout << "The skeleton starts running towards the altar. What will you do? (chase him / throw the sword at him)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "chase him")
+			{
+				skeleton->state = 1;
+			}
+			else if (answer == "throw the sword at him" || answer == "throw sword")
+			{
+				skeleton->state = 2;
+			}
+			else
+			{
+				cout << "You decided to chase him anyway." << endl << endl;
+				skeleton->state = 1;
+			}
+			break;
+
+		case 1:
+			cout << "You're chasing the skeleton. You can almost touch his cape. What will you do? (pull the cape / continue to chase)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "pull the cape")
+			{
+				skeleton->state = 4;
+			}
+			else if (answer == "continue to chase")
+			{
+				skeleton->state = 5;
+			}
+			else
+			{
+				cout << "You decided to continue chasing anyway." << endl << endl;
+				skeleton->state = 5;
+			}
+			break;
+
+		case 2:
+			cout << "You threw your sword at the skeleton. You knocked his head off. He's now unconscious. What will you do? (move forward)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "move forward")
+			{
+				cout << "You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dead = true;
+				chase = false;
+			}
+			else
+			{
+				cout << "You decided to move forward anyway. You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dead = true;
+				chase = false;
+			}
+			break;
+
+		case 4:
+			cout << "You pulled the skeleton's cape. You caused him to fall to the ground. He's now unconscious. What will you do? (move forward)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "move forward")
+			{
+				cout << "You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dead = true;
+				chase = false;
+			}
+			else
+			{
+				cout << "You decided to move forward anyway. You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dead = true;
+				chase = false;
+			}
+			break;
+
+		case 5:
+			cout << "The skeleton activated a pitfall trap. He's now unconscious. What will you do? (jump over the trap / move forward)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "jump over the trap")
+			{
+				cout << "You got to the altar." << endl << endl;
+				skeleton->position = 12;
+				adventurer->items.PushBack(entities[30]);
+				chase = false;
+				chasing = false;
+				((Room*)entities[11])->ModifyDescription("There's an altar with a shiny orb on top.");
+			}
+			else if (answer == "move forward")
+			{
+				cout << "You fell into the trap like an idiot." << endl << endl << "You are DEAD" << endl << endl << "Press any key to quit.";
+				dead = true;
+				chase = false;
+			}
+			else
+			{
+				cout << "You decided to jump over the trap anyway and got to the altar." << endl << endl;
+				skeleton->position = 12;
+				adventurer->items.PushBack(entities[30]);
+				chase = false;
+				chasing = false;
+				((Room*)entities[11])->ModifyDescription("There's an altar with a shiny orb on top.");
+			}
+			break;
 		}
 	}
 }
@@ -418,7 +547,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 				{
 					if (item == entities[i]->GetName())
 					{
-						cout << entities[i]->GetDescription() << " It's on the floor." << endl << endl;
+						cout << entities[i]->GetDescription() << endl << endl;
 					}
 				}
 			}
@@ -442,13 +571,21 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 
 	else if (str == "go!")
 	{
-		if (((Room*)entities[position])->CheckOptions(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
+		if (adventurer->CheckPosition() == 11 && dir == 3)
+		{
+			cout << "There's no going back now!" << endl << endl;
+		}
+		else if (((Room*)entities[position])->CheckOptions(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
 		{
 			position = ((Room*)entities[position])->CheckOptions(dir);
 			Move(position);
 			if (adventurer->CheckPosition() == dragon->position)
 			{
 				fighting = true;
+			}
+			if (adventurer->CheckPosition() == skeleton->position)
+			{
+				chasing = true;
 			}
 		}
 		else if (((Room*)entities[position])->CheckOptions(dir) == -1)
@@ -1038,37 +1175,44 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 
 	else if (str == "pick!")
 	{
-		if (((Room*)entities[position])->GetItem(item) == false)
+		if (adventurer->CheckPosition() == 11 && item == "Orb")
 		{
-			cout << "There's no such item in this room!" << endl << endl;
+			cout << "You can't pick the orb because you're carrying too much toucan" << endl << endl;
 		}
 		else
 		{
-			if (adventurer->GetCap() > 2)
+			if (((Room*)entities[position])->GetItem(item) == false)
 			{
-				cout << "Your inventory is full! Consider dropping, storing or equipping something to free some space." << endl << endl;
+				cout << "There's no such item in this room!" << endl << endl;
 			}
 			else
 			{
-				dList<Entity*>::dNode* temp = ((Room*)entities[position])->items.first;
-				if (temp != nullptr)
+				if (adventurer->GetCap() > 2)
 				{
-					while (temp != nullptr)
-					{
-						if (item == temp->data->GetName())
-						{
-							if (temp != nullptr)
-							{
-								adventurer->items.PushBack(temp->data);
-								adventurer->itemCap++;
-								((Room*)entities[position])->items.erase(temp);
-								break;
-							}
-						}
-						temp = temp->next;
-					}
+					cout << "Your inventory is full! Consider dropping, storing or equipping something to free some space." << endl << endl;
 				}
-				cout << "You picked a " << entities[pickdrop]->GetName() << endl << endl;
+				else
+				{
+					dList<Entity*>::dNode* temp = ((Room*)entities[position])->items.first;
+					if (temp != nullptr)
+					{
+						while (temp != nullptr)
+						{
+							if (item == temp->data->GetName())
+							{
+								if (temp != nullptr)
+								{
+									adventurer->items.PushBack(temp->data);
+									adventurer->itemCap++;
+									((Room*)entities[position])->items.erase(temp);
+									break;
+								}
+							}
+							temp = temp->next;
+						}
+					}
+					cout << "You picked a " << entities[pickdrop]->GetName() << endl << endl;
+				}
 			}
 		}
 	}
@@ -1096,6 +1240,16 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 			}
 			cout << "You dropped the " << entities[pickdrop]->GetName() << endl << endl;
 		}
+	}
+
+	//DROP TOUCAN
+
+	else if (str == "droptoucan!")
+	{
+		cout << "Toucan: What a horrible pijama!" << endl << endl << "The toucan flew around the room for a while, grabbed the orb and then flew away through a hole in the ceiling." << endl << endl << "<<< THE END >>>" << endl << endl;
+		cout << "Zork: Pijama adventures. A zork by Albert Llopart";
+
+		ending = true;
 	}
 
 	//PUT ITEM INTO BOX
@@ -1266,6 +1420,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 	{
 		position = 11;
 		Move(position);
+		chasing = true;
 	}
 
 	//CHEAT
