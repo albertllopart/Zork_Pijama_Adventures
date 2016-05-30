@@ -5,3 +5,8 @@ Enemy::Enemy(const char* name, const char* description, int position) : Creature
 	fighting = false;
 	state = 0;
 }
+
+Enemy::~Enemy()
+{
+
+}

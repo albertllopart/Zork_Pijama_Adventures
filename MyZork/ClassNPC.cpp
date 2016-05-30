@@ -34,3 +34,8 @@ const char* NPC::GetDialog(int dialog)const
 	}
 	return "ooops";
 }
+
+NPC::~NPC()
+{
+
+}
