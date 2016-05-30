@@ -40,17 +40,21 @@ void Command::ReadInstruction(String& str)
 	{
 		cout << "MOVEMENT" << endl << endl;
 		cout << "Move using the 'n', 's', 'e', 'w' keys, 'north/south/east/west' or 'go + north/south/east/west' commands." << endl;
-		cout << "Open and close doors by using the 'open/close + direction' command" << endl << endl;
+		cout << "Open doors by using the 'open door' command." << endl << endl;
 		cout << "INFORMATION" << endl << endl;
-		cout << "Check door descriptions using 'look + north/south/east/west', player description using 'look + player/me/myself' or room descriptions using 'look room' command" << endl;
+		cout << "Check door descriptions using 'look + north/south/east/west', player description using 'look + player/me/myself' or room descriptions using 'look room' command." << endl;
+		cout << "Check NPC descriptions using 'look + NPC name (or something similar. There are some combinations that work)" << endl;
 		cout << "You can check item descriptions by using the command 'look + <item>'" << endl;
 		cout << "Check your inventory at any time by using the command 'look/check + inventory or inventory/inv/i" << endl;
-		cout << "Check what the box contains by using 'look/check + box' command" << endl;
-		cout << "Check your stats with the 'stats' command and check your equipment with the 'equipment, look equipment or check equipment' command" << endl << endl;
+		cout << "Check what the box contains by using 'look/check + box' command." << endl;
+		cout << "Check your stats with the 'stats' command and check your equipment with the 'equipment, look equipment or check equipment' command." << endl << endl;
 		cout << "INTERACTION" << endl << endl;
 		cout << "Pick or drop items by using the 'pick/drop + <item>' command. You can also store items in a Box by using the commands 'put/get + <item> + into/from + box'." << endl;
-		cout << "Equip and unequip items by using the commands 'equip/unequip + <item>'" << endl << endl;
-		cout << "Use 'quit' command to quit the game" << endl << endl;
+		cout << "Equip and unequip items by using the commands 'equip/unequip + <item>'" << endl;
+		cout << "Use items by using the command 'use + item'. Notice that this command will only work in certain rooms and with certain items." << endl;
+		cout << "Press buttons with 'press button' command and open chests with the 'open chest' command." << endl;
+		cout << "Talk to the Misterious Masked Man with the 'talk man / talk to man / talk misterious ... etc' command." << endl << endl;
+		cout << "Use 'quit' command to quit the game." << endl << endl;
 	}
 
 	//LOOK EXITS

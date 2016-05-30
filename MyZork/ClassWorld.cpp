@@ -1448,6 +1448,12 @@ void World::EndGame()
 
 World::~World()
 {
+	delete dragon;
+	delete skeleton;
+	delete toucan;
+	delete warrior;
+	delete misterious;
+	delete chest;
 	delete box;
 	delete adventurer;
 }
