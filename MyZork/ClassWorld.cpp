@@ -612,7 +612,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 			String answer(buffer);
 			misterious->talking = true;
 
-			if (adventurer->GetItem("Sword") && misterious->state < 4)
+			if (adventurer->GetItem("Sword") && misterious->state < 4  || adventurer->GetEquip("Sword") && misterious->state < 4)
 			{
 				misterious->state = 3;
 			}
@@ -808,6 +808,82 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		default:
 			cout << "There's are no locked doors nearby." << endl << endl;
 			break;
+		}
+	}
+
+	//KEYS
+
+	else if (str == "opencopper!")
+	{
+		if (adventurer->GetItem(item))
+		{
+			if (adventurer->CheckPosition() == 5)
+			{
+				if (((Exit*)entities[17])->IsOpen() == false)
+				{
+					((Exit*)entities[17])->ModifyState();
+					cout << "You used the Copper Key to open the Copper Door" << endl << endl;
+					adventurer->itemCap--;
+					dList<Entity*>::dNode* temp = adventurer->items.first;
+					for (; temp != nullptr; temp = temp->next)
+					{
+						if (item == temp->data->GetName())
+						{
+							adventurer->items.erase(temp);
+							break;
+						}
+					}
+				}
+				else if (((Exit*)entities[17])->IsOpen())
+				{
+					cout << "The door is already open." << endl << endl;
+				}
+			}
+			else
+			{
+				cout << "There is no use for that in here." << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "You don't have that item in your inventory." << endl << endl;
+		}
+	}
+
+	else if (str == "opensilver!")
+	{
+		if (adventurer->GetItem(item))
+		{
+			if (adventurer->CheckPosition() == 6)
+			{
+				if (((Exit*)entities[20])->IsOpen() == false)
+				{
+					((Exit*)entities[20])->ModifyState();
+					cout << "You used the Silver Key to open the Silver Door" << endl << endl;
+					adventurer->itemCap--;
+					dList<Entity*>::dNode* temp = adventurer->items.first;
+					for (; temp != nullptr; temp = temp->next)
+					{
+						if (item == temp->data->GetName())
+						{
+							adventurer->items.erase(temp);
+							break;
+						}
+					}
+				}
+				else if (((Exit*)entities[17])->IsOpen())
+				{
+					cout << "The door is already open." << endl << endl;
+				}
+			}
+			else
+			{
+				cout << "There is no use for that in here." << endl << endl;
+			}
+		}
+		else
+		{
+			cout << "You don't have that item in your inventory." << endl << endl;
 		}
 	}
 

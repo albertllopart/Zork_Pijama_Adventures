@@ -224,6 +224,19 @@ void Command::ReadInstruction(String& str)
 		str = "open!";
 	}
 
+	//KEYS
+
+	else if (str == "use copper key")
+	{
+		ModifyitemName("Copper Key");
+		str = "opencopper!";
+	}
+	else if (str == "use silver key")
+	{
+		ModifyitemName("Silver Key");
+		str = "opensilver!";
+	}
+
 	//OPEN CHEST
 
 	else if (str == "open chest")
