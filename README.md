@@ -1,7 +1,16 @@
+*Important:     
+
+Notice that I don't have any buy/sell system but I have something which is quite similar.     
+There's an NPC that will give you a key item if you bring him a certain item. It's not an actual trade because the player     
+gets to keep both items (they are both key to the adventure), but essentially it works in the same way as a trade.     
+
+I decided to turn my fights and some puzzles to be turn based as they made no sense at all otherwise. There's an     
+NPC though that can move freely through the dungeon even if the player isn't using commands.     
+
 MOVEMENT
 
 Move using the 'n', 's', 'e', 'w' keys, 'north/south/east/west' or 'go + north/south/east/west' commands.   
-Open and close doors by using the 'open/close + direction' command
+Open doors by using the 'open door' command
 
 INFORMATION
 
@@ -15,6 +24,9 @@ INTERACTION
 
 Pick or drop items by using the 'pick/drop + <item>' command. You can also store items in a Box by using the commands 'put/get + <item> + into/from + box'.   
 Equip and unequip items by using the commands 'equip/unequip + <item>'
+Use items by using the command 'use + item'. Notice that this command will only work in certain rooms and with certain items.
+Press buttons with 'press button' command and open chests with the 'open chest' command
+Talk to the Misterious Masked Man with the 'talk man / talk to man / talk misterious ... etc' command
 
 Use 'quit' command to quit the game
 
