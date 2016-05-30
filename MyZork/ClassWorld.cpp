@@ -2,6 +2,9 @@
 
 World::World(const char* str)
 {
+	dead = false;
+	fighting = false;
+
 	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
 	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
 	entities.PushBack(new Room(">>> NORTH OF HALL", "It's a small room with one door at each wall. There's a huge box in the center."));
@@ -12,7 +15,7 @@ World::World(const char* str)
 	entities.PushBack(new Room(">>> BIRD ROOM", "This room has a high ceiling with a window at the top, but it's impossible to reach."));
 	entities.PushBack(new Room(">>> SUSPICIOUSLY EMPTY ROOM", "It's completely empty. There's a suspicious crack on the northern wall."));
 	entities.PushBack(new Room(">>> CHEST ROOM", "This room would be completely empty if there wasn't a chest right in the center of it."));
-	entities.PushBack(new Room(">>> DRAGON ROOM", "It smells like if something had been burning for days in here. You notice a huge dragon staring at you. His face doesn't look like the face of mercy."));
+	entities.PushBack(new Room(">>> DRAGON ROOM", "It smells like if something had been burning for days in here."));
 	entities.PushBack(new Room(">>> ALTAR ROOM", "There's a long passage that leads to something that looks like an altar. Something shines on it."));
 	
 	entities.PushBack(new Exit("A wooden door."));
@@ -111,7 +114,7 @@ void World::CreateWorld()
 
 }
 
-void World::CheckRoom(int room)const
+void World::CheckRoom(int room)
 {
 	cout << ((Room*)entities[room])->GetName() << endl;
 	if (((Room*)entities[room])->FirstVisit()) cout << ((Room*)entities[room])->GetDescription() << endl, ((Room*)entities[room])->NoDescription();
@@ -205,7 +208,192 @@ void World::NPCMove(int direction)
 		}
 	}
 }
-void World::Execute(const String& str, int dir, const String& item, int pickdrop, int& position)const
+
+void World::DragonFight() // DRAGON FIGHT
+{
+	cout << "A huge dragon attacks you!" << endl << endl;
+	dragon->fighting = true;
+
+	char buffer[25] = "lel";
+	String answer(buffer);
+
+	while (dragon->fighting)
+	{
+		switch (dragon->state)
+		{
+		case 0: //DRAGON TURN
+			cout << "The dragon throws a fireball at you at a conviniently set slow speed. What will you do? (dodge / attack / block / run)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "dodge")
+			{
+				cout << "You successfully dodged the fireball." << endl << endl;
+				dragon->state = 1;
+			}
+			else if (answer == "attack")
+			{
+				cout << "You are too far away from the dragon. The fireball hit you." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dragon->fighting = false;
+				dead = true;
+			}
+			else if (answer == "block")
+			{
+				if (adventurer->GetEquip("Wooden Shield"))
+				{
+					cout << "You successfully blocked the fireball, but your shield burnt to ashes." << endl << endl;
+					dList<Entity*>::dNode* temp = adventurer->equipment.first;
+					String item("Wooden Shield");
+					adventurer->itemCap--;
+					for (; temp != nullptr; temp = temp->next)
+					{
+						if (item == temp->data->GetName())
+						{
+							adventurer->equipment.erase(temp);
+							break;
+						}
+					}
+					dragon->state = 1;
+				}
+				else
+				{
+					cout << "You don't have a shield equipped. The fireball hit you." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+					dragon->fighting = false;
+					dead = true;
+				}
+			}
+			else if (answer == "run")
+			{
+				cout << "You ran away safely to the room you came from" << endl << endl;
+				dragon->fighting = false;
+				fighting = false;
+				Move(8);
+				CheckRoom(8);
+				dragon->state = 0;
+			}
+			else
+			{
+				cout << "The fireball hit you" << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dragon->fighting = false;
+				dead = true;
+			}
+			break;
+
+		case 1: //PLAYER TURN
+			cout << "The dragon is preparing its next move. What will you do? (run / attack / move forward)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "run")
+			{
+				cout << "You ran away safely to the room you came from" << endl << endl;
+				dragon->fighting = false;
+				fighting = false;
+				Move(8);
+				CheckRoom(8);
+				dragon->state = 0;
+			}
+			else if (answer == "attack")
+			{
+				cout << "You are too far away from the dragon." << endl << endl;
+				dragon->state = 0;
+			}
+			else if (answer == "move forward")
+			{
+				cout << "You moved closer to the dragon." << endl << endl;
+				dragon->state = 2;
+			}
+			else
+			{
+				cout << "You did nothing." << endl << endl;
+				dragon->state = 0;
+			}
+			break;
+
+		case 2: //DRAGON TURN (CC)
+			cout << "The dragon tries to bite you. What will you do? (block / dodge / attack)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "block")
+			{
+				if (adventurer->GetEquip("Wooden Shield"))
+				{
+					cout << "You successfully blocked the attack, but your shield got crushed." << endl << endl;
+					dList<Entity*>::dNode* temp = adventurer->equipment.first;
+					String item("Wooden Shield");
+					adventurer->itemCap--;
+					for (; temp != nullptr; temp = temp->next)
+					{
+						if (item == temp->data->GetName())
+						{
+							adventurer->equipment.erase(temp);
+							break;
+						}
+					}
+					dragon->state = 3;
+				}
+				else
+				{
+					cout << "You don't have a shield equipped. The dragon chopped your head." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+					dragon->fighting = false;
+					dead = true;
+				}
+			}
+			else if (answer == "dodge")
+			{
+				cout << "You failed to dodge the attack. The dragon chopped your head." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dragon->fighting = false;
+				dead = true;
+			}
+			else if (answer == "attack")
+			{
+				cout << "The dragon was faster. Your head got chopped." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dragon->fighting = false;
+				dead = true;
+			}
+			else
+			{
+				cout << "The dragon chopped your head." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+				dragon->fighting = false;
+				dead = true;
+			}
+			break;
+
+		case 3: //PLAYER TURN (CC)
+			cout << "The dragon is preparing its next move. What will you do? (move away / attack)" << endl << endl;
+			gets_s(buffer);
+			answer = buffer;
+
+			if (answer == "move away")
+			{
+				cout << "You moved away from the dragon." << endl << endl;
+				dragon->state = 0;
+			}
+			else if (answer == "attack")
+			{
+				if (adventurer->GetEquip("Sword"))
+				{
+					cout << "You swung your sword over the dragon's neck and successfully chopped its head. The dragon is dead." << endl << endl;
+					dragon->fighting = false;
+					dragon->position = 12;
+					fighting = false;
+				}
+				else
+				{
+					cout << "You don't have a sword equipped." << endl << endl;
+					dragon->state = 2;
+				}
+			}
+			else
+			{
+				cout << "You did nothing." << endl << endl;
+				dragon->state = 2;
+			}
+		}
+	}
+}
+void World::Execute(const String& str, int dir, const String& item, int pickdrop, int& position)
 {
 
 	//LOOK ITEMS / EXITS
@@ -257,6 +445,11 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 		if (((Room*)entities[position])->CheckOptions(dir) != -1 && ((Exit*)entities[((Room*)entities[position])->CheckDoors(dir)])->IsOpen())
 		{
 			position = ((Room*)entities[position])->CheckOptions(dir);
+			Move(position);
+			if (adventurer->CheckPosition() == dragon->position)
+			{
+				fighting = true;
+			}
 		}
 		else if (((Room*)entities[position])->CheckOptions(dir) == -1)
 		{
@@ -577,6 +770,7 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 				adventurer->itemCap--;
 				((Exit*)entities[21])->ModifyState();
 				((Exit*)entities[21])->ModifyDescription("A huge hole that leads deeper into this strange place.");
+				((Room*)entities[8])->ModifyDescription("It's completely empty. There's a huge hole in the northern wall.");
 				dList<Entity*>::dNode* temp = adventurer->items.first;
 				for (; temp != nullptr; temp = temp->next)
 				{
@@ -1061,14 +1255,29 @@ void World::Execute(const String& str, int dir, const String& item, int pickdrop
 	else if (str == "teleport 1")
 	{
 		position = 0;
+		Move(position);
 	}
 	else if (str == "teleport 2")
 	{
 		position = 6;
+		Move(position);
 	}
 	else if (str == "teleport 3")
 	{
 		position = 11;
+		Move(position);
+	}
+
+	//CHEAT
+
+	else if (str == "photonman!")
+	{
+		adventurer->items.PushBack(entities[23]);
+		adventurer->items.PushBack(entities[24]);
+		adventurer->items.PushBack(entities[25]);
+		adventurer->items.PushBack(entities[26]);
+		adventurer->items.PushBack(entities[27]);
+		adventurer->items.PushBack(entities[28]);
 	}
 }
 

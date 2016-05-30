@@ -11,6 +11,9 @@ private:
 
 public:
 
+	bool fighting;
+	int state;
+
 	Enemy(const char* name, const char* description, int position);
 	~Enemy();
 

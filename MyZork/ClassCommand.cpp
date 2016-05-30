@@ -553,6 +553,13 @@ void Command::ReadInstruction(String& str)
 		dir = 33;
 	}
 
+	//CHEAT
+
+	else if (str == "photonman")
+	{
+		str = "photonman!";
+	}
+
 	//ELSE
 
 	else

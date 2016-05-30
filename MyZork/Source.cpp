@@ -56,14 +56,29 @@ int main()
 				position = dungeon.CheckPosition();
 				command.ReadInstruction(order);
 				dungeon.Execute(order, command.GetDirection(), command.GetItemName(), command.GetItem(), position);
-				dungeon.Move(position);
 				if (command.GetDirection() != -1 && order != "look!" && order != "open!" && order != "close!" && lastposition != position)
 				{
 					dungeon.CheckRoom(position);
+				}
+				if (dungeon.fighting)
+				{
+					dungeon.DragonFight();
+					if (dungeon.dead)
+					{
+						while (1)
+						{
+							if (_kbhit())
+							{
+								dungeon.EndGame();
+								break;
+							}
+						}
+					}
 				}
 				command.ModifyDirection(-1);
 				command.ModifyItem(-1);
 			}
 		}
+
 	}
 }

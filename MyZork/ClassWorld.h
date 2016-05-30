@@ -30,15 +30,19 @@ public:
 	World(const char* str);
 	~World();
 
+	bool dead;
+	bool fighting;
+
 	Vector <Entity*> entities;
 
-	void CheckRoom(int room)const;
+	void CheckRoom(int room);
 	int CheckPosition()const;
 	void Move(int position);
-	void Execute(const String& str, int dir, const String& item, int pickdrop, int& position)const;
+	void Execute(const String& str, int dir, const String& item, int pickdrop, int& position);
 	bool Talking()const;
 	void NPCMove(int direction);
 	bool Continue()const;
+	void DragonFight();
 
 	void CreateWorld();
 	void EndGame();
