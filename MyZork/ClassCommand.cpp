@@ -54,6 +54,7 @@ void Command::ReadInstruction(String& str)
 		cout << "Use items by using the command 'use + item'. Notice that this command will only work in certain rooms and with certain items." << endl;
 		cout << "Press buttons with 'press button' command and open chests with the 'open chest' command." << endl;
 		cout << "Talk to the Misterious Masked Man with the 'talk man / talk to man / talk misterious ... etc' command." << endl << endl;
+		cout << "DON'T USE CAPITAL LETTERS IN YOUR COMMANDS!" << endl << endl;
 		cout << "Use 'quit' command to quit the game." << endl << endl;
 	}
 

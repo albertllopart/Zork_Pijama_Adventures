@@ -7,7 +7,7 @@ World::World(const char* str)
 	chasing = false;
 	ending = false;
 
-	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old panitings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
+	entities.PushBack(new Room(">>> HALL", "It's an old fashioned hall, with loads of old paintings hanging on walls and a couple of rusty armors in the center. It's barely illuminated."));
 	entities.PushBack(new Room(">>> WEST OF HALL", "Something smells rotten in this room. It's a lot darker than the hall."));
 	entities.PushBack(new Room(">>> NORTH OF HALL", "It's a small room with one door at each wall. There's a huge box in the center."));
 	entities.PushBack(new Room(">>> LIVING ROOM", "It's a small room with lots of torches. There's also a man laying on a blood puddle."));
@@ -38,7 +38,7 @@ World::World(const char* str)
 	entities.PushBack(new Entity("Copper Key", "It's a key made out of copper."));
 	entities.PushBack(new Entity("Silver Key", "It's a key made out of silver."));
 	entities.PushBack(new Entity("Grenade", "It's just a grenade. Were you really expecting a detailed description?"));
-	entities.PushBack(new Entity("Orb", "It's a translucid blue orb with a shinny core."));
+	entities.PushBack(new Entity("Orb", "It's a translucid blue orb with a shiny core."));
 	entities.PushBack(new Entity("Toucan", "An annoying toucan."));
 
 	adventurer = new Player(str, "You're wearing a warm pijaman and slippers.", 0);
@@ -49,7 +49,7 @@ World::World(const char* str)
 		"Okay, do what you want, but you ain't getting outta here without my help. Cya.", 
 		"Have you changed your mind? Will you help me?",
 		"Great! Listen carefully: ", 
-		"Prove your value first. Bring me a sword and I'll give you something you'll be needing sooner or later. Don't worry, you'll get to keep the sword. I opened the northern door of the Hall for you. Let's bounce!",
+		"Prove your value first. Bring me a sword and I'll give you something you'll be needing sooner or later. Don't worry, you'll get to keep the sword. I opened the northern door of the Hall for you. Be careful not to put yourself in dangerous situations while you aren't armed! Watch your step. Let's bounce!",
 		"Nice sword you found there. I'm afraid it belonged to the last dude I sent on a quest. But don't worry, take this shield and you'll be fine. You've proven your value. Good luck on your quest!",
 		"Are you really expecting me to say something else? This can only mean you still don't know about the lazyness of my programmer. Get outta here, you're on a quest!");
 	warrior = new NPC("Warrior", "It's a dead body laying on a blood puddle.", 3, " ", " ", " ", " ", " ", " ", " ");
@@ -248,6 +248,7 @@ void World::DragonFight() // DRAGON FIGHT
 					dList<Entity*>::dNode* temp = adventurer->equipment.first;
 					String item("Wooden Shield");
 					adventurer->itemCap--;
+					adventurer->EquipUnequip(item);
 					for (; temp != nullptr; temp = temp->next)
 					{
 						if (item == temp->data->GetName())
@@ -326,6 +327,7 @@ void World::DragonFight() // DRAGON FIGHT
 					dList<Entity*>::dNode* temp = adventurer->equipment.first;
 					String item("Wooden Shield");
 					adventurer->itemCap--;
+					adventurer->EquipUnequip(item);
 					for (; temp != nullptr; temp = temp->next)
 					{
 						if (item == temp->data->GetName())
@@ -413,110 +415,128 @@ void World::SkeletonChase()
 		{
 		case 0:
 			cout << "The skeleton starts running towards the altar. What will you do? (chase him / throw the sword at him)" << endl << endl;
-			gets_s(buffer);
-			answer = buffer;
+			while (1)
+			{
+				gets_s(buffer);
+				answer = buffer;
 
-			if (answer == "chase him")
-			{
-				skeleton->state = 1;
-			}
-			else if (answer == "throw the sword at him" || answer == "throw sword")
-			{
-				skeleton->state = 2;
-			}
-			else
-			{
-				cout << "You decided to chase him anyway." << endl << endl;
-				skeleton->state = 1;
+				if (answer == "chase him")
+				{
+					skeleton->state = 1;
+					break;
+				}
+				else if (answer == "throw the sword at him" || answer == "throw sword")
+				{
+					skeleton->state = 2;
+					break;
+				}
+				else
+				{
+					cout << "Make a decision, fast! (chase him / throw the sword at him)" << endl << endl;
+				}
 			}
 			break;
 
 		case 1:
 			cout << "You're chasing the skeleton. You can almost touch his cape. What will you do? (pull the cape / continue to chase)" << endl << endl;
-			gets_s(buffer);
-			answer = buffer;
+			while (1)
+			{
+				gets_s(buffer);
+				answer = buffer;
 
-			if (answer == "pull the cape")
-			{
-				skeleton->state = 4;
-			}
-			else if (answer == "continue to chase")
-			{
-				skeleton->state = 5;
-			}
-			else
-			{
-				cout << "You decided to continue chasing anyway." << endl << endl;
-				skeleton->state = 5;
+				if (answer == "pull the cape")
+				{
+					skeleton->state = 4;
+					break;
+				}
+				else if (answer == "continue to chase")
+				{
+					skeleton->state = 5;
+					break;
+				}
+				else
+				{
+					cout << "Make a decision, fast! (pull the cape / continue to chase)" << endl << endl;
+				}
 			}
 			break;
 
 		case 2:
 			cout << "You threw your sword at the skeleton. You knocked his head off. He's now unconscious. What will you do? (move forward)" << endl << endl;
-			gets_s(buffer);
-			answer = buffer;
+			while (1)
+			{
+				gets_s(buffer);
+				answer = buffer;
 
-			if (answer == "move forward")
-			{
-				cout << "You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
-				dead = true;
-				chase = false;
-			}
-			else
-			{
-				cout << "You decided to move forward anyway. You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
-				dead = true;
-				chase = false;
+				if (answer == "move forward")
+				{
+					cout << "You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+					dead = true;
+					chase = false;
+					break;
+				}
+				else
+				{
+					cout << "You decided to move forward anyway. You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+					dead = true;
+					chase = false;
+					break;
+				}
 			}
 			break;
 
 		case 4:
 			cout << "You pulled the skeleton's cape. You caused him to fall to the ground. He's now unconscious. What will you do? (move forward)" << endl << endl;
-			gets_s(buffer);
-			answer = buffer;
+			while (1)
+			{
+				gets_s(buffer);
+				answer = buffer;
 
-			if (answer == "move forward")
-			{
-				cout << "You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
-				dead = true;
-				chase = false;
-			}
-			else
-			{
-				cout << "You decided to move forward anyway. You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
-				dead = true;
-				chase = false;
+				if (answer == "move forward")
+				{
+					cout << "You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+					dead = true;
+					chase = false;
+					break;
+				}
+				else
+				{
+					cout << "You decided to move forward anyway. You started moving towards the altar, but suddently you activated a pitfall trap." << endl << endl << "You are DEAD." << endl << endl << "Press any key to quit.";
+					dead = true;
+					chase = false;
+					break;
+				}
 			}
 			break;
 
 		case 5:
 			cout << "The skeleton activated a pitfall trap. He's now unconscious. What will you do? (jump over the trap / move forward)" << endl << endl;
-			gets_s(buffer);
-			answer = buffer;
+			while (1)
+			{
+				gets_s(buffer);
+				answer = buffer;
 
-			if (answer == "jump over the trap")
-			{
-				cout << "You got to the altar." << endl << endl;
-				skeleton->position = 12;
-				adventurer->items.PushBack(entities[30]);
-				chase = false;
-				chasing = false;
-				((Room*)entities[11])->ModifyDescription("There's an altar with a shiny orb on top.");
-			}
-			else if (answer == "move forward")
-			{
-				cout << "You fell into the trap like an idiot." << endl << endl << "You are DEAD" << endl << endl << "Press any key to quit.";
-				dead = true;
-				chase = false;
-			}
-			else
-			{
-				cout << "You decided to jump over the trap anyway and got to the altar." << endl << endl;
-				skeleton->position = 12;
-				adventurer->items.PushBack(entities[30]);
-				chase = false;
-				chasing = false;
-				((Room*)entities[11])->ModifyDescription("There's an altar with a shiny orb on top.");
+				if (answer == "jump over the trap")
+				{
+					cout << "You got to the altar." << endl << endl;
+					skeleton->position = 12;
+					adventurer->items.PushBack(entities[30]);
+					chase = false;
+					chasing = false;
+					((Room*)entities[11])->ModifyDescription("There's an altar with a shiny orb on top.");
+					break;
+				}
+				else if (answer == "move forward")
+				{
+					cout << "You fell into the trap like an idiot." << endl << endl << "You are DEAD" << endl << endl << "Press any key to quit.";
+					dead = true;
+					chase = false;
+					break;
+				}
+				else
+				{
+					cout << "Make a decision (jump over the trap / move forward)" << endl << endl;
+				}
 			}
 			break;
 		}
